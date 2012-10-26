@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Craigslist-Analyzer</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1>Craigslist-Analyzer</h1>
+		<fieldset>
+			<h:form>
+ 				Enter something: <h:inputText value="#{someBean.someProperty}"></h:inputText>
+				<h:commandButton value="Start analyzing" action="result-page" />
+			</h:form>
+		</fieldset>
+		<p>If the tags like h:form and h:commandButton are totally
+			ignored, it probably means that you don't have jsf-api.jar and
+			jsf-impl.jar in WEB-INF/lib, or that you haven't mapped the
+			FacesServlet in web.xml. If you get a JSF-specific error message, it
+			probably means that you used the wrong URL (i.e, ending in
+			page-a.xhtml instead of page-a.jsf).</p>
+	</div>
+</h:body>
+</html>
