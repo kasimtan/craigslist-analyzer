@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.crawl.model.CraigslistCategoryEnum;
+import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
@@ -21,14 +23,14 @@ public class Crawler {
 	 * 
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> crawlWebPages(){
+	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum){
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		Collection<CrawlResultPackage> aCurrentPageResults=null;
 		int myIntPage=0;
 		
 		do{
 			System.out.println("Page="+myIntPage);
-			aCurrentPageResults=this.crawlWebPage(myIntPage);
+			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum);
 			aReturnColl.addAll(aCurrentPageResults);
 			
 			myIntPage=myIntPage+100;
@@ -41,7 +43,7 @@ public class Crawler {
 	 * The crawl function
 	 * @return
 	 */
-	private Collection<CrawlResultPackage> crawlWebPage(int page) {
+	private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic) {
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		URL url;
 		InputStream is = null;
@@ -51,7 +53,7 @@ public class Crawler {
 		try {
 			// http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc
 			// http://sfbay.craigslist.org/search/sya?sort=pricedsc&hasPic=1&srchType=A
-			String stringURL="http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc&s="+page;
+			String stringURL="http://sfbay.craigslist.org/search/"+inEnumForSaleTopic.getCode()+"?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc&s="+page;
 			System.out.println("stringURL"+stringURL);
 			url = new URL(stringURL);
 
