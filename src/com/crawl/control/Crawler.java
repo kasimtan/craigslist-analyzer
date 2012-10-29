@@ -164,15 +164,16 @@ public class Crawler {
 	 */
 	private Collection<String> getLocationsFromString(String input) {
 		try {
-			//System.out.println("input="+input);
+			//System.out.println("1111111111111111111111 getLocationsFromString 111111111111111111111111111111111111111111111111111111111111111");
+			//System.out.println("a) input=|"+input+"|");
 			
 			Collection<String> aCollLoc=new ArrayList<String>();
 			String aWorkString=null;
 
 			completeLoop: // Break out mark
 
-			// Search for the first '$' character. 
-			// Beginning from the left side
+			// Search for the first '(' character. 
+			// Beginning from the right side
 			for (int i = input.length()-1; i >= 0 ; i--) {
 				if (input.charAt(i) == '(') {
 					// Get everything after the ( character
@@ -185,7 +186,9 @@ public class Crawler {
 						}
 					}
 	
-					//System.out.println("aWorkString="+aWorkString);
+					//System.out.println("aWorkString=|"+aWorkString+"|");
+					
+					// if there are more locations then one?
 					if (aWorkString.contains("/")==true){
 						Collection<String> aStringCollLocations=new ArrayList<String>();
 						aCollLoc.addAll(this.getLocationsFromCleanStringRecursion(aWorkString, aStringCollLocations, 10));
@@ -197,6 +200,7 @@ public class Crawler {
 				}
 			}
 
+			//System.out.println("ENNNNNDDDD) aCollLoc=|"+aCollLoc.toString()+"|");
 			return aCollLoc;
 		} catch (Exception e) {
 			System.err.println(e.toString());
@@ -210,9 +214,10 @@ public class Crawler {
 	 * @return
 	 */
 	private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> ínputCollection, int inMaxRecursion) {
-		try {		
+		try {	
+			//System.out.println("getLocationsFromCleanStringRecursion inMaxRecursion="+inMaxRecursion+" +++++++++++++++++++++++++++++++++++++++++++++");
 			// input string look like that = Locations=dublin / pleasanton / livermore
-			//System.out.println("inputCleanString=|"+inputCleanString+"|");
+			//System.out.println("1) inputCleanString=|"+inputCleanString+"|");
 						
 			if (inputCleanString.contains("/")==true){
 				for (int i=0;i<inputCleanString.length();i++){
@@ -220,15 +225,20 @@ public class Crawler {
 						String aTempStringNewAddItem=inputCleanString.substring(0, i).trim();
 						String aTempStringNewRecurItem=inputCleanString.substring(i+1).trim();
 						
-						//System.out.println("lllllllllllllllllllllll aTempStringNewAddItem=|"+aTempStringNewAddItem+"| aTempStringNewRecurItem=|"+aTempStringNewRecurItem+"|");
+						//System.out.println("2) aTempStringNewAddItem=|"+aTempStringNewAddItem+"|\n   aTempStringNewRecurItem=|"+aTempStringNewRecurItem+"|");
 						
 						// Break out condition
 						if (inMaxRecursion<=0){
+							//System.out.println("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
 							ínputCollection.add(inputCleanString);
+							//System.out.println("30) ínputCollection=|"+ínputCollection.toString()+"|");
 							return ínputCollection;
 						} else {
+							//System.out.println("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
 							ínputCollection.add(aTempStringNewAddItem);
+							//System.out.println("38) ínputCollection=|"+ínputCollection.toString()+"|");
 							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, (inMaxRecursion-1));
+							return ínputCollection;
 						}
 					}
 				}
@@ -236,6 +246,7 @@ public class Crawler {
 				ínputCollection.add(inputCleanString.trim());
 			}
 		
+			//System.out.println("40) ínputCollection=|"+ínputCollection.toString()+"|");
 			return ínputCollection;
 		} catch (Exception e) {
 			System.err.println(e.toString());
