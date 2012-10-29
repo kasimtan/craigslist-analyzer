@@ -21,7 +21,7 @@ public class StartMain {
 	public static void main(String[] args) {
 		Crawler aCrawl=new Crawler();
 		
-		Collection<CrawlResultPackage> aResultColl=aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, "");
+		Collection<CrawlResultPackage> aResultColl=aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, "", 500 /*Max Offers*/);
 		
 		for (CrawlResultPackage myPackage:aResultColl){
 			System.out.println("myPackage Price="+myPackage.getPriceOfItem()+" Locations="+myPackage.getLocationsAsString());
