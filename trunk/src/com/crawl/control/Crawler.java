@@ -26,7 +26,7 @@ public class Crawler {
 	 * @param inSearchItem Which item do you search "iPhone", "Apple IIc", etc.
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, String inSearchItem){
+	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, String inSearchItem, int inputIntOffers){
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		Collection<CrawlResultPackage> aCurrentPageResults=null;
 		int myIntPage=0;
@@ -37,7 +37,7 @@ public class Crawler {
 			aReturnColl.addAll(aCurrentPageResults);
 			
 			myIntPage=myIntPage+100;
-		} while (aCurrentPageResults.size()!=0 && myIntPage < 1000);
+		} while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
 		
 		return aReturnColl;
 	}
@@ -184,11 +184,11 @@ public class Crawler {
 							aWorkString=aWorkString.substring(0, j);							
 						}
 					}
-					
+	
 					//System.out.println("aWorkString="+aWorkString);
 					if (aWorkString.contains("/")==true){
 						Collection<String> aStringCollLocations=new ArrayList<String>();
-						aCollLoc.addAll(this.getLocationsFromCleanStringRecursion(aWorkString, aStringCollLocations, 5));
+						aCollLoc.addAll(this.getLocationsFromCleanStringRecursion(aWorkString, aStringCollLocations, 10));
 						break completeLoop;
 					} else {
 						aCollLoc.add(aWorkString);
@@ -213,10 +213,7 @@ public class Crawler {
 		try {		
 			// input string look like that = Locations=dublin / pleasanton / livermore
 			//System.out.println("inputCleanString=|"+inputCleanString+"|");
-			
-			// Reduce maxRecursion
-			inMaxRecursion--;
-			
+						
 			if (inputCleanString.contains("/")==true){
 				for (int i=0;i<inputCleanString.length();i++){
 					if (inputCleanString.charAt(i) == '/'){
@@ -231,7 +228,7 @@ public class Crawler {
 							return ínputCollection;
 						} else {
 							ínputCollection.add(aTempStringNewAddItem);
-							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, inMaxRecursion);
+							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, (inMaxRecursion-1));
 						}
 					}
 				}
