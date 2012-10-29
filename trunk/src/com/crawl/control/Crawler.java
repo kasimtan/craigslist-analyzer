@@ -175,7 +175,7 @@ public class Crawler {
 			// Beginning from the left side
 			for (int i = input.length()-1; i >= 0 ; i--) {
 				if (input.charAt(i) == '(') {
-					// Get everything after the ( character if it is a number
+					// Get everything after the ( character
 					aWorkString=input.substring(i+1);
 					
 					// Cut off the rest including and after the ')' sign
@@ -186,9 +186,13 @@ public class Crawler {
 					}
 					
 					//System.out.println("aWorkString="+aWorkString);
-					
-					aCollLoc.add(aWorkString);
-					break completeLoop;
+					if (aWorkString.contains("/")==true){
+						aCollLoc.addAll(this.getLocationsFromCleanString(aWorkString));
+						break completeLoop;
+					} else {
+						aCollLoc.add(aWorkString);
+						break completeLoop;
+					}
 				}
 			}
 
@@ -198,4 +202,26 @@ public class Crawler {
 			return new ArrayList<String>();
 		}
 	}	
+	
+	/**
+	 * Split up the writing style "dublin / pleasanton / livermore"
+	 * @param input
+	 * @return
+	 */
+	private Collection<String> getLocationsFromCleanString(String input) {
+		try {		
+			// input string look like that = Locations=dublin / pleasanton / livermore
+		
+			Collection<String> aRetColl=new ArrayList<String>();
+			
+			// DO THE SPLITUP AND PUT IT INTO THE COLLECTION
+		
+			return aRetColl;
+		} catch (Exception e) {
+			System.err.println(e.toString());
+			Collection<String> aExcepionColl=new ArrayList<String>();
+			aExcepionColl.add(input);
+			return aExcepionColl;
+		}
+	}
 }
