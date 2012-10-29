@@ -1,4 +1,4 @@
-package com.craigsliter.starter;
+package com.craigslist.starter;
 
 import java.util.Collection;
 
