@@ -1,4 +1,4 @@
-package somePackage;
+package com.craigsliter.starter;
 
 import java.util.Collection;
 
