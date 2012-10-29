@@ -44,7 +44,7 @@ public class CrawlResultPackage {
 		String aReturnLocations="";
 		
 		for (String aLoc: this.getLocations()){
-			aReturnLocations+=""+aLoc;
+			aReturnLocations+=" - "+aLoc;
 		}
 		
 		return aReturnLocations;
