@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
@@ -21,16 +22,18 @@ import com.crawl.model.CrawlResultPackage;
 public class Crawler {
 	/**
 	 * 
+	 * @param inCraigslistCategoryEnum Which category?
+	 * @param inSearchItem Which item do you search "iPhone", "Apple IIc", etc.
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum){
+	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, String inSearchItem){
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		Collection<CrawlResultPackage> aCurrentPageResults=null;
 		int myIntPage=0;
 		
 		do{
-			System.out.println("Page="+myIntPage);
-			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum);
+			//System.out.println("Page="+myIntPage);
+			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inSearchItem);
 			aReturnColl.addAll(aCurrentPageResults);
 			
 			myIntPage=myIntPage+100;
@@ -43,7 +46,7 @@ public class Crawler {
 	 * The crawl function
 	 * @return
 	 */
-	private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic) {
+	private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic, String inSearchItem) {
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		URL url;
 		InputStream is = null;
@@ -51,10 +54,18 @@ public class Crawler {
 		String line;
 
 		try {
-			// http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc
-			// http://sfbay.craigslist.org/search/sya?sort=pricedsc&hasPic=1&srchType=A
-			String stringURL="http://sfbay.craigslist.org/search/"+inEnumForSaleTopic.getCode()+"?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc&s="+page;
-			System.out.println("stringURL"+stringURL);
+			// OLD http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc
+			// OLD http://sfbay.craigslist.org/search/sya?sort=pricedsc&hasPic=1&srchType=A
+			
+			// http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc&s=0
+			// http://sfbay.craigslist.org/search/sya?
+			// 	maxAsk=1000000
+			// 	&sort=pricedsc
+			//  &srchType=A
+			String stringURL="http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+
+					".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
+					"?maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
+			//System.out.println("URL = "+stringURL);
 			url = new URL(stringURL);
 
 			is = url.openStream(); // throws an IOException
@@ -62,13 +73,29 @@ public class Crawler {
 
 			// Go to the complete html output. Line by line
 			while ((line = dis.readLine()) != null) {
+				
+				// A line looks like this...
+				// Oct 26 - $799999 - COLD CASH CASH FOR ANY USED/NEW IPHONES - IPADS - (santa clara) img computers - by owner 
+				
 				line = line.trim(); // Cutoff unneeded characters
 				// if a item is found
-				if (line.matches(".*<a href=\"http://sfbay.craigslist.org/.*html.*>") == true) {
+				
+				// <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
+				// if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
+				String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
+				
+				//System.out.println("aStringMatch="+aStringMatch);
+				
+				if (line.matches(aStringMatch) == true) {
 					CrawlResultPackage myTempCrawlResultPackage= new CrawlResultPackage();
 					myTempCrawlResultPackage.setLine(line);
 					// get the price
 					myTempCrawlResultPackage.setPriceOfItem(this.getPriceFromString(line));
+					
+					// The location is located in the html source code two lines under the a href
+					line = dis.readLine();
+					line = dis.readLine();
+					myTempCrawlResultPackage.setLocations(this.getLocationsFromString(line));
 					aReturnColl.add(myTempCrawlResultPackage);
 				}
 			}
@@ -84,7 +111,7 @@ public class Crawler {
 			}
 		}
 		
-		System.out.println("Size="+aReturnColl.size());
+		//System.out.println("Size="+aReturnColl.size());
 		return aReturnColl;
 	}
 	
@@ -99,7 +126,7 @@ public class Crawler {
 	 *            transformed it into a int number
 	 * @return
 	 */
-	public int getPriceFromString(String input) {
+	private int getPriceFromString(String input) {
 		try {
 			String stringNumber = "";
 
@@ -127,6 +154,48 @@ public class Crawler {
 		} catch (Exception e) {
 			System.err.println(e.toString());
 			return -1;
+		}
+	}	
+	
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
+	private Collection<String> getLocationsFromString(String input) {
+		try {
+			//System.out.println("input="+input);
+			
+			Collection<String> aCollLoc=new ArrayList<String>();
+			String aWorkString=null;
+
+			completeLoop: // Break out mark
+
+			// Search for the first '$' character. 
+			// Beginning from the left side
+			for (int i = input.length()-1; i >= 0 ; i--) {
+				if (input.charAt(i) == '(') {
+					// Get everything after the ( character if it is a number
+					aWorkString=input.substring(i+1);
+					
+					// Cut off the rest including and after the ')' sign
+					for (int j=0;j<aWorkString.length();j++){
+						if (aWorkString.charAt(j) == ')') {
+							aWorkString=aWorkString.substring(0, j);							
+						}
+					}
+					
+					//System.out.println("aWorkString="+aWorkString);
+					
+					aCollLoc.add(aWorkString);
+					break completeLoop;
+				}
+			}
+
+			return aCollLoc;
+		} catch (Exception e) {
+			System.err.println(e.toString());
+			return new ArrayList<String>();
 		}
 	}	
 }
