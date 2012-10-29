@@ -11,7 +11,6 @@ import java.util.Collection;
 
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
-import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
@@ -31,7 +30,7 @@ public class Crawler {
 		Collection<CrawlResultPackage> aCurrentPageResults=null;
 		int myIntPage=0;
 		
-		do{
+		do {
 			//System.out.println("Page="+myIntPage);
 			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inSearchItem);
 			aReturnColl.addAll(aCurrentPageResults);
