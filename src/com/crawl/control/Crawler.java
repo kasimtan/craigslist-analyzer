@@ -187,7 +187,8 @@ public class Crawler {
 					
 					//System.out.println("aWorkString="+aWorkString);
 					if (aWorkString.contains("/")==true){
-						aCollLoc.addAll(this.getLocationsFromCleanString(aWorkString));
+						Collection<String> aStringCollLocations=new ArrayList<String>();
+						aCollLoc.addAll(this.getLocationsFromCleanStringRecursion(aWorkString, aStringCollLocations, 5));
 						break completeLoop;
 					} else {
 						aCollLoc.add(aWorkString);
@@ -208,20 +209,41 @@ public class Crawler {
 	 * @param input
 	 * @return
 	 */
-	private Collection<String> getLocationsFromCleanString(String input) {
+	private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> ínputCollection, int inMaxRecursion) {
 		try {		
 			// input string look like that = Locations=dublin / pleasanton / livermore
-		
-			Collection<String> aRetColl=new ArrayList<String>();
+			//System.out.println("inputCleanString=|"+inputCleanString+"|");
 			
-			// DO THE SPLITUP AND PUT IT INTO THE COLLECTION
+			// Reduce maxRecursion
+			inMaxRecursion--;
+			
+			if (inputCleanString.contains("/")==true){
+				for (int i=0;i<inputCleanString.length();i++){
+					if (inputCleanString.charAt(i) == '/'){
+						String aTempStringNewAddItem=inputCleanString.substring(0, i).trim();
+						String aTempStringNewRecurItem=inputCleanString.substring(i+1).trim();
+						
+						//System.out.println("lllllllllllllllllllllll aTempStringNewAddItem=|"+aTempStringNewAddItem+"| aTempStringNewRecurItem=|"+aTempStringNewRecurItem+"|");
+						
+						// Break out condition
+						if (inMaxRecursion<=0){
+							ínputCollection.add(inputCleanString);
+							return ínputCollection;
+						} else {
+							ínputCollection.add(aTempStringNewAddItem);
+							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, inMaxRecursion);
+						}
+					}
+				}
+			} else {
+				ínputCollection.add(inputCleanString.trim());
+			}
 		
-			return aRetColl;
+			return ínputCollection;
 		} catch (Exception e) {
 			System.err.println(e.toString());
-			Collection<String> aExcepionColl=new ArrayList<String>();
-			aExcepionColl.add(input);
-			return aExcepionColl;
+			ínputCollection.add(inputCleanString);
+			return ínputCollection;
 		}
 	}
 }
