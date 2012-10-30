@@ -30,7 +30,7 @@ public class Crawler {
 	 * @param inSearchItem Which item do you search "iPhone", "Apple IIc", etc.
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, String inSearchItem, int inputIntOffers){
+	public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, CraigslistAreasEnum inCraigslistAreasEnum,String inSearchItem, int inputIntOffers){
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		Collection<CrawlResultPackage> aCurrentPageResults=null;
 		int myIntPage=0;
@@ -214,7 +214,7 @@ public class Crawler {
 	}	
 	
 	/**
-	 * Split up the writing style "dublin / pleasanton / livermore"
+	 * Split up the writing style "(dublin / pleasanton / livermore)"
 	 * @param input
 	 * @return
 	 */

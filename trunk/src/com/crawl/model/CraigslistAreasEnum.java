@@ -30,4 +30,5 @@ public enum CraigslistAreasEnum {
 	public String getCode() {   
 		return this.code; 
 	}
+	
 }
