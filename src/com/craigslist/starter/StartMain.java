@@ -24,52 +24,63 @@ public class StartMain {
 	// Define a static logger variable so that it references the
 	// Logger instance named "MyApp".
 	static Logger logger = Logger.getLogger(StartMain.class);
-	
+
+	/**
+	 * Init logger.
+	 */
+	private static void initLogger() {
+		try {
+			// Set up a simple configuration that logs on the console.
+			BasicConfigurator.configure();
+
+			Properties props = new Properties();
+			props.load(StartMain.class.getResourceAsStream("/log4j.properties"));
+			PropertyConfigurator.configure(props);
+
+			logger.info("Entering application.");
+			logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
+					+ CraigslistCategoryEnum.FOR_SALE__COMPUTER.toString());
+			logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
+					+ CraigslistCategoryEnum.FOR_SALE__COMPUTER.getCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Analyzing main function
 	 * 
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static void main(String[] args) throws IOException {
-		// Set up a simple configuration that logs on the console.
-	    BasicConfigurator.configure();
-	    
-	    Properties props = new Properties();
-	    props.load(StartMain.class.getResourceAsStream("/log4j.properties"));
-	    PropertyConfigurator.configure(props);
-	    	    
-	    logger.info("Entering application.");
-		logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="+CraigslistCategoryEnum.FOR_SALE__COMPUTER.toString());
-		logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="+CraigslistCategoryEnum.FOR_SALE__COMPUTER.getCode());
+	public static void main(String[] args) {
+		StartMain.initLogger();
 
 		// 1. Create the crawler object
-		Crawler aCrawl=new Crawler();
-		
+		Crawler aCrawl = new Crawler();
+
 		// 2. Step get all offers
-		Collection<CrawlResultPackage> aResultColl=
-				aCrawl.crawlWebPages(
-						CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
-						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, 
-						"Apple II", 
-						600 /*Max Offers - 100 = 1 page*/);
-		
-		for (CrawlResultPackage myPackage:aResultColl){
-			logger.info("CrawlResultPackage\n"+myPackage.toString());
+		Collection<CrawlResultPackage> aResultColl = aCrawl
+				.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, "Apple II",
+						600 /* Max Offers - 100 = 1 page */);
+
+		for (CrawlResultPackage myPackage : aResultColl) {
+			logger.info("CrawlResultPackage\n" + myPackage.toString());
 		}
-		
+
 		// 3. Create analyzer object
-		AnaCrack aAnaCrack=new AnaCrack();
-		
+		AnaCrack aAnaCrack = new AnaCrack();
+
 		// 4. do the anlysing and return the offers
-		Collection<CrawlResultPackage> aAnaColl=aAnaCrack.getBestOffers(
-				aResultColl, /* The result collection from  the crawler */
+		Collection<CrawlResultPackage> aAnaColl = aAnaCrack.getBestOffers(
+				aResultColl, /* The result collection from the crawler */
 				10, /* Give me the 10 best offers */
 				CraigslistAlgorithmEnum.BEST, /* To use algorithm */
 				1, /* Lower control limit */
 				1000 /* higher control limit */
-				);
-		
+		);
+
 		logger.info("Ending application.");
 	}
 }
