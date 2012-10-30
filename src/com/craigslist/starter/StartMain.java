@@ -1,6 +1,8 @@
 package com.craigslist.starter;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -24,15 +26,18 @@ public class StartMain {
 	 * Analyzing main function
 	 * 
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// Set up a simple configuration that logs on the console.
 	    BasicConfigurator.configure();
-	    logger.info("Entering application.");
 	    
-	    // BasicConfigurator replaced with PropertyConfigurator.
-	    PropertyConfigurator.configure("log4j.configuration");
-
+	    Properties props = new Properties();
+	    props.load(StartMain.class.getResourceAsStream("/log4j.properties"));
+	    PropertyConfigurator.configure(props);
+	    	    
+	    logger.info("Entering application.");
+	    	    
 		Crawler aCrawl=new Crawler();
 		
 		Collection<CrawlResultPackage> aResultColl=aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, "", 10 /*Max Offers*/);
