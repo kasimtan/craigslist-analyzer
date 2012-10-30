@@ -1,6 +1,8 @@
 package com.crawl.control;
 
 import java.io.BufferedInputStream;
+import org.apache.log4j.Logger;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.craigslist.starter.StartMain;
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
@@ -19,6 +22,8 @@ import com.crawl.model.CrawlResultPackage;
  *
  */
 public class Crawler {
+	static Logger logger = Logger.getLogger(Crawler.class);
+	
 	/**
 	 * 
 	 * @param inCraigslistCategoryEnum Which category?
@@ -31,7 +36,8 @@ public class Crawler {
 		int myIntPage=0;
 		
 		do {
-			//System.out.println("Page="+myIntPage);
+			logger.debug("Page="+myIntPage);
+			
 			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inSearchItem);
 			aReturnColl.addAll(aCurrentPageResults);
 			
@@ -64,7 +70,7 @@ public class Crawler {
 			String stringURL="http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+
 					".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
 					"?maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
-			//System.out.println("URL = "+stringURL);
+			logger.debug("URL = "+stringURL);
 			url = new URL(stringURL);
 
 			is = url.openStream(); // throws an IOException
@@ -83,7 +89,7 @@ public class Crawler {
 				// if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
 				String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
 				
-				//System.out.println("aStringMatch="+aStringMatch);
+				logger.debug("aStringMatch="+aStringMatch);
 				
 				if (line.matches(aStringMatch) == true) {
 					CrawlResultPackage myTempCrawlResultPackage= new CrawlResultPackage();
@@ -106,11 +112,11 @@ public class Crawler {
 			try {
 				is.close();
 			} catch (IOException ioe) {
-				// nothing to see here
+				logger.error(ioe);
 			}
 		}
 		
-		//System.out.println("Size="+aReturnColl.size());
+		logger.debug("Size="+aReturnColl.size());
 		return aReturnColl;
 	}
 	
@@ -151,7 +157,7 @@ public class Crawler {
 			// Transform the String to an int value and return it
 			return new Integer(stringNumber).intValue();
 		} catch (Exception e) {
-			System.err.println(e.toString());
+			logger.fatal(e);
 			return -1;
 		}
 	}	
@@ -163,8 +169,8 @@ public class Crawler {
 	 */
 	private Collection<String> getLocationsFromString(String input) {
 		try {
-			//System.out.println("1111111111111111111111 getLocationsFromString 111111111111111111111111111111111111111111111111111111111111111");
-			//System.out.println("a) input=|"+input+"|");
+			logger.debug("1111111111111111111111 getLocationsFromString 111111111111111111111111111111111111111111111111111111111111111");
+			logger.debug("a) input=|"+input+"|");
 			
 			Collection<String> aCollLoc=new ArrayList<String>();
 			String aWorkString=null;
@@ -185,7 +191,7 @@ public class Crawler {
 						}
 					}
 	
-					//System.out.println("aWorkString=|"+aWorkString+"|");
+					logger.debug("aWorkString=|"+aWorkString+"|");
 					
 					// if there are more locations then one?
 					if (aWorkString.contains("/")==true){
@@ -199,10 +205,10 @@ public class Crawler {
 				}
 			}
 
-			//System.out.println("ENNNNNDDDD) aCollLoc=|"+aCollLoc.toString()+"|");
+			logger.debug("ENNNNNDDDD) aCollLoc=|"+aCollLoc.toString()+"|");
 			return aCollLoc;
 		} catch (Exception e) {
-			System.err.println(e.toString());
+			logger.fatal(e.toString());
 			return new ArrayList<String>();
 		}
 	}	
@@ -214,9 +220,9 @@ public class Crawler {
 	 */
 	private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> ínputCollection, int inMaxRecursion) {
 		try {	
-			//System.out.println("getLocationsFromCleanStringRecursion inMaxRecursion="+inMaxRecursion+" +++++++++++++++++++++++++++++++++++++++++++++");
+			logger.debug("getLocationsFromCleanStringRecursion inMaxRecursion="+inMaxRecursion+" +++++++++++++++++++++++++++++++++++++++++++++");
 			// input string look like that = Locations=dublin / pleasanton / livermore
-			//System.out.println("1) inputCleanString=|"+inputCleanString+"|");
+			logger.debug("1) inputCleanString=|"+inputCleanString+"|");
 						
 			if (inputCleanString.contains("/")==true){
 				for (int i=0;i<inputCleanString.length();i++){
@@ -224,18 +230,18 @@ public class Crawler {
 						String aTempStringNewAddItem=inputCleanString.substring(0, i).trim();
 						String aTempStringNewRecurItem=inputCleanString.substring(i+1).trim();
 						
-						//System.out.println("2) aTempStringNewAddItem=|"+aTempStringNewAddItem+"|\n   aTempStringNewRecurItem=|"+aTempStringNewRecurItem+"|");
+						logger.debug("2) aTempStringNewAddItem=|"+aTempStringNewAddItem+"|\n   aTempStringNewRecurItem=|"+aTempStringNewRecurItem+"|");
 						
 						// Break out condition
 						if (inMaxRecursion<=0){
-							//System.out.println("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
+							logger.debug("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
 							ínputCollection.add(inputCleanString);
-							//System.out.println("30) ínputCollection=|"+ínputCollection.toString()+"|");
+							logger.debug("30) ínputCollection=|"+ínputCollection.toString()+"|");
 							return ínputCollection;
 						} else {
-							//System.out.println("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
+							logger.debug("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
 							ínputCollection.add(aTempStringNewAddItem);
-							//System.out.println("38) ínputCollection=|"+ínputCollection.toString()+"|");
+							logger.debug("38) ínputCollection=|"+ínputCollection.toString()+"|");
 							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, (inMaxRecursion-1));
 							return ínputCollection;
 						}
@@ -245,10 +251,10 @@ public class Crawler {
 				ínputCollection.add(inputCleanString.trim());
 			}
 		
-			//System.out.println("40) ínputCollection=|"+ínputCollection.toString()+"|");
+			logger.debug("40) ínputCollection=|"+ínputCollection.toString()+"|");
 			return ínputCollection;
 		} catch (Exception e) {
-			System.err.println(e.toString());
+			logger.fatal(e);
 			ínputCollection.add(inputCleanString);
 			return ínputCollection;
 		}

@@ -1,5 +1,9 @@
 package com.crawl.model;
 
+import org.apache.log4j.Logger;
+
+import com.crawl.control.Crawler;
+
 /**
  * Which area should be used to analyze?
  * @author mschimpf

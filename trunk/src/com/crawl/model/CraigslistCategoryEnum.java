@@ -1,5 +1,7 @@
 package com.crawl.model;
 
+import org.apache.log4j.Logger;
+
 /**
  * Craigslist "For Sale" Category
  * @author mschimpf

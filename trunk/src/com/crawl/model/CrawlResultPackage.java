@@ -1,6 +1,7 @@
 package com.crawl.model;
 
 import java.util.Collection;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -8,6 +9,8 @@ import java.util.Collection;
  *
  */
 public class CrawlResultPackage {
+	static Logger logger = Logger.getLogger(CrawlResultPackage.class);
+	
 	private String line=null;
 	private int priceOfItem=0;
 	private Collection<String> locations=null;
@@ -62,8 +65,10 @@ public class CrawlResultPackage {
 		String aReturnLocations="";
 		
 		for (String aLoc: this.getLocations()){
-			aReturnLocations+=" - "+aLoc;
+			aReturnLocations+=" "+aLoc;
 		}
+		
+		logger.debug("aReturnLocations=|"+aReturnLocations+"|");
 		
 		return aReturnLocations;
 	}
