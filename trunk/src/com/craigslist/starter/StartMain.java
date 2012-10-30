@@ -63,6 +63,7 @@ public class StartMain {
 		
 		// 4. do the anlysing and return the offers
 		Collection<CrawlResultPackage> aAnaColl=aAnaCrack.getBestOffers(
+				aResultColl, /* The result collection from  the crawler */
 				10, /* Give me the 10 best offers */
 				CraigslistAlgorithmEnum.BEST, /* To use algorithm */
 				1, /* Lower control limit */
