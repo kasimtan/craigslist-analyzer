@@ -27,6 +27,7 @@ public class StartMain {
 
 	/**
 	 * Init logger.
+	 * This initiation is only for the main function needed. The web application need his own init method. 
 	 */
 	private static void initLogger() {
 		try {
