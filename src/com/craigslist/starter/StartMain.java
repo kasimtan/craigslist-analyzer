@@ -8,7 +8,10 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.analysis.control.AnaCrack;
 import com.crawl.control.Crawler;
+import com.crawl.model.CraigslistAlgorithmEnum;
+import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
@@ -37,14 +40,34 @@ public class StartMain {
 	    PropertyConfigurator.configure(props);
 	    	    
 	    logger.info("Entering application.");
-	    	    
+		logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="+CraigslistCategoryEnum.FOR_SALE__COMPUTER.toString());
+		logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="+CraigslistCategoryEnum.FOR_SALE__COMPUTER.getCode());
+
+		// 1. Create the crawler object
 		Crawler aCrawl=new Crawler();
 		
-		Collection<CrawlResultPackage> aResultColl=aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, "", 10 /*Max Offers*/);
+		// 2. Step get all offers
+		Collection<CrawlResultPackage> aResultColl=
+				aCrawl.crawlWebPages(
+						CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, 
+						"Apple II", 
+						600 /*Max Offers - 100 = 1 page*/);
 		
 		for (CrawlResultPackage myPackage:aResultColl){
 			logger.info("CrawlResultPackage\n"+myPackage.toString());
 		}
+		
+		// 3. Create analyzer object
+		AnaCrack aAnaCrack=new AnaCrack();
+		
+		// 4. do the anlysing and return the offers
+		Collection<CrawlResultPackage> aAnaColl=aAnaCrack.getBestOffers(
+				10, /* Give me the 10 best offers */
+				CraigslistAlgorithmEnum.BEST, /* To use algorithm */
+				1, /* Lower control limit */
+				1000 /* higher control limit */
+				);
 		
 		logger.info("Ending application.");
 	}
