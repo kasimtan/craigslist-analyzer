@@ -6,6 +6,11 @@ import java.util.Collection;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
 
+/**
+ * Class for doing the analyzing things.
+ * @author mschimpf
+ *
+ */
 public class AnaCrack {
 	/**
 	 * 
@@ -17,5 +22,47 @@ public class AnaCrack {
 	 */
 	public Collection<CrawlResultPackage> getBestOffers(Collection<CrawlResultPackage> inputCrawlerResultColl, int inputInputHowMuch, CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, int inputLowerControlLimit, int inputHigherControlLimit){
 		return new ArrayList<CrawlResultPackage>();
+	}
+	
+	/**
+	 * 
+	 */
+	public int getAverage(){
+		return -1;
+	}
+
+	/**
+	 * 
+	 */
+	public int getMin(){
+		return -1;
+	}
+	
+	/**
+	 * 
+	 */	
+	public int getMax(){
+		return -1;
+	}
+	
+	/**
+	 * 
+	 */	
+	public int getMedian(){
+		return -1;
+	}
+
+	/**
+	 * 
+	 */
+	public int getMode(){
+		return -1;
+	}
+	
+	/**
+	 * 
+	 */	
+	public double getStandardDeviation(){
+		return 0.0;
 	}
 }
