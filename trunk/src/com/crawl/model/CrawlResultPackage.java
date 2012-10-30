@@ -72,4 +72,25 @@ public class CrawlResultPackage {
 		
 		return aReturnLocations;
 	}
+	
+	/**
+	 * Good looking result, and it uses StringBuilder which is faster and also thread save.
+	 */
+	public String toString(){
+		try{
+			StringBuilder aRetStringBuild=new StringBuilder();
+			aRetStringBuild.append("----------------------------------------------------\n");
+			aRetStringBuild.append("line=\t\t"+this.line+"\n");
+			aRetStringBuild.append("priceOfItem=\t"+this.priceOfItem+"\n");
+			aRetStringBuild.append("item=\t\t"+this.item+"\n");
+			aRetStringBuild.append("url=\t\t"+this.url+"\n");
+			aRetStringBuild.append("locations=\t"+this.getLocationsAsString()+"\n");
+			aRetStringBuild.append("=====================================================\n");
+			
+			return aRetStringBuild.toString();
+		}catch (Exception e){
+			this.logger.fatal(e);
+			return e.toString();
+		}
+	}
 }

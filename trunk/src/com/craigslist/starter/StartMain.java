@@ -43,7 +43,7 @@ public class StartMain {
 		Collection<CrawlResultPackage> aResultColl=aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, "", 10 /*Max Offers*/);
 		
 		for (CrawlResultPackage myPackage:aResultColl){
-			logger.info("myPackage Price="+myPackage.getPriceOfItem()+" Locations="+myPackage.getLocationsAsString());
+			logger.info("CrawlResultPackage\n"+myPackage.toString());
 		}
 		
 		logger.info("Ending application.");
