@@ -1,17 +1,17 @@
 package com.crawl.control;
 
 import java.io.BufferedInputStream;
-import org.apache.log4j.Logger;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.craigslist.starter.StartMain;
+import org.apache.log4j.Logger;
+
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
@@ -62,6 +62,10 @@ public class Crawler {
 			// OLD http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc
 			// OLD http://sfbay.craigslist.org/search/sya?sort=pricedsc&hasPic=1&srchType=A
 			
+			// http://sfbay.craigslist.org/search/sya?maxAsk=100000&sort=pricedsc&srchType=A&s=0
+			// http://sfbay.craigslist.org/search/sya?query=Macbook&srchType=A&minAsk=&maxAsk=100000&sort=pricedsc
+			
+			
 			// http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc&s=0
 			// http://sfbay.craigslist.org/search/sya?
 			// 	maxAsk=1000000
@@ -69,8 +73,8 @@ public class Crawler {
 			//  &srchType=A
 			String stringURL="http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+
 					".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
-					"?maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
-			logger.debug("URL = "+stringURL);
+					"?query="+URLEncoder.encode(inSearchItem,"UTF-8")+"&maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
+			logger.info("URL = "+stringURL);
 			url = new URL(stringURL);
 
 			is = url.openStream(); // throws an IOException
@@ -113,6 +117,7 @@ public class Crawler {
 				is.close();
 			} catch (IOException ioe) {
 				logger.error(ioe);
+				ioe.printStackTrace();
 			}
 		}
 		
@@ -218,7 +223,7 @@ public class Crawler {
 	 * @param input
 	 * @return
 	 */
-	private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> ínputCollection, int inMaxRecursion) {
+	private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> inputCollection, int inMaxRecursion) {
 		try {	
 			logger.debug("getLocationsFromCleanStringRecursion inMaxRecursion="+inMaxRecursion+" +++++++++++++++++++++++++++++++++++++++++++++");
 			// input string look like that = Locations=dublin / pleasanton / livermore
@@ -235,28 +240,28 @@ public class Crawler {
 						// Break out condition
 						if (inMaxRecursion<=0){
 							logger.debug("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
-							ínputCollection.add(inputCleanString);
-							logger.debug("30) ínputCollection=|"+ínputCollection.toString()+"|");
-							return ínputCollection;
+							inputCollection.add(inputCleanString);
+							logger.debug("30) ínputCollection=|"+inputCollection.toString()+"|");
+							return inputCollection;
 						} else {
 							logger.debug("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
-							ínputCollection.add(aTempStringNewAddItem);
-							logger.debug("38) ínputCollection=|"+ínputCollection.toString()+"|");
-							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, (inMaxRecursion-1));
-							return ínputCollection;
+							inputCollection.add(aTempStringNewAddItem);
+							logger.debug("38) ínputCollection=|"+inputCollection.toString()+"|");
+							this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, inputCollection, (inMaxRecursion-1));
+							return inputCollection;
 						}
 					}
 				}
 			} else {
-				ínputCollection.add(inputCleanString.trim());
+				inputCollection.add(inputCleanString.trim());
 			}
 		
-			logger.debug("40) ínputCollection=|"+ínputCollection.toString()+"|");
-			return ínputCollection;
+			logger.debug("40) ínputCollection=|"+inputCollection.toString()+"|");
+			return inputCollection;
 		} catch (Exception e) {
 			logger.fatal(e);
-			ínputCollection.add(inputCleanString);
-			return ínputCollection;
+			inputCollection.add(inputCleanString);
+			return inputCollection;
 		}
 	}
 }

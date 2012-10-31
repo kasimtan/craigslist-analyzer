@@ -63,8 +63,8 @@ public class StartMain {
 		// 2. Step get all offers
 		Collection<CrawlResultPackage> aResultColl = aCrawl
 				.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
-						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, "Apple II",
-						600 /* Max Offers - 100 = 1 page */);
+						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, "Apple",
+						100 /* Max Offers - 100 = 1 page */);
 
 		for (CrawlResultPackage myPackage : aResultColl) {
 			logger.info("CrawlResultPackage\n" + myPackage.toString());
