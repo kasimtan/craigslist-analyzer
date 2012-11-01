@@ -84,10 +84,10 @@ public class CrawlResultPackage {
 			aRetStringBuild.append("priceOfItem=\t"+this.priceOfItem+"\n");
 			aRetStringBuild.append("item=\t\t"+this.item+"\n");
 			aRetStringBuild.append("url=\t\t"+this.url+"\n");
-			aRetStringBuild.append("locations=\t"+this.getLocationsAsString()+"\n");
+			aRetStringBuild.append("locations=\t"+this.getLocationsAsString().trim()+"\n");
 			aRetStringBuild.append("=====================================================\n");
 			
-			return aRetStringBuild.toString();
+			return aRetStringBuild.toString().trim();
 		}catch (Exception e){
 			this.logger.fatal(e);
 			return e.toString();
