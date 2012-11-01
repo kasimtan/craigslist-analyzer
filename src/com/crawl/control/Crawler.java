@@ -23,6 +23,9 @@ import com.crawl.model.CrawlResultPackage;
 public class Crawler {
     static Logger logger = Logger.getLogger(Crawler.class);
     
+    private String url;
+    private String matchPattern;
+    
     /**
      * 
      * @param inCraigslistCategoryEnum Which category?
@@ -31,7 +34,11 @@ public class Crawler {
      * @param inputIntOffers how manz offers 100 = 1 Craigslist page
      * @return
      */
-    public Collection<CrawlResultPackage> crawlWebPages(CraigslistCategoryEnum inCraigslistCategoryEnum, CraigslistAreasEnum inCraigslistAreasEnum,String inSearchItem, int inputIntOffers){
+    public Collection<CrawlResultPackage> crawlWebPages(
+            CraigslistCategoryEnum inCraigslistCategoryEnum, 
+            CraigslistAreasEnum inCraigslistAreasEnum,
+            String inSearchItem, 
+            int inputIntOffers){
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         Collection<CrawlResultPackage> aCurrentPageResults=null;
         int myIntPage=0;
@@ -39,7 +46,7 @@ public class Crawler {
         do {
             logger.debug("Page="+myIntPage);
             
-            aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inSearchItem);
+            aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inCraigslistAreasEnum, inSearchItem);
             aReturnColl.addAll(aCurrentPageResults);
             
             myIntPage=myIntPage+100;
@@ -52,7 +59,11 @@ public class Crawler {
      * The crawl function
      * @return
      */
-    private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic, String inSearchItem) {
+    private Collection<CrawlResultPackage> crawlWebPage(
+            int page, 
+            CraigslistCategoryEnum inEnumForSaleTopic, 
+            CraigslistAreasEnum inCraigslistAreasEnum,
+            String inSearchItem) {
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         URL url;
         InputStream is = null;
@@ -68,11 +79,14 @@ public class Crawler {
             //  maxAsk=1000000
             //  &sort=pricedsc
             //  &srchType=A
-            String stringURL="http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
+            this.setUrl((
+                    "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
                     ".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
-                    "?maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
-            logger.info("URL = "+stringURL);
-            url = new URL(stringURL);
+                    inCraigslistAreasEnum.getCode()+
+                    "?query="+inSearchItem+
+                    "&maxAsk=100000&sort=pricedsc&srchType=A&s="+page).trim());
+            logger.info("URL = "+this.getUrl());
+            url = new URL(this.getUrl());
 
             is = url.openStream(); // throws an IOException
             dis = new DataInputStream(new BufferedInputStream(is));
@@ -88,11 +102,11 @@ public class Crawler {
                 
                 // <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
                 // if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
-                String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
+                this.setMatchPattern((".*<a href=\"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>").trim());
                 
-                logger.debug("aStringMatch="+aStringMatch);
+                logger.debug("MatchPattern="+this.getMatchPattern());
                 
-                if (line.matches(aStringMatch) == true) {
+                if (line.matches(this.getMatchPattern()) == true) {
                     CrawlResultPackage myTempCrawlResultPackage= new CrawlResultPackage();
                     myTempCrawlResultPackage.setLine(line);
                     // get the price
@@ -325,5 +339,21 @@ public class Crawler {
             ínputCollection.add(inputCleanString);
             return ínputCollection;
         }
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    private void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMatchPattern() {
+        return matchPattern;
+    }
+
+    private void setMatchPattern(String matchPattern) {
+        this.matchPattern = matchPattern;
     }
 }
