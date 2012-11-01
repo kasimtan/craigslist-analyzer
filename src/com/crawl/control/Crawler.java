@@ -24,6 +24,9 @@ import com.crawl.model.CrawlResultPackage;
 public class Crawler {
 	static Logger logger = Logger.getLogger(Crawler.class);
 	
+	// Is autiomatic initialized with null (object var)
+	private String searchUrl;	
+	
 	/**
 	 * 
 	 * @param inCraigslistCategoryEnum Which category?
@@ -38,7 +41,7 @@ public class Crawler {
 		do {
 			logger.debug("Page="+myIntPage);
 			
-			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inSearchItem);
+			aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inCraigslistAreasEnum, inSearchItem);
 			aReturnColl.addAll(aCurrentPageResults);
 			
 			myIntPage=myIntPage+100;
@@ -51,7 +54,7 @@ public class Crawler {
 	 * The crawl function
 	 * @return
 	 */
-	private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic, String inSearchItem) {
+	private Collection<CrawlResultPackage> crawlWebPage(int page, CraigslistCategoryEnum inEnumForSaleTopic, CraigslistAreasEnum inCraigslistAreasEnum, String inSearchItem) {
 		Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
 		URL url;
 		InputStream is = null;
@@ -71,11 +74,16 @@ public class Crawler {
 			// 	maxAsk=1000000
 			// 	&sort=pricedsc
 			//  &srchType=A
-			String stringURL="http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+
+			this.setSearchUrl((
+					"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
 					".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
-					"?query="+URLEncoder.encode(inSearchItem,"UTF-8")+"&maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
-			logger.info("URL = "+stringURL);
-			url = new URL(stringURL);
+					inCraigslistAreasEnum.getCode()+
+					"?query="+URLEncoder.encode(inSearchItem,"UTF-8")+
+					"&maxAsk=100000&sort=pricedsc&srchType=A&s="+page).trim());
+			
+			logger.info("URL = "+this.getSearchUrl());
+			
+			url = new URL(this.getSearchUrl());
 
 			is = url.openStream(); // throws an IOException
 			dis = new DataInputStream(new BufferedInputStream(is));
@@ -91,7 +99,7 @@ public class Crawler {
 				
 				// <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
 				// if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
-				String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
+				String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
 				
 				logger.debug("aStringMatch="+aStringMatch);
 				
@@ -125,6 +133,14 @@ public class Crawler {
 		return aReturnColl;
 	}
 	
+	public String getSearchUrl() {
+		return searchUrl;
+	}
+
+	public void setSearchUrl(String searchUrl) {
+		this.searchUrl = searchUrl;
+	}
+
 	/**
 	 * Extracts the price as int value from Craigslists strings like this <a
 	 * href="http://sfbay.craigslist.org/sby/sys/3256407578.html">$1895 - Apple

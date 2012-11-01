@@ -38,10 +38,10 @@ public class StartMain {
 			props.load(StartMain.class.getResourceAsStream("/log4j.properties"));
 			PropertyConfigurator.configure(props);
 
-			logger.info("Entering application.");
-			logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
+			logger.debug("Entering application.");
+			logger.debug("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
 					+ CraigslistCategoryEnum.FOR_SALE__COMPUTER.toString());
-			logger.info("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
+			logger.debug("CraigslistCategoryEnum.FOR_SALE__COMPUTER="
 					+ CraigslistCategoryEnum.FOR_SALE__COMPUTER.getCode());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,10 +62,15 @@ public class StartMain {
 
 		// 2. Step get all offers
 		Collection<CrawlResultPackage> aResultColl = aCrawl
-				.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
-						CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA, "Apple",
+				.crawlWebPages(
+						CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+						//CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
+						CraigslistAreasEnum.SAN_FRANCISCO,
+						"Apple",
 						100 /* Max Offers - 100 = 1 page */);
 
+		logger.debug("aResultColl Size="+aResultColl.size());
+		
 		for (CrawlResultPackage myPackage : aResultColl) {
 			logger.info("CrawlResultPackage\n" + myPackage.toString());
 		}
@@ -82,6 +87,6 @@ public class StartMain {
 				1000 /* higher control limit */
 		);
 
-		logger.info("Ending application.");
+		logger.debug("Ending application.");
 	}
 }
