@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Craigslist Analyzer</title>
+    <meta name="description" content="An analyzing tool for Craigslist"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="cleartype" content="on"/>
+    <link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'/>
+    <script src="js/vendor/modernizr-2.6.1.min.js"></script>
+</h:head>
+<h:body>
+    <div class="container">
+        <div class="content">
+        <h1><span>Craigslist Analyzer</span></h1>
+        <h:form>
+            <table width="100%" border="0" cellpadding="10">
+                <tr>
+                    <td align="right"><strong>*LOCATION:</strong></td>
+                    <td align="left"><select class="myselect"><option>San Francisco Bay Area</option></select></td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>*CATEGORY:</strong></td>
+                    <td align="left"><select class="myselect"><option>For Sale</option><option>Housing</option></select></td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>*KEYWORD:</strong></td>
+                    <td align="left"><h:inputText class="mytextbox" value="#{someBean.someProperty}"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="Analyze" class="mybutton" action="result-page" /></td>
+                </tr>
+            </table>
+        </h:form>
+        </div>
+    </div>
+    <script src="js/vendor/zepto.min.js"></script>
+    <script src="js/helper.js"></script>
+</h:body>
+</html>
