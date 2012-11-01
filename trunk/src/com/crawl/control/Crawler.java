@@ -68,10 +68,10 @@ public class Crawler {
             //  maxAsk=1000000
             //  &sort=pricedsc
             //  &srchType=A
-            String stringURL="http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+
+            String stringURL="http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
                     ".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
                     "?maxAsk=100000&sort=pricedsc&srchType=A&s="+page;
-            logger.debug("URL = "+stringURL);
+            logger.info("URL = "+stringURL);
             url = new URL(stringURL);
 
             is = url.openStream(); // throws an IOException
@@ -88,7 +88,7 @@ public class Crawler {
                 
                 // <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
                 // if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
-                String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
+                String aStringMatch=".*<a href=\"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>";
                 
                 logger.debug("aStringMatch="+aStringMatch);
                 
