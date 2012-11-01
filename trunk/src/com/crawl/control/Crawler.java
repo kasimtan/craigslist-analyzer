@@ -197,7 +197,7 @@ public class Crawler {
                     stringLine=inputLine.substring(i+2, inputLine.length()-4 );
                     // ToDo HTML encoding ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                     logger.debug("WITHOUT HTML stringLine=|"+stringLine+"|");
-                    return stringLine;
+                    return stringLine.trim();
                 }
             }
 
@@ -230,7 +230,7 @@ public class Crawler {
 
                             logger.debug("stringLine=|"+stringLine+"|");
     
-                            return stringLine;
+                            return stringLine.trim();
                         }
                     }
                 }
