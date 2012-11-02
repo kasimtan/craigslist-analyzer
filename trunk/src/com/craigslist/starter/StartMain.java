@@ -71,10 +71,6 @@ public class StartMain {
 
 		logger.debug("aResultColl Size="+aResultColl.size());
 		
-		for (CrawlResultPackage myPackage : aResultColl) {
-			logger.info("CrawlResultPackage\n" + myPackage.toString());
-		}
-
 		// 3. Create analyzer object
 		AnaCrack aAnaCrack = new AnaCrack();
 
