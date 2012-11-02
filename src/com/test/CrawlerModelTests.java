@@ -32,4 +32,106 @@ public class CrawlerModelTests {
 		assertTrue(c != null);
 		assertTrue(d != null);
 	}
+	
+    @Test
+    public void test_2() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_3() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_4() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_5() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_6() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_7() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_8() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_9() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_10() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_11() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_12() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_13() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_14() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_15() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_16() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_17() {
+        logger.debug("...");
+        assertTrue(null == null);
+    }
+    
+    @Test
+    public void test_18() {
+        logger.debug("...");
+        assertTrue(null == null);
+    } 	
 }
