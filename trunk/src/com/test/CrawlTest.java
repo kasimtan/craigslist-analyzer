@@ -22,14 +22,14 @@ public class CrawlTest {
 
 	@Test
 	public void test_createCrawler() {
-		logger.info("Create Crawler class...");
+		logger.debug("Create Crawler class...");
 		Crawler c = new Crawler();
 		assertTrue(c != null);
 	}
 	
     @Test
     public void test_callGetWebPagesMethod() {
-        logger.info("...");
+        logger.debug("...");
         
         Crawler c = new Crawler();
         
@@ -40,103 +40,103 @@ public class CrawlTest {
     
     @Test
     public void test_2() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_3() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_4() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_5() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_6() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_7() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_8() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_9() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_10() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_11() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_12() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_13() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_14() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_15() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_16() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_17() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }
     
     @Test
     public void test_18() {
-        logger.info("...");
+        logger.debug("...");
         assertTrue(null == null);
     }    
 }
