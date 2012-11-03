@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
  * @author mschimpf
  *
  */
-public class CrawlResultPackage {
-	static Logger logger = Logger.getLogger(CrawlResultPackage.class);
+public final class CrawlResultPackage {
+	static final Logger logger = Logger.getLogger(CrawlResultPackage.class);
 	
 	private String line=null;
 	private int priceOfItem=0;
@@ -17,47 +17,47 @@ public class CrawlResultPackage {
 	private String item=null;
 	private String url=null;
 	
-	public String getItem() {
+	public final String getItem() {
 		return item;
 	}
 
-	public void setItem(String item) {
+	public final void setItem(String item) {
 		this.item = item;
 	}
 
-	public String getUrl() {
+	public final String getUrl() {
 		return url;
 	}
 
-	public void setUrl(String url) {
+	public final void setUrl(String url) {
 		this.url = url;
 	}
 
-	public int getPriceOfItem() {
+	public final int getPriceOfItem() {
 		return priceOfItem;
 	}
 
-	public void setPriceOfItem(int priceOfItem) {
+	public final void setPriceOfItem(int priceOfItem) {
 		this.priceOfItem = priceOfItem;
 	}
 
-	public String getLine() {
+	public final String getLine() {
 		return line;
 	}
 
-	public void setLine(String line) {
+	public final void setLine(String line) {
 		this.line = line;
 	}
 
-	public Collection<String> getLocations() {
+	public final Collection<String> getLocations() {
 		return locations;
 	}
 
-	public void setLocations(Collection<String> locations) {
+	public final void setLocations(Collection<String> locations) {
 		this.locations = locations;
 	}
 	
-	public String getLocationsAsString(){
+	public final String getLocationsAsString(){
 		if (this.getLocations()==null || this.getLocations().size()==0){
 			return "";
 		}
@@ -76,7 +76,7 @@ public class CrawlResultPackage {
 	/**
 	 * Good looking result, and it uses StringBuilder which is faster and also thread save.
 	 */
-	public String toString(){
+	@Override public final String toString(){
 		try{
 			StringBuilder aRetStringBuild=new StringBuilder();
 			aRetStringBuild.append("----------------------------------------------------\n");
