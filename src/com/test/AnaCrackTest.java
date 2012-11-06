@@ -68,6 +68,7 @@ public class AnaCrackTest {
         // ToDo try something lower then 10 Packages and you will receive an Exception
         Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
         
+        // ToDo try to sort my list
         //Collections.sort(aColl.toArray(), new CrawlResultPackageComparator());
         
         assertTrue(null == null);
