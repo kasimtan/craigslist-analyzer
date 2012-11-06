@@ -69,6 +69,11 @@ textarea {
     background: #fcfcfc;
 }
 
+.error {
+	color: #f00;
+	font-size: 80%;
+}
+
 h1 {
     text-align: center;
 }
