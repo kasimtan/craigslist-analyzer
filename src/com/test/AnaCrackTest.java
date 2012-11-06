@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -54,24 +56,34 @@ public class AnaCrackTest {
         // ToDo try something lower then 10 Packages and you will receive an Exception
         Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
-        logger.info(""+c.toString());
+        logger.debug(""+c.toString());
         
         assertTrue(null == null);
     }
     
     @Test
     public void test_Sort() {
-        logger.debug("Sort");
+        logger.debug("Test sort...");
         
-        AnaCrack c = new AnaCrack();
+        List<CrawlResultPackage> aCrawlResultPackage=new ArrayList<CrawlResultPackage>();
         
-        // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        CrawlResultPackage aCrawlResultPackage1=new CrawlResultPackage();
+        aCrawlResultPackage1.setPriceOfItem(1000);
+        aCrawlResultPackage.add(aCrawlResultPackage1);
+
+        CrawlResultPackage aCrawlResultPackage2=new CrawlResultPackage();
+        aCrawlResultPackage2.setPriceOfItem(1);
+        aCrawlResultPackage.add(aCrawlResultPackage2);
         
-        // ToDo try to sort my list
-        //Collections.sort(aColl.toArray(), new CrawlResultPackageComparator());
+        assertTrue(aCrawlResultPackage.size() == 2);
         
-        assertTrue(null == null);
+        Iterator<CrawlResultPackage> aIt=aCrawlResultPackage.iterator();
+        
+        CrawlResultPackage aCrawlResultPackageOne=aIt.next();
+        assertTrue(aCrawlResultPackageOne.getPriceOfItem() == 1000);
+
+        CrawlResultPackage aCrawlResultPackageTwo=aIt.next();
+        assertTrue(aCrawlResultPackageTwo.getPriceOfItem() == 1);
     }
     
     @Test
