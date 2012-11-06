@@ -83,6 +83,12 @@ public class StartMain {
 				1000 /* higher control limit */
 		);
 
+		int i=0;
+		for (CrawlResultPackage aPack:aAnaColl){
+		    i++;
+		    logger.info(i+". BEST OFFERS="+aPack.toString());
+		}
+		
 		logger.debug("Ending application.");
 	}
 }
