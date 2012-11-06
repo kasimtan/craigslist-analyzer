@@ -132,6 +132,7 @@ public class Crawler {
                 is.close();
             } catch (IOException ioe) {
                 logger.error(ioe);
+                ioe.printStackTrace();
             }
         }
         
@@ -172,11 +173,18 @@ public class Crawler {
                     }
                 }
             }
-
-            // Transform the String to an int value and return it
-            return new Integer(stringNumber).intValue();
+            
+            logger.debug("stringNumber=|"+stringNumber+"|");
+            
+            if (stringNumber==null || stringNumber.trim().length()==0){
+                return 0;
+            } else {
+                // Transform the String to an int value and return it
+                return new Integer(stringNumber).intValue();
+            }
         } catch (Exception e) {
             logger.fatal(e);
+            e.printStackTrace();
             return -1;
         }
     }   
@@ -204,6 +212,7 @@ public class Crawler {
             return stringLine.trim();
         } catch (Exception e) {
             logger.fatal(e);
+            e.printStackTrace();
             return "";
         }
     }   
@@ -239,6 +248,7 @@ public class Crawler {
             return stringLine.trim();
         } catch (Exception e) {
             logger.fatal(e);
+            e.printStackTrace();
             return "";
         }
     }       
@@ -290,6 +300,7 @@ public class Crawler {
             return aCollLoc;
         } catch (Exception e) {
             logger.fatal(e.toString());
+            e.printStackTrace();
             return new ArrayList<String>();
         }
     }   
@@ -337,6 +348,7 @@ public class Crawler {
         } catch (Exception e) {
             logger.fatal(e);
             ínputCollection.add(inputCleanString);
+            e.printStackTrace();
             return ínputCollection;
         }
     }
