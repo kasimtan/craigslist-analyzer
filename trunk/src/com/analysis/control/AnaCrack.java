@@ -218,7 +218,7 @@ public class AnaCrack {
 
         logger.debug(mean);
 
-        double[] deviations = new double[this.howMuchOffersToReturn];
+        double[] deviations = new double[doubleArray.length];
 
         // Taking the deviation of mean from each numbers
         for(int i = 0; i < deviations.length; i++) {
@@ -226,7 +226,7 @@ public class AnaCrack {
          logger.debug(""+deviations[i]);   
         }
 
-        double[] squares = new double[this.howMuchOffersToReturn];
+        double[] squares = new double[doubleArray.length];
 
         // getting the squares of deviations
         for(int i =0; i< squares.length; i++) {
@@ -252,7 +252,9 @@ public class AnaCrack {
 	    logger.info("Standard Deviation="+this.getStandardDeviation()+" offers="+this.getOffers());
 	}  
 
-	
+	/**
+	 * 
+	 */
 	private void searchForMode() {
         int[] intArray=new int[this.getOffers()];
         int a=0;

@@ -67,7 +67,7 @@ public class StartMain {
 						//CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
 						CraigslistAreasEnum.SAN_FRANCISCO,
 						"Apple",
-						2000 /* Max Offers - 100 = 1 page */);
+						1000 /* Max Offers - 100 = 1 page */);
 
 		logger.debug("aResultColl Size="+aResultColl.size());
 		
