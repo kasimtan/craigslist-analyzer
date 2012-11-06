@@ -388,7 +388,7 @@ public class AnaCrack {
     /**
 	 * 
 	 */
-	private int getAverage(){
+	public int getAverage(){
 		return this.average;
 	}
 
