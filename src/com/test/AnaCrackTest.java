@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import com.analysis.control.AnaCrack;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
+import com.crawl.model.CrawlResultPackageComparator;
 
 /**
  * 
@@ -58,8 +60,16 @@ public class AnaCrackTest {
     }
     
     @Test
-    public void test_4() {
-        logger.debug("...");
+    public void test_Sort() {
+        logger.debug("Sort");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        
+        //Collections.sort(aColl.toArray(), new CrawlResultPackageComparator());
+        
         assertTrue(null == null);
     }
     
