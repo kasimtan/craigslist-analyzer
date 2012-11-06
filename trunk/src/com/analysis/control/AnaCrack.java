@@ -77,7 +77,7 @@ public class AnaCrack {
 	        case DUMBEST : 
                 return this.getWorstOffers();
 	        default:
-                System.out.println("The students grade is unknown.");
+                logger.error("The algorithm is unknown!");
                 break;                
 	    }
 	    
