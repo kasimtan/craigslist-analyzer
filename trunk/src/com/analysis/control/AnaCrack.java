@@ -69,13 +69,13 @@ public class AnaCrack {
 	        case BEST : 
 	            return this.getBestOffers();
 	        case WORST : 
-                return this.getBestOffers();
+                return this.getWorstOffers();
 	        case HIGHEST : 
-                return this.getBestOffers();
+                return this.getWorstOffers();
 	        case LOWEST : 
                 return this.getBestOffers();
 	        case DUMBEST : 
-                return this.getBestOffers();
+                return this.getWorstOffers();
 	        default:
                 System.out.println("The students grade is unknown.");
                 break;                
@@ -83,6 +83,55 @@ public class AnaCrack {
 	    
 		return new ArrayList<CrawlResultPackage>();
 	}
+	
+    /**
+     * Get the worst offers
+     * @return
+     */
+    private Collection<CrawlResultPackage> getWorstOffers(){
+        Collection<CrawlResultPackage> aCrawlCollTemp=new ArrayList<CrawlResultPackage>();
+        
+        for (CrawlResultPackage aPack: this.getCrawlCollection()){
+            logger.debug("price="+aPack.getPriceOfItem());
+            if (   
+                    aPack.getPriceOfItem()<this.higherControlLimit &&
+                    aPack.getPriceOfItem()>this.lowerControlLimit){
+                aCrawlCollTemp.add(aPack);
+            }
+        }
+        
+        logger.debug("aCrawlCollTemp="+aCrawlCollTemp.size());
+        
+        int aInt10Percent=aCrawlCollTemp.size()/10;
+        
+        Object[] aPackArray=aCrawlCollTemp.toArray();
+        
+        logger.debug("aPackArray="+aPackArray.length);
+        
+        Collection<CrawlResultPackage> aCrawlCollTemp2=new ArrayList<CrawlResultPackage>();
+        
+        for (int i=0+aInt10Percent;i<=aCrawlCollTemp.size()-aInt10Percent-1;i++){
+            CrawlResultPackage aPack=(CrawlResultPackage)aPackArray[i];
+            logger.debug("aPack="+aPack.getPriceOfItem());
+            aCrawlCollTemp2.add(aPack);
+        }
+        
+        logger.debug("aCrawlCollTemp2="+aCrawlCollTemp2.size());
+        
+        Object[] aPackArrayRet=aCrawlCollTemp2.toArray();
+        Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
+                
+        // Get the 10 expensivest offers
+        for (int i=0;i<=this.howMuchOffersToReturn;i++){
+            CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
+            logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
+            aCrawlCollRet.add(aPack2);
+        }
+        
+        logger.debug("aCrawlCollRet="+aCrawlCollRet.size());
+        return aCrawlCollRet;
+    }
+	
 	
 	/**
 	 * Get the best offers
