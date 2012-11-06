@@ -122,7 +122,7 @@ public class AnaCrack {
 	    Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
 	    
 	    int i=aPackArrayRet.length-1;
-	    int littleEqual=aPackArrayRet.length-10;
+	    int littleEqual=aPackArrayRet.length-this.howMuchOffersToReturn;
 	    
 	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
 	    logger.debug(i+">="+littleEqual);
