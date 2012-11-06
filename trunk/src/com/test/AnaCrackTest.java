@@ -48,8 +48,8 @@ public class AnaCrackTest {
     }
     
     @Test
-    public void test_collection() {
-        logger.info("Catch expected IllegalArgumentException");
+    public void test_collectionAverage() {
+        logger.info("Test Average");
         
         AnaCrack c = new AnaCrack();
         
@@ -58,7 +58,7 @@ public class AnaCrackTest {
 
         logger.debug(""+c.toString());
         
-        assertTrue(null == null);
+        assertTrue(c.getAverage() == 5);
     }
     
     @Test
@@ -87,89 +87,75 @@ public class AnaCrackTest {
     }
     
     @Test
-    public void test_5() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_offers() {
+        logger.info("Test offers");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+
+        logger.debug(""+c.toString());
+        
+        assertTrue(c.getOffers() == 9);
     }
     
     @Test
-    public void test_6() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_min() {
+        logger.info("Test min");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+
+        logger.debug(""+c.toString());
+        
+        assertTrue(c.getMin() == 1);
     }
     
     @Test
-    public void test_7() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_max() {
+        logger.info("Test max");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+
+        logger.debug(""+c.toString());
+        
+        assertTrue(c.getMax() == 9);
     }
     
     @Test
-    public void test_8() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_median() {
+        logger.info("Test median");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+
+        logger.debug(""+c.toString());
+        
+        assertTrue(c.getMedian() == 5.0);
     }
     
     @Test
-    public void test_9() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_standardDeviation() {
+        logger.info("Test Standard Deviation");
+        
+        AnaCrack c = new AnaCrack();
+        
+        // ToDo try something lower then 10 Packages and you will receive an Exception
+        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+
+        logger.debug(""+c.toString());
+        
+        assertTrue(c.getStandardDeviation() == 2.7386127875258306);
     }
-    
-    @Test
-    public void test_10() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_11() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_12() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_13() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_14() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_15() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_16() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_17() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_18() {
-        logger.debug("...");
-        assertTrue(null == null);
-    } 
-    
+        
     /**
      * Utility method to produce test objects.
      * @param inputHowMuchPackages
