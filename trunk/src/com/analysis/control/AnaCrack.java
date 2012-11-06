@@ -226,7 +226,7 @@ public class AnaCrack {
          logger.debug(""+deviations[i]);   
         }
 
-        double[] squares = new double[10];
+        double[] squares = new double[this.howMuchOffersToReturn];
 
         // getting the squares of deviations
         for(int i =0; i< squares.length; i++) {
