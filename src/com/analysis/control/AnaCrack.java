@@ -18,6 +18,7 @@ public class AnaCrack {
     static Logger logger = Logger.getLogger(AnaCrack.class);
 
     private Collection<CrawlResultPackage> crawlCollection;
+    
     private int offers;
     private int average;
     private int min;
@@ -45,6 +46,13 @@ public class AnaCrack {
 	        CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, 
 	        int inputLowerControlLimit, 
 	        int inputHigherControlLimit){
+	   if (inputCrawlerResultColl==null ||
+	           inputInputHowMuch<=0 ||
+	           inputCraigslistAlgorithmEnum==null ||
+	           inputLowerControlLimit<=0 ||
+	           inputHigherControlLimit<=0){
+	       throw new IllegalArgumentException(""+inputCrawlerResultColl+" "+inputInputHowMuch+" "+inputCraigslistAlgorithmEnum+" "+inputLowerControlLimit+ " "+inputHigherControlLimit);
+	   }
 	    
 	    this.setCrawlCollection(inputCrawlerResultColl);
 	    this.setOffers(inputCrawlerResultColl.size());
@@ -210,7 +218,7 @@ public class AnaCrack {
 
         logger.debug(mean);
 
-        double[] deviations = new double[10];
+        double[] deviations = new double[this.howMuchOffersToReturn];
 
         // Taking the deviation of mean from each numbers
         for(int i = 0; i < deviations.length; i++) {
@@ -336,7 +344,9 @@ public class AnaCrack {
         logger.info("FINAL aMaxPrice="+this.getMax()+" offers="+this.getOffers());                
     }
 	
-	
+	/**
+	 * 
+	 */
 	private void createAverage(){
         int aPrice=0;
         
@@ -346,15 +356,17 @@ public class AnaCrack {
             aPrice=aPrice+myPackage.getPriceOfItem();
         }
         
-        this.setAverage((aPrice/this.getOffers()));
+        logger.info("Offers="+this.getOffers()+" price="+aPrice);
         
-        logger.info("average price="+this.getAverage()+" offers="+this.getOffers());	    
+        if (this.getOffers()==0){
+            this.setAverage(-1);
+        } else{
+            this.setAverage((aPrice/this.getOffers()));
+            
+            logger.info("average price="+this.getAverage()+" offers="+this.getOffers());    
+        }
 	}
-	
-	private void analyzeAndDoStaistics(){
-	    
-	}
-	
+		
     public int getOffers() {
         return offers;
     }
@@ -435,5 +447,18 @@ public class AnaCrack {
 	 */	
 	public double getStandardDeviation(){
 		return this.standardDeviation;
+	}
+	
+	@Override public String toString(){
+	    StringBuilder aRetString=new StringBuilder();
+	    
+	    aRetString.append("Max="+this.getMax()+"\n");
+	    aRetString.append("Median="+this.getMedian()+"\n");
+	    aRetString.append("Min="+this.getMin()+"\n");
+	    aRetString.append("Mode="+this.getMode()+"\n");
+	    aRetString.append("Offers="+this.getOffers()+"\n");
+	    aRetString.append("StandardDeviation="+this.getStandardDeviation()+"\n");
+	    
+	    return aRetString.toString();
 	}
 }
