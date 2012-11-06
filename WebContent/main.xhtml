@@ -23,314 +23,292 @@
     <div class="container">
         <div class="content">
             <h1><span>Craigslist<br/>Analyzer</span></h1>
-            <h:form>
+            <h:form id="scForm">
                 <table width="100%" border="0" cellpadding="10">
                     <tr>
-                        <td align="right"><strong>*LOCATION:</strong></td>
+                        <td align="right"><strong>*LOCATION:</strong>
+                            <br/><h:inputHidden id="locationURLField" value="#{searchCriteriaBean.locationURL}" required="true" requiredMessage="Location required"/>
+                            <h:inputHidden id="locationField" value="#{searchCriteriaBean.location}"/>
+                            <h:message for="locationURLField" styleClass="error"/>
+                        </td>
                         <td align="left">
-<a href="#location" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="locationLabel"><span class="ui-icon ui-icon-triangle-1-s"></span>Select a location ......</a>
-<div id="location" class="hidden">
-<ul>
-    <li><a href="#">United States</a>
-        <ul>
-            <li><a href="#">Alabama</a>
-                <ul>
-                    <li><a href="#">Auburn</a></li>
-                    <li><a href="#">Birmingham</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Alaska</a>
-                <ul>
-                    <li><a href="#">Anchorage / Mat-su</a></li>
-                    <li><a href="#">Fairbanks</a></li>
-                    <li><a href="#">Kenai Peninsula</a></li>
-                    <li><a href="#">Southeast Alaska</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Arizona</a>
-                <ul>
-                    <li><a href="#">Flagstaff / Sedona</a></li>
-                    <li><a href="#">Mohave County</a></li>
-                    <li><a href="#">Phoenix</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Arkansas</a>
-                <ul>
-                    <li><a href="#">Fayetteville</a></li>
-                    <li><a href="#">Fort Smith</a></li>
-                    <li><a href="#">Jonesboro</a></li>
-                    <li><a href="#">Little Rock</a></li>
-                    <li><a href="#">Texarkana</a></li>
-                </ul>
-            </li>
-            <li><a href="#">California</a>
-                <ul>
-                    <li><a href="#">Bakersfield</a></li>
-                    <li><a href="#">Los Angeles</a></li>
-                    <li><a href="#">Monterey Bay</a></li>
-                    <li><a href="#">Sacramento</a></li>
-                    <li><a href="#">San Diego</a></li>
-                    <li><a href="#">San Franscisco Bay Area</a>
-                        <ul>
-                            <li><a href="#">East Bay</a></li>
-                            <li><a href="#">North Bay</a></li>
-                            <li><a href="#">Peninsula</a></li>
-                            <li><a href="#">San Franscisco</a></li>
-                            <li><a href="#">San Franscisco Bay Area</a></li>
-                            <li><a href="#">Santa Cruz</a></li>
-                            <li><a href="#">South Bay</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Santa Barbara</a></li>
-                    <li><a href="#">Santa Maria</a></li>
-                    <li><a href="#">Stockton</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Delaware</a>
-                <ul>
-                    <li><a href="#">Delaware</a></li>
-                </ul>
-            </li>
-            <li><a href="#">District of Columbia</a>
-                <ul>
-                    <li><a href="#">Washington</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Florida</a></li>
-            <li><a href="#">Georgia</a></li>
-            <li><a href="#">Hawaii</a></li>
-        </ul>
-    </li>
-    <li><a href="#">Canada</a>
-	    <ul>
-	        <li><a href="#">Alberta</a></li>
-	        <li><a href="#">British Columbia</a>
-		        <ul>
-		            <li><a href="#">Cariboo</a></li>
-		            <li><a href="#">Comox Valley</a></li>
-		            <li><a href="#">Fraser Valley</a></li>
-		            <li><a href="#">Prince George</a></li>
-		            <li><a href="#">Sunshine Coast</a></li>
-		            <li><a href="#">Vancouver</a></li>
-		            <li><a href="#">Victoria</a></li>
-		        </ul>
-	        </li>
-	        <li><a href="#">Ontario</a></li>
-	        <li><a href="#">Quebec</a></li>
-	    </ul>
-    </li>
-    <li><a href="#">Europe</a>
-	    <ul>
-	        <li><a href="#">Austria</a></li>
-	        <li><a href="#">Belgium</a></li>
-	        <li><a href="#">Bulgaria</a></li>
-	        <li><a href="#">Croatia</a></li>
-	        <li><a href="#">Czech Republic</a></li>
-	        <li><a href="#">Denmark</a></li>
-	        <li><a href="#">Finland</a></li>
-	        <li><a href="#">France</a>
-		        <ul>
-		            <li><a href="#">Bordeaux</a></li>
-		            <li><a href="#">Brittany</a></li>
-		            <li><a href="#">Lyon</a></li>
-		            <li><a href="#">Marseille</a></li>
-		            <li><a href="#">Paris</a></li>
-		            <li><a href="#">Strasbourg</a></li>
-		        </ul>
-	        </li>
-	        <li><a href="#">Germany</a>
-		        <ul>
-		            <li><a href="#">Berlin</a></li>
-		            <li><a href="#">Bremen</a></li>
-		            <li><a href="#">Cologne</a></li>
-		            <li><a href="#">Dresden</a></li>
-		            <li><a href="#">Dusseldorf</a></li>
-		            <li><a href="#">Frankfurt</a></li>
-		            <li><a href="#">Hamburg</a></li>
-		            <li><a href="#">Hannover</a></li>
-		            <li><a href="#">Munich</a></li>
-		            <li><a href="#">Stuttgart</a></li>
-		        </ul>
-	        </li>
-	        <li><a href="#">Greece</a></li>
-	    </ul>
-    </li>
-    <li><a href="#">Asia/Pacific/Middle East</a>
-	    <ul>
-	        <li><a href="#">Bangladesh</a></li>
-	        <li><a href="#">China</a>
-	            <ul>
-	                <li><a href="#">Beijing</a></li>
-	                <li><a href="#">Chengdu</a></li>
-	                <li><a href="#">Chongqing</a></li>
-	                <li><a href="#">Dalian</a></li>
-	                <li><a href="#">Guangzhou</a></li>
-	                <li><a href="#">Hangzhou</a></li>
-	                <li><a href="#">Nanjing</a></li>
-	                <li><a href="#">Shanghai</a></li>
-	                <li><a href="#">Shenyang</a></li>
-	                <li><a href="#">Shenzhen</a></li>
-	                <li><a href="#">Wuhan</a></li>
-	                <li><a href="#">Xi'an</a></li>
-	            </ul>
-	        </li>
-	        <li><a href="#">Guam-Micronesia</a></li>
-	        <li><a href="#">Hong Kong</a></li>
-	        <li><a href="#">India</a></li>
-	        <li><a href="#">Indonesia</a></li>
-	    </ul>
-    </li>
-    <li><a href="#">Oceania</a>
-        <ul>
-            <li><a href="#">Australia</a>
-	            <ul>
-	                <li><a href="#">Adelaide</a></li>
-	                <li><a href="#">Brisbane</a></li>
-	                <li><a href="#">Canberra</a></li>
-	                <li><a href="#">Darwin</a></li>
-	                <li><a href="#">Gold Coast</a></li>
-	                <li><a href="#">Melbourne</a></li>
-	                <li><a href="#">Perth</a></li>
-	                <li><a href="#">Sydney</a></li>
-	                <li><a href="#">Tasmania</a></li>
-	                <li><a href="#">Wollongong</a></li>
-	            </ul>
-            </li>
-            <li><a href="#">New Zealand</a>
-	            <ul>
-	                <li><a href="#">Auckland</a></li>
-	                <li><a href="#">Christchurch</a></li>
-	                <li><a href="#">Dunedin</a></li>
-	                <li><a href="#">Wellington</a></li>
-	            </ul>
-            </li>
-        </ul>
-    </li>
-    <li><a href="#">Latin America and Caribbean</a>
-	    <ul>
-	        <li><a href="#">Argentina</a></li>
-	        <li><a href="#">Bolivia</a></li>
-	        <li><a href="#">Brazil</a>
-	            <ul>
-	                <li><a href="#">Brasilia</a></li>
-	                <li><a href="#">Rio De Janeiro</a></li>
-	                <li><a href="#">Sao Paulo</a></li>
-	            </ul>
-	        </li>
-	        <li><a href="#">Caribbean Islads</a></li>
-	        <li><a href="#">Chile</a></li>
-	        <li><a href="#">Colombia</a></li>
-	        <li><a href="#">Costa Rica</a></li>
-	        <li><a href="#">Dominican Republic</a></li>
-	        <li><a href="#">Ecuador</a></li>
-	        <li><a href="#">El Savador</a></li>
-	        <li><a href="#">Guatemala</a></li>
-	        <li><a href="#">Mexico</a></li>
-	    </ul>
-    </li>
-    <li><a href="#">Africa</a>
-	    <ul>
-	        <li><a href="#">Egypt</a></li>
-	        <li><a href="#">Ethiopia</a></li>
-	        <li><a href="#">Ghana</a></li>
-	        <li><a href="#">Kenya</a></li>
-	        <li><a href="#">Morocco</a></li>
-	        <li><a href="#">South Africa</a></li>
-	        <li><a href="#">Tunisia</a></li>
-	    </ul>
-    </li>
-</ul>
-</div>
+							<a href="#location" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="locationLabel"></a>
+							<div id="location" class="hidden">
+							<ul>
+							    <li><a href="#">United States</a>
+							        <ul>
+							            <li><a href="#">Alabama</a>
+							                <ul>
+							                    <li><a href="#">Auburn</a></li>
+							                    <li><a href="#">Birmingham</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">Alaska</a>
+							                <ul>
+							                    <li><a href="#">Anchorage / Mat-su</a></li>
+							                    <li><a href="#">Fairbanks</a></li>
+							                    <li><a href="#">Kenai Peninsula</a></li>
+							                    <li><a href="#">Southeast Alaska</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">Arizona</a>
+							                <ul>
+							                    <li><a href="#">Flagstaff / Sedona</a></li>
+							                    <li><a href="#">Mohave County</a></li>
+							                    <li><a href="#">Phoenix</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">Arkansas</a>
+							                <ul>
+							                    <li><a href="#">Fayetteville</a></li>
+							                    <li><a href="#">Fort Smith</a></li>
+							                    <li><a href="#">Jonesboro</a></li>
+							                    <li><a href="#">Little Rock</a></li>
+							                    <li><a href="#">Texarkana</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">California</a>
+							                <ul>
+							                    <li><a href="#">Bakersfield</a></li>
+							                    <li><a href="#">Los Angeles</a></li>
+							                    <li><a href="#">Monterey Bay</a></li>
+							                    <li><a href="#">Sacramento</a></li>
+							                    <li><a href="#">San Diego</a></li>
+							                    <li><a href="#">San Franscisco Bay Area</a>
+							                        <ul>
+							                            <li><a href="#">East Bay</a></li>
+							                            <li><a href="#">North Bay</a></li>
+							                            <li><a href="#">Peninsula</a></li>
+							                            <li><a href="#">San Franscisco</a></li>
+							                            <li><a href="#">San Franscisco Bay Area</a></li>
+							                            <li><a href="#">Santa Cruz</a></li>
+							                            <li><a href="#">South Bay</a></li>
+							                        </ul>
+							                    </li>
+							                    <li><a href="#">Santa Barbara</a></li>
+							                    <li><a href="#">Santa Maria</a></li>
+							                    <li><a href="#">Stockton</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">Delaware</a>
+							                <ul>
+							                    <li><a href="#">Delaware</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">District of Columbia</a>
+							                <ul>
+							                    <li><a href="#">Washington</a></li>
+							                </ul>
+							            </li>
+							            <li><a href="#">Florida</a></li>
+							            <li><a href="#">Georgia</a></li>
+							            <li><a href="#">Hawaii</a></li>
+							        </ul>
+							    </li>
+							    <li><a href="#">Canada</a>
+								    <ul>
+								        <li><a href="#">Alberta</a></li>
+								        <li><a href="#">British Columbia</a>
+									        <ul>
+									            <li><a href="#">Cariboo</a></li>
+									            <li><a href="#">Comox Valley</a></li>
+									            <li><a href="#">Fraser Valley</a></li>
+									            <li><a href="#">Prince George</a></li>
+									            <li><a href="#">Sunshine Coast</a></li>
+									            <li><a href="#">Vancouver</a></li>
+									            <li><a href="#">Victoria</a></li>
+									        </ul>
+								        </li>
+								        <li><a href="#">Ontario</a></li>
+								        <li><a href="#">Quebec</a></li>
+								    </ul>
+							    </li>
+							    <li><a href="#">Europe</a>
+								    <ul>
+								        <li><a href="#">Austria</a></li>
+								        <li><a href="#">Belgium</a></li>
+								        <li><a href="#">Bulgaria</a></li>
+								        <li><a href="#">Croatia</a></li>
+								        <li><a href="#">Czech Republic</a></li>
+								        <li><a href="#">Denmark</a></li>
+								        <li><a href="#">Finland</a></li>
+								        <li><a href="#">France</a>
+									        <ul>
+									            <li><a href="#">Bordeaux</a></li>
+									            <li><a href="#">Brittany</a></li>
+									            <li><a href="#">Lyon</a></li>
+									            <li><a href="#">Marseille</a></li>
+									            <li><a href="#">Paris</a></li>
+									            <li><a href="#">Strasbourg</a></li>
+									        </ul>
+								        </li>
+								        <li><a href="#">Germany</a>
+									        <ul>
+									            <li><a href="#">Berlin</a></li>
+									            <li><a href="#">Bremen</a></li>
+									            <li><a href="#">Cologne</a></li>
+									            <li><a href="#">Dresden</a></li>
+									            <li><a href="#">Dusseldorf</a></li>
+									            <li><a href="#">Frankfurt</a></li>
+									            <li><a href="#">Hamburg</a></li>
+									            <li><a href="#">Hannover</a></li>
+									            <li><a href="#">Munich</a></li>
+									            <li><a href="#">Stuttgart</a></li>
+									        </ul>
+								        </li>
+								        <li><a href="#">Greece</a></li>
+								    </ul>
+							    </li>
+							    <li><a href="#">Asia/Pacific/Middle East</a>
+								    <ul>
+								        <li><a href="#">Bangladesh</a></li>
+								        <li><a href="#">China</a>
+								            <ul>
+								                <li><a href="#">Beijing</a></li>
+								                <li><a href="#">Chengdu</a></li>
+								                <li><a href="#">Chongqing</a></li>
+								                <li><a href="#">Dalian</a></li>
+								                <li><a href="#">Guangzhou</a></li>
+								                <li><a href="#">Hangzhou</a></li>
+								                <li><a href="#">Nanjing</a></li>
+								                <li><a href="#">Shanghai</a></li>
+								                <li><a href="#">Shenyang</a></li>
+								                <li><a href="#">Shenzhen</a></li>
+								                <li><a href="#">Wuhan</a></li>
+								                <li><a href="#">Xi'an</a></li>
+								            </ul>
+								        </li>
+								        <li><a href="#">Guam-Micronesia</a></li>
+								        <li><a href="#">Hong Kong</a></li>
+								        <li><a href="#">India</a></li>
+								        <li><a href="#">Indonesia</a></li>
+								    </ul>
+							    </li>
+							    <li><a href="#">Oceania</a>
+							        <ul>
+							            <li><a href="#">Australia</a>
+								            <ul>
+								                <li><a href="#">Adelaide</a></li>
+								                <li><a href="#">Brisbane</a></li>
+								                <li><a href="#">Canberra</a></li>
+								                <li><a href="#">Darwin</a></li>
+								                <li><a href="#">Gold Coast</a></li>
+								                <li><a href="#">Melbourne</a></li>
+								                <li><a href="#">Perth</a></li>
+								                <li><a href="#">Sydney</a></li>
+								                <li><a href="#">Tasmania</a></li>
+								                <li><a href="#">Wollongong</a></li>
+								            </ul>
+							            </li>
+							            <li><a href="#">New Zealand</a>
+								            <ul>
+								                <li><a href="#">Auckland</a></li>
+								                <li><a href="#">Christchurch</a></li>
+								                <li><a href="#">Dunedin</a></li>
+								                <li><a href="#">Wellington</a></li>
+								            </ul>
+							            </li>
+							        </ul>
+							    </li>
+							    <li><a href="#">Latin America and Caribbean</a>
+								    <ul>
+								        <li><a href="#">Argentina</a></li>
+								        <li><a href="#">Bolivia</a></li>
+								        <li><a href="#">Brazil</a>
+								            <ul>
+								                <li><a href="#">Brasilia</a></li>
+								                <li><a href="#">Rio De Janeiro</a></li>
+								                <li><a href="#">Sao Paulo</a></li>
+								            </ul>
+								        </li>
+								        <li><a href="#">Caribbean Islads</a></li>
+								        <li><a href="#">Chile</a></li>
+								        <li><a href="#">Colombia</a></li>
+								        <li><a href="#">Costa Rica</a></li>
+								        <li><a href="#">Dominican Republic</a></li>
+								        <li><a href="#">Ecuador</a></li>
+								        <li><a href="#">El Savador</a></li>
+								        <li><a href="#">Guatemala</a></li>
+								        <li><a href="#">Mexico</a></li>
+								    </ul>
+							    </li>
+							    <li><a href="#">Africa</a>
+								    <ul>
+								        <li><a href="#">Egypt</a></li>
+								        <li><a href="#">Ethiopia</a></li>
+								        <li><a href="#">Ghana</a></li>
+								        <li><a href="#">Kenya</a></li>
+								        <li><a href="#">Morocco</a></li>
+								        <li><a href="#">South Africa</a></li>
+								        <li><a href="#">Tunisia</a></li>
+								    </ul>
+							    </li>
+							</ul>
+							</div>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right"><strong>*CATEGORY:</strong></td>
+                        <td align="right"><strong>*CATEGORY:</strong>
+                            <br/><h:inputHidden id="categoryURLField" value="#{searchCriteriaBean.categoryURL}" required="true" requiredMessage="Category required"/>
+                            <h:inputHidden id="categoryField" value="#{searchCriteriaBean.category}"/>
+                            <h:message for="categoryURLField" styleClass="error"/>
+                        </td>
                         <td align="left">
-                        <!--select class="fg-textbox fg-button-icon-right ui-state-default ui-corner-all">               
-        <optgroup label="For Sale">
-            <option>All For Sale</option>
-            <option>Appliances</option>
-            <option>Antiques</option>
-            <option>Barter</option>
-            <option>Bikes</option>
-            <option>Boats</option>
-            <option>Books</option>
-            <option>Business</option>
-            <option>Compute</option>
-            <option>Furniture</option>
-            <option>General</option>
-            <option>Jewelry</option>
-            <option>Materials</option>
-            <option>Rvs</option>
-            <option>Sporting</option>
-            <option>Tickets</option>
-            <option>Tools</option>
-            <option>Wanted</option>
-            <option>Video Gaming</option>
-        </optgroup>
-        <optgroup label="Housing">
-            <option>Apts / Housing</option>
-            <option>Rooms / Shared</option>
-            <option>Sublets / Temporary</option>
-            <option>Housing Wanted</option>
-            <option>Housing Swap</option>
-            <option>Vacation Rentals</option>
-            <option>Parking / Storage</option>
-            <option>Office / Commercial</option>
-            <option>Real Estate For Sale</option>
-        </optgroup>
-    </select-->
-<a href="#category" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="categoryLabel"><span class="ui-icon ui-icon-triangle-1-s"></span>Select a category .....</a>
-<div id="category" class="hidden">
-<ul>
-    <li><a href="#">For Sale</a>
-        <ul>
-            <li><a href="#">All For Sale</a></li>
-            <li><a href="#">Appliances</a></li>
-            <li><a href="#">Antiques</a></li>
-            <li><a href="#">Barter</a></li>
-            <li><a href="#">Bikes</a></li>
-            <li><a href="#">Boats</a></li>
-            <li><a href="#">Books</a></li>
-            <li><a href="#">Business</a></li>
-            <li><a href="#">Computer</a></li>
-            <li><a href="#">Furniture</a></li>
-            <li><a href="#">General</a></li>
-            <li><a href="#">Jewelry</a></li>
-            <li><a href="#">Materials</a></li>
-            <li><a href="#">Rvs</a></li>
-            <li><a href="#">Sporting</a></li>
-            <li><a href="#">Tickets</a></li>
-            <li><a href="#">Tools</a></li>
-            <li><a href="#">Wanted</a></li>
-            <li><a href="#">Video Gaming</a></li>
-        </ul>
-    </li>
-    <li><a href="#">Housing</a>
-        <ul>
-            <li><a href="#">Apts / Housing</a></li>
-            <li><a href="#">Rooms / Shared</a></li>
-            <li><a href="#">Sublets / Temporary</a></li>
-            <li><a href="#">Housing Wanted</a></li>
-            <li><a href="#">Housing Swap</a></li>
-            <li><a href="#">Vacation Rentals</a></li>
-            <li><a href="#">Parking / Storage</a></li>
-            <li><a href="#">Office / Commercial</a></li>
-            <li><a href="#">Real Estate For Sale</a></li>
-        </ul>
-    </li>
-    <li style="padding:.36em">&nbsp;</li>
-    <li style="padding:.36em">&nbsp;</li>
-    <li style="padding:.36em">&nbsp;</li>
-    <li style="padding:.36em">&nbsp;</li>
-    <li style="padding:.36em">&nbsp;</li>
-</ul>
-</div>
+							<a href="#category" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="categoryLabel"></a>
+							<div id="category" class="hidden">
+							<ul>
+							    <li><a href="#">For Sale</a>
+							        <ul>
+							            <li><a href="#">All For Sale</a></li>
+							            <li><a href="#">Appliances</a></li>
+							            <li><a href="#">Antiques</a></li>
+							            <li><a href="#">Barter</a></li>
+							            <li><a href="#">Bikes</a></li>
+							            <li><a href="#">Boats</a></li>
+							            <li><a href="#">Books</a></li>
+							            <li><a href="#">Business</a></li>
+							            <li><a href="#">Computer</a></li>
+							            <li><a href="#">Furniture</a></li>
+							            <li><a href="#">General</a></li>
+							            <li><a href="#">Jewelry</a></li>
+							            <li><a href="#">Materials</a></li>
+							            <li><a href="#">Rvs</a></li>
+							            <li><a href="#">Sporting</a></li>
+							            <li><a href="#">Tickets</a></li>
+							            <li><a href="#">Tools</a></li>
+							            <li><a href="#">Wanted</a></li>
+							            <li><a href="#">Video Gaming</a></li>
+							        </ul>
+							    </li>
+							    <li><a href="#">Housing</a>
+							        <ul>
+							            <li><a href="#">Apts / Housing</a></li>
+							            <li><a href="#">Rooms / Shared</a></li>
+							            <li><a href="#">Sublets / Temporary</a></li>
+							            <li><a href="#">Housing Wanted</a></li>
+							            <li><a href="#">Housing Swap</a></li>
+							            <li><a href="#">Vacation Rentals</a></li>
+							            <li><a href="#">Parking / Storage</a></li>
+							            <li><a href="#">Office / Commercial</a></li>
+							            <li><a href="#">Real Estate For Sale</a></li>
+							        </ul>
+							    </li>
+							    <li style="padding:.36em">&nbsp;</li>
+							    <li style="padding:.36em">&nbsp;</li>
+							    <li style="padding:.36em">&nbsp;</li>
+							    <li style="padding:.36em">&nbsp;</li>
+							    <li style="padding:.36em">&nbsp;</li>
+							</ul>
+							</div>
                         </td>
                     </tr>
                     <tr>
-                        <td align="right"><strong>*KEYWORD:</strong></td>
-                        <td align="left"><h:inputText class="fg-textbox ui-state-default ui-corner-all" value="#{someBean.someProperty}"/></td>
+                        <td align="right"><strong>*KEYWORD:</strong>
+                            <br/><h:message for="keywordField" styleClass="error"/>
+                        </td>
+                        <td align="left">
+                            <h:inputText id="keywordField" class="fg-textbox ui-state-default ui-corner-all" value="#{searchCriteriaBean.keyword}" required="true" requiredMessage="Keyword required"/>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="left"><i>* : required field</i>

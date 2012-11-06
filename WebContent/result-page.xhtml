@@ -9,7 +9,11 @@
     <div align="center">
         <h1>Craigslist Analyzer Result Page</h1>
     </div>
-        <h4>Hello #{someBean.someProperty}</h4>
+        <h4>Location: #{searchCriteriaBean.location}</h4>
+        <h4>LocationURL: #{searchCriteriaBean.locationURL}</h4>
+        <h4>Category: #{searchCriteriaBean.category}</h4>
+        <h4>CategoryURL: #{searchCriteriaBean.categoryURL}</h4>
+        <h4>Keyword: #{searchCriteriaBean.keyword}</h4>
         <h:form>
             <h:commandButton value="Go to Main Page" action="main" />
         </h:form>

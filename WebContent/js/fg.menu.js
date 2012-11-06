@@ -236,12 +236,25 @@ function Menu(callr, option){
 	this.chooseItem = function(item){
 		menu.kill();
 		// edit this for your own custom function/callback:
-		if(options.crumbDefaultText == 'Select a location:')
-			$('#locationLabel').text($(item).text());
-		else if(options.crumbDefaultText == 'Select a category:')
-			$('#categoryLabel').text($(item).text());
+		if(options.crumbDefaultText == 'Select a location:') {
+			$('#locationLabel').html(arrowStr + $(item).text());
+			$('#scForm\\:locationField').val($(item).text());
+			$('#scForm\\:locationURLField').val($(item).attr('href'));
+		}
+		else if(options.crumbDefaultText == 'Select a category:') {
+			$('#categoryLabel').html(arrowStr + $(item).text());
+			$('#scForm\\:categoryField').val($(item).text());
+			$('#scForm\\:categoryURLField').val($(item).attr('href'));
+		}
 	};
 };
+
+function updateLabel() {
+	$('#locationLabel').html(arrowStr + $('#scForm\\:locationField').val());
+	$('#categoryLabel').html(arrowStr + $('#scForm\\:categoryField').val());
+}
+
+var arrowStr = '<span class="ui-icon ui-icon-triangle-1-s"></span>';
 
 Menu.prototype.drilldown = function(container, options) {
 	var menu = this;	
@@ -580,6 +593,8 @@ Number.prototype.pxToEm = String.prototype.pxToEm = function(settings){
 	var result = (settings.reverse == true) ? (pxVal * scopeVal).toFixed(2) + 'px' : (pxVal / scopeVal).toFixed(2) + 'em';
 	return result;
 };
+
+$(document).ready(updateLabel);
 
 $(function(){
     // BUTTON
