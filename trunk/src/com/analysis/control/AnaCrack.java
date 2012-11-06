@@ -2,6 +2,7 @@ package com.analysis.control;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
@@ -25,6 +26,11 @@ public class AnaCrack {
     private int mode;
     private double standardDeviation;
     
+    private int howMuchOffersToReturn;
+    private int lowerControlLimit;
+    private int higherControlLimit;
+    
+    
 	/**
 	 * 
 	 * @param inputInputHowMuch Give me the 10 best offers
@@ -33,9 +39,19 @@ public class AnaCrack {
 	 * @param inputHigherControlLimit higher control limit
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> getBestOffers(Collection<CrawlResultPackage> inputCrawlerResultColl, int inputInputHowMuch, CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, int inputLowerControlLimit, int inputHigherControlLimit){
+	public Collection<CrawlResultPackage> getBestOffers(
+	        Collection<CrawlResultPackage> inputCrawlerResultColl, 
+	        int inputInputHowMuch, 
+	        CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, 
+	        int inputLowerControlLimit, 
+	        int inputHigherControlLimit){
+	    
 	    this.setCrawlCollection(inputCrawlerResultColl);
 	    this.setOffers(inputCrawlerResultColl.size());
+	    
+	    this.howMuchOffersToReturn=inputInputHowMuch;
+	    this.lowerControlLimit=inputLowerControlLimit;
+	    this.higherControlLimit=inputHigherControlLimit;
 	    
 	    this.createAverage();
 	    this.searchForMinPrice();
@@ -44,9 +60,86 @@ public class AnaCrack {
 	    this.searchForMode();
 	    this.searchForStandardDeviation();
 	    
+	    if (inputCrawlerResultColl.size()<=inputInputHowMuch){
+	        return this.getCrawlCollection();
+	    }
+	    
+	    // Which Algoritm?
+	    switch (inputCraigslistAlgorithmEnum){
+	        case BEST : 
+	            return this.getBestOffers();
+	        case WORST : 
+                return this.getBestOffers();
+	        case HIGHEST : 
+                return this.getBestOffers();
+	        case LOWEST : 
+                return this.getBestOffers();
+	        case DUMBEST : 
+                return this.getBestOffers();
+	        default:
+                System.out.println("The students grade is unknown.");
+                break;                
+	    }
+	    
 		return new ArrayList<CrawlResultPackage>();
 	}
 	
+	/**
+	 * Get the best offers
+	 * @return
+	 */
+	private Collection<CrawlResultPackage> getBestOffers(){
+	    Collection<CrawlResultPackage> aCrawlCollTemp=new ArrayList<CrawlResultPackage>();
+	    
+	    for (CrawlResultPackage aPack: this.getCrawlCollection()){
+	        logger.debug("price="+aPack.getPriceOfItem());
+	        if (   
+	                aPack.getPriceOfItem()<this.higherControlLimit &&
+	                aPack.getPriceOfItem()>this.lowerControlLimit){
+	            aCrawlCollTemp.add(aPack);
+	        }
+	    }
+	    
+	    logger.debug("aCrawlCollTemp="+aCrawlCollTemp.size());
+	    
+	    int aInt10Percent=aCrawlCollTemp.size()/10;
+	    
+	    Object[] aPackArray=aCrawlCollTemp.toArray();
+	    
+	    logger.debug("aPackArray="+aPackArray.length);
+	    
+	    Collection<CrawlResultPackage> aCrawlCollTemp2=new ArrayList<CrawlResultPackage>();
+	    
+	    for (int i=0+aInt10Percent;i<=aCrawlCollTemp.size()-aInt10Percent-1;i++){
+	        CrawlResultPackage aPack=(CrawlResultPackage)aPackArray[i];
+	        logger.debug("aPack="+aPack.getPriceOfItem());
+	        aCrawlCollTemp2.add(aPack);
+	    }
+	    
+	    logger.debug("aCrawlCollTemp2="+aCrawlCollTemp2.size());
+	    
+	    Object[] aPackArrayRet=aCrawlCollTemp2.toArray();
+	    Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
+	    
+	    int i=aPackArrayRet.length-1;
+	    int littleEqual=aPackArrayRet.length-10;
+	    
+	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
+	    logger.debug(i+">="+littleEqual);
+	    
+	    for (;i>=littleEqual;i--){
+	        CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
+	        logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
+	        aCrawlCollRet.add(aPack2);
+	    }
+	    
+	    logger.debug("aCrawlCollRet="+aCrawlCollRet.size());
+	    return aCrawlCollRet;
+	}
+	
+	/**
+	 * Standrd Deviation
+	 */
 	private void searchForStandardDeviation(){   
         double[] doubleArray=new double[this.getOffers()];
         int a=0;
