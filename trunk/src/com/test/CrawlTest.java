@@ -29,114 +29,125 @@ public class CrawlTest {
 	
     @Test
     public void test_callGetWebPagesMethod() {
-        logger.debug("...");
+        logger.debug("get 100 apple items");
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER, CraigslistAreasEnum.PENINSULA, "Apple", 100);
-        assertTrue(null == null);
-        assertTrue(aCrawlResultColl.size()!=0);
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+        
+        logger.debug("aCrawlResultColl.size()="+aCrawlResultColl.size());
+        
+        assertTrue(aCrawlResultColl.size()==100);
     }	
     
     @Test
-    public void test_2() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_MatchPattern() {
+        logger.debug("Test MatchPattern...");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+
+        String aString=c.getMatchPattern();
+        
+        logger.debug("MatchPatter="+aString);
+        
+        assertTrue(aString!=null);
     }
     
     @Test
-    public void test_3() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_MatchPatternCompare() {
+        logger.debug("Test MatchPattern... compare");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+
+        String aString=c.getMatchPattern();
+        
+        logger.debug("MatchPatter="+aString);
+        
+        assertTrue(aString.compareTo(".*<a href=\"http://sfbay.craigslist.org/.*html.*>")==0);
     }
     
     @Test
-    public void test_4() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_MatchPatternCompareLength() {
+        logger.debug("Test MatchPattern... compare length");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+
+        String aString=c.getMatchPattern();
+        
+        logger.debug("MatchPatter="+aString+" length="+aString.length());
+        
+        assertTrue(aString.length()==48);
     }
     
     @Test
-    public void test_5() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_url1() {
+        logger.debug("Test url 1");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+        
+        String aStringUrl=c.getUrl();
+        
+        logger.info("URL="+aStringUrl+" length="+aStringUrl.length());
+        
+        assertTrue(aStringUrl != null);
     }
     
     @Test
-    public void test_6() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_url2() {
+        logger.debug("Test url 2...");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+        
+        String aStringUrl=c.getUrl();
+        
+        logger.info("URL="+aStringUrl+" length="+aStringUrl.length());
+        
+        assertTrue(aStringUrl.compareTo("http://sfbay.craigslist.org/search/sya/pen?query=Apple&maxAsk=100000&sort=pricedsc&srchType=A&s=0") ==0);    
     }
     
     @Test
-    public void test_7() {
-        logger.debug("...");
-        assertTrue(null == null);
+    public void test_url3() {
+        logger.debug("Test url 3...");
+        
+        Crawler c = new Crawler();
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
+                CraigslistAreasEnum.PENINSULA, 
+                "Apple", 100);
+        
+        String aStringUrl=c.getUrl();
+        
+        logger.debug("URL="+aStringUrl+" length="+aStringUrl.length());
+        
+        assertTrue(aStringUrl.length()==97);    
     }
-    
-    @Test
-    public void test_8() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_9() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_10() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_11() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_12() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_13() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_14() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_15() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_16() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_17() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }
-    
-    @Test
-    public void test_18() {
-        logger.debug("...");
-        assertTrue(null == null);
-    }    
 }
