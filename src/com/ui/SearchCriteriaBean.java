@@ -1,11 +1,22 @@
 package com.ui;
 
-import javax.faces.bean.*;
+import java.io.Serializable;
+import java.util.Collection;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 import org.apache.log4j.Logger;
 
-import java.io.Serializable;
+import com.analysis.control.AnaCrack;
+import com.crawl.control.Crawler;
+import com.crawl.model.CraigslistAlgorithmEnum;
+import com.crawl.model.CraigslistAreasEnum;
+import com.crawl.model.CraigslistCategoryEnum;
+import com.crawl.model.CrawlResultPackage;
 
 @ManagedBean
+@SessionScoped
 public class SearchCriteriaBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -13,18 +24,20 @@ public class SearchCriteriaBean implements Serializable {
 
     private String location = "Select a location ......";
     private String category = "Select a category .....";
-    private String locationURL, categoryURL, keyword;
+    private String locationURL = "";
+    private String categoryURL = "";
+    private String keyword = "";
 
     public String getLocation() {
-        return(location);
+        return this.location;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.toString();
     }
 
     public String getLocationURL() {
-        return(locationURL);
+        return this.locationURL;
     }
 
     public void setLocationURL(String locationURL) {
@@ -32,7 +45,7 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getCategory() {
-        return(category);
+        return this.category;
     }
 
     public void setCategory(String category) {
@@ -40,7 +53,7 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getCategoryURL() {
-        return(categoryURL);
+        return this.categoryURL;
     }
 
     public void setCategoryURL(String categoryURL) {
@@ -48,7 +61,7 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getKeyword() {
-        return(keyword);
+        return this.keyword;
     }
 
     public void setKeyword(String keyword) {
@@ -56,6 +69,60 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String someActionControllerMethod() {
-        return("some-page");
+        return "some-page";
+    }
+    
+    @Override public String toString(){
+        StringBuilder aRetString=new StringBuilder();
+        
+        aRetString.append(location+"\n");
+        aRetString.append(category+"\n");
+        aRetString.append(locationURL+"\n");
+        aRetString.append(categoryURL+"\n");
+        aRetString.append(keyword+"\n");
+
+        return aRetString.toString();
+    }
+    
+    /**
+     * This is the main function it is generating the output collection.
+     * @return
+     */
+    public Collection<CrawlResultPackage> getBestOffers(){
+        // 1. Create the crawler object
+        Crawler aCrawl = new Crawler();
+
+        // 2. Step get all offers
+        Collection<CrawlResultPackage> aResultColl = aCrawl
+                .crawlWebPages(
+                        CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+                        //CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
+                        CraigslistAreasEnum.SAN_FRANCISCO,
+                        "Apple",
+                        1000 /* Max Offers - 100 = 1 page */);
+
+        logger.debug("aResultColl Size="+aResultColl.size());
+        
+        // 3. Create analyzer object
+        AnaCrack aAnaCrack = new AnaCrack();
+
+        // 4. do the anlysing and return the offers
+        Collection<CrawlResultPackage> aAnaColl = aAnaCrack.getBestOffers(
+                aResultColl, /* The result collection from the crawler */
+                8, /* Give me the x best offers */
+                CraigslistAlgorithmEnum.BEST, /* To use algorithm */
+                1, /* Lower control limit */
+                1000 /* higher control limit */
+        );
+
+        int i=0;
+        for (CrawlResultPackage aPack:aAnaColl){
+            i++;
+            logger.info(i+". BEST OFFERS="+aPack.toString());
+        }
+        
+        logger.debug("Ending application.");
+        
+        return aAnaColl;
     }
 }
