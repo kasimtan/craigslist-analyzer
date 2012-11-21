@@ -51,7 +51,7 @@ public class Crawler {
             
             myIntPage=myIntPage+100;
         } while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
-        
+                
         return aReturnColl;
     }
     

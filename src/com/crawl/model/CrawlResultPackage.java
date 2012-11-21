@@ -1,6 +1,8 @@
 package com.crawl.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -11,11 +13,11 @@ import org.apache.log4j.Logger;
 public final class CrawlResultPackage {
 	static final Logger logger = Logger.getLogger(CrawlResultPackage.class);
 	
-	private String line=null;
+	private String line="";
 	private int priceOfItem=0;
-	private Collection<String> locations=null;
-	private String item=null;
-	private String url=null;
+	private Collection<String> locations=new ArrayList<String>();
+	private String item="";
+	private String url="";
 	
 	public final String getItem() {
 		return item;
