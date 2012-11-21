@@ -26,16 +26,17 @@ public class Crawler {
     private String oldURL=null;
     private String url;
     private String matchPattern;
+    private Collection<CrawlResultPackage> findings=null;
     
     /**
      * 
      * @param inCraigslistCategoryEnum Which category?
      * @param inCraigslistAreasEnum Which area
      * @param inSearchItem Which item do you search "iPhone", "Apple IIc", etc.
-     * @param inputIntOffers how manz offers 100 = 1 Craigslist page
+     * @param inputIntOffers how many offers 100 = 1 Craigslist page
      * @return
      */
-    public Collection<CrawlResultPackage> crawlWebPages(
+    public void crawlWebPages(
             CraigslistCategoryEnum inCraigslistCategoryEnum, 
             CraigslistAreasEnum inCraigslistAreasEnum,
             String inSearchItem, 
@@ -44,27 +45,67 @@ public class Crawler {
         Collection<CrawlResultPackage> aCurrentPageResults=null;
         int myIntPage=0;
         
+        String aTempUrl=(
+                "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
+                ".craigslist.org/search/"+inCraigslistCategoryEnum.getCode()+
+                inCraigslistAreasEnum.getCode()+
+                "?query="+inSearchItem+
+                "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();
+        
+        this.setUrl(aTempUrl);
+        
+        // To prepare something like a Proxy...
+        // Currently it is strange, but the crawl methid will be called a lot of times and I don't know why
+        // The frontend does it...
+        
+        // First time ever
+        
+        // IS NOT WORKING BECAUSE THE FRONTEND CREATES ALWAYS A NEW CRAWL OBJECT...
+        //
+        // I have to create some SINGLETON like with all the results etc.
+        if (this.getOldURL()==null || this.getOldURL().trim().length()==0){
+            this.setOldURL(aTempUrl.trim());
+            logger.debug("FIRST +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        } else if (this.getOldURL().trim().compareTo(this.getUrl().trim())==0) {
+            logger.debug("DUPLICATE REQUEST ******************************************************");
+        } else {
+            logger.debug("ELSE -----------------------------------------------------------");
+            this.setOldURL(this.getUrl());
+        }
+        
         do {
             logger.debug("Page="+myIntPage);
             
-            aCurrentPageResults=this.crawlWebPage(myIntPage, inCraigslistCategoryEnum, inCraigslistAreasEnum, inSearchItem);
+            aCurrentPageResults=this.crawlWebPage(myIntPage);
             aReturnColl.addAll(aCurrentPageResults);
             
             myIntPage=myIntPage+100;
         } while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
-                
-        return aReturnColl;
+           
+        this.setFindings(aReturnColl);
     }
     
+    private String getOldURL() {
+        return oldURL;
+    }
+
+    private void setOldURL(String oldURL) {
+        this.oldURL = oldURL;
+    }
+
+    public Collection<CrawlResultPackage> getFindings() {
+        return findings;
+    }
+
+    public void setFindings(Collection<CrawlResultPackage> findings) {
+        this.findings = findings;
+    }
+
     /**
      * The crawl function
      * @return
      */
-    private Collection<CrawlResultPackage> crawlWebPage(
-            int page, 
-            CraigslistCategoryEnum inEnumForSaleTopic, 
-            CraigslistAreasEnum inCraigslistAreasEnum,
-            String inSearchItem) {
+    private Collection<CrawlResultPackage> crawlWebPage(int page) {
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         URL url;
         InputStream is = null;
@@ -80,14 +121,9 @@ public class Crawler {
             //  maxAsk=1000000
             //  &sort=pricedsc
             //  &srchType=A
-            this.setUrl((
-                    "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
-                    ".craigslist.org/search/"+inEnumForSaleTopic.getCode()+
-                    inCraigslistAreasEnum.getCode()+
-                    "?query="+inSearchItem+
-                    "&maxAsk=100000&sort=pricedsc&srchType=A&s="+page).trim());
-            logger.info("URL = "+this.getUrl());
-            url = new URL(this.getUrl());
+            
+            logger.info("URL = "+this.getUrl()+" +page="+page);
+            url = new URL(this.getUrl()+page);
 
             is = url.openStream(); // throws an IOException
             dis = new DataInputStream(new BufferedInputStream(is));
@@ -311,7 +347,7 @@ public class Crawler {
      * @param input
      * @return
      */
-    private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> ínputCollection, int inMaxRecursion) {
+    private Collection<String> getLocationsFromCleanStringRecursion(String inputCleanString, Collection<String> inputCollection, int inMaxRecursion) {
         try {   
             logger.debug("getLocationsFromCleanStringRecursion inMaxRecursion="+inMaxRecursion+" +++++++++++++++++++++++++++++++++");
             // input string look like that = Locations=dublin / pleasanton / livermore
@@ -328,29 +364,29 @@ public class Crawler {
                         // Break out condition
                         if (inMaxRecursion<=0){
                             logger.debug("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
-                            ínputCollection.add(inputCleanString);
-                            logger.debug("30) ínputCollection=|"+ínputCollection.toString()+"|");
-                            return ínputCollection;
+                            inputCollection.add(inputCleanString);
+                            logger.debug("30) ínputCollection=|"+inputCollection.toString()+"|");
+                            return inputCollection;
                         } else {
                             logger.debug("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
-                            ínputCollection.add(aTempStringNewAddItem);
-                            logger.debug("38) ínputCollection=|"+ínputCollection.toString()+"|");
-                            this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, ínputCollection, (inMaxRecursion-1));
-                            return ínputCollection;
+                            inputCollection.add(aTempStringNewAddItem);
+                            logger.debug("38) ínputCollection=|"+inputCollection.toString()+"|");
+                            this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, inputCollection, (inMaxRecursion-1));
+                            return inputCollection;
                         }
                     }
                 }
             } else {
-                ínputCollection.add(inputCleanString.trim());
+                inputCollection.add(inputCleanString.trim());
             }
         
-            logger.debug("40) ínputCollection=|"+ínputCollection.toString()+"|");
-            return ínputCollection;
+            logger.debug("40) ínputCollection=|"+inputCollection.toString()+"|");
+            return inputCollection;
         } catch (Exception e) {
             logger.fatal(e);
-            ínputCollection.add(inputCleanString);
+            inputCollection.add(inputCleanString);
             e.printStackTrace();
-            return ínputCollection;
+            return inputCollection;
         }
     }
 

@@ -33,10 +33,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
         
         logger.debug("aCrawlResultColl.size()="+aCrawlResultColl.size());
         
@@ -49,10 +51,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
 
         String aString=c.getMatchPattern();
         
@@ -67,10 +71,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
 
         String aString=c.getMatchPattern();
         
@@ -85,10 +91,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
 
         String aString=c.getMatchPattern();
         
@@ -103,10 +111,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
         
         String aStringUrl=c.getUrl();
         
@@ -121,10 +131,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
         
         String aStringUrl=c.getUrl();
         
@@ -139,10 +151,12 @@ public class CrawlTest {
         
         Crawler c = new Crawler();
         
-        Collection<CrawlResultPackage> aCrawlResultColl=c.crawlWebPages(
+        c.crawlWebPages(
                 CraigslistCategoryEnum.FOR_SALE__COMPUTER, 
                 CraigslistAreasEnum.PENINSULA, 
                 "Apple", 100);
+        
+        Collection<CrawlResultPackage> aCrawlResultColl=c.getFindings();
         
         String aStringUrl=c.getUrl();
         
