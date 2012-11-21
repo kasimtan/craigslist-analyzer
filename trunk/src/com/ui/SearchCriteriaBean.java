@@ -103,6 +103,9 @@ public class SearchCriteriaBean implements Serializable {
 
         logger.debug("aResultColl Size="+aResultColl.size());
         
+        this.setCategoryURL(aCrawl.getUrl());
+        this.setLocationURL(aCrawl.getUrl());
+        
         // 3. Create analyzer object
         AnaCrack aAnaCrack = new AnaCrack();
 
@@ -114,14 +117,6 @@ public class SearchCriteriaBean implements Serializable {
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
-
-        int i=0;
-        for (CrawlResultPackage aPack:aAnaColl){
-            i++;
-            logger.info(i+". BEST OFFERS="+aPack.toString());
-        }
-        
-        logger.debug("Ending application.");
         
         return aAnaColl;
     }

@@ -53,6 +53,11 @@ public class AnaCrack {
 	           inputHigherControlLimit<=0){
 	       throw new IllegalArgumentException(""+inputCrawlerResultColl+" "+inputInputHowMuch+" "+inputCraigslistAlgorithmEnum+" "+inputLowerControlLimit+ " "+inputHigherControlLimit);
 	   }
+	   
+	   if (inputCrawlerResultColl.size()==0){
+	       this.logger.info("No Infos!");
+	       return inputCrawlerResultColl;
+	   }
 	    
 	    this.setCrawlCollection(inputCrawlerResultColl);
 	    this.setOffers(inputCrawlerResultColl.size());
@@ -283,6 +288,9 @@ public class AnaCrack {
 	    logger.info("Mode="+this.getMode()+" offers="+this.getOffers());
 	}	
 	
+	/**
+	 * 
+	 */
 	private void searchForMedian() {
 	    int[] intArray=new int[this.getOffers()];
 	    int i=0;
