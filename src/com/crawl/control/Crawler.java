@@ -23,6 +23,7 @@ import com.crawl.model.CrawlResultPackage;
 public class Crawler {
     static Logger logger = Logger.getLogger(Crawler.class);
     
+    private String oldURL=null;
     private String url;
     private String matchPattern;
     

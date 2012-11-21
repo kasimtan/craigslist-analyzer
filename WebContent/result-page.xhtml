@@ -28,9 +28,8 @@
 	<div align="center">
 		<h1>Craigslist Analyzer Result Page</h1>
 	</div>
-	<h4>Location: #{searchCriteriaBean.location} - LocationURL: #{searchCriteriaBean.locationURL}<br></br>
-	Category: #{searchCriteriaBean.category} - CategoryURL: #{searchCriteriaBean.categoryURL}<br></br>
-	Keyword: #{searchCriteriaBean.keyword}<br></br></h4>
+	<h4>Location: #{searchCriteriaBean.location} - LocationURL: #{searchCriteriaBean.locationURL} - 
+	Category: #{searchCriteriaBean.category} - CategoryURL: #{searchCriteriaBean.categoryURL}<br></br></h4>
 	<h:dataTable value="#{searchCriteriaBean.bestOffers}" var="o"
 		styleClass="order-table" headerClass="order-table-header"
 		rowClasses="order-table-odd-row,order-table-even-row">
