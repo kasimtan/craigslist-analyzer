@@ -71,41 +71,42 @@ public class SearchCriteriaBean implements Serializable {
     public String someActionControllerMethod() {
         return "some-page";
     }
-    
-    @Override public String toString(){
-        StringBuilder aRetString=new StringBuilder();
-        
-        aRetString.append(location+"\n");
-        aRetString.append(category+"\n");
-        aRetString.append(locationURL+"\n");
-        aRetString.append(categoryURL+"\n");
-        aRetString.append(keyword+"\n");
+
+    @Override
+    public String toString() {
+        StringBuilder aRetString = new StringBuilder();
+
+        aRetString.append(location + "\n");
+        aRetString.append(category + "\n");
+        aRetString.append(locationURL + "\n");
+        aRetString.append(categoryURL + "\n");
+        aRetString.append(keyword + "\n");
 
         return aRetString.toString();
     }
-    
+
     /**
      * This is the main function it is generating the output collection.
+     * 
      * @return
      */
-    public Collection<CrawlResultPackage> getBestOffers(){
+    public Collection<CrawlResultPackage> getBestOffers() {
         // 1. Create the crawler object
         Crawler aCrawl = new Crawler();
 
         // 2. Step get all offers
-        Collection<CrawlResultPackage> aResultColl = aCrawl
-                .crawlWebPages(
-                        CraigslistCategoryEnum.FOR_SALE__COMPUTER,
-                        //CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
-                        CraigslistAreasEnum.SAN_FRANCISCO,
-                        this.getKeyword(),//"Apple",
-                        1000 /* Max Offers - 100 = 1 page */);
+        aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+        // CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
+                CraigslistAreasEnum.SAN_FRANCISCO, this.getKeyword(),// "Apple",
+                1000 /* Max Offers - 100 = 1 page */);
 
-        logger.debug("aResultColl Size="+aResultColl.size());
-        
+        Collection<CrawlResultPackage> aResultColl = aCrawl.getFindings();
+
+        logger.debug("aResultColl Size=" + aResultColl.size());
+
         this.setCategoryURL(aCrawl.getUrl());
         this.setLocationURL(aCrawl.getUrl());
-        
+
         // 3. Create analyzer object
         AnaCrack aAnaCrack = new AnaCrack();
 
@@ -117,7 +118,7 @@ public class SearchCriteriaBean implements Serializable {
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
-        
+
         return aAnaColl;
     }
 }
