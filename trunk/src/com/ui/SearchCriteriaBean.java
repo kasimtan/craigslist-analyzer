@@ -99,6 +99,7 @@ public class SearchCriteriaBean implements Serializable {
 
         CraigslistCategoryEnum aCraigslistCategoryEnum=CraigslistCategoryEnum.getCategory(this.getCategoryURL());
         
+        
         logger.info("aCraigslistCategoryEnum="+aCraigslistCategoryEnum);
         
         if (aCraigslistCategoryEnum==null){
@@ -106,9 +107,18 @@ public class SearchCriteriaBean implements Serializable {
             return null;
         }
         
+        CraigslistAreasEnum aCraigslistAreasEnum=CraigslistAreasEnum.getArea(this.getLocationURL());
+        
+        logger.info("aCraigslistAreasEnum="+aCraigslistAreasEnum);
+        
+        if (aCraigslistAreasEnum==null){
+            logger.error("aCraigslistAreasEnum IS NULL");
+            return null;
+        }
+                
         this.setCraigslistUrl(aCrawl.createUrl(
                 aCraigslistCategoryEnum,
-                CraigslistAreasEnum.SAN_FRANCISCO, 
+                aCraigslistAreasEnum, 
                 this.getKeyword()));
 
         // 2. Step get all offers        

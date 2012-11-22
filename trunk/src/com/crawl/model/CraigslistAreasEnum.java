@@ -2,8 +2,6 @@ package com.crawl.model;
 
 import org.apache.log4j.Logger;
 
-import com.crawl.control.Crawler;
-
 /**
  * Which area should be used to analyze?
  * @author mschimpf
@@ -25,6 +23,8 @@ public enum CraigslistAreasEnum {
 	// Only for internal use
 	URL_CONST_AREA_SF_BAY_AREA("sfbay");
 	
+	static Logger logger = Logger.getLogger(CraigslistAreasEnum.class);
+	
 	private String code;  
 	
 	private CraigslistAreasEnum(String c) {   
@@ -35,4 +35,19 @@ public enum CraigslistAreasEnum {
 		return this.code; 
 	}
 	
+    public static CraigslistAreasEnum getArea(String inputString){
+        logger.debug("inputString="+inputString);
+        CraigslistAreasEnum[] aValuesOfCraigslistAreasEnum=CraigslistAreasEnum.values();
+        
+        for (CraigslistAreasEnum aFORCraigslistAreasEnum : aValuesOfCraigslistAreasEnum){
+            logger.debug("aFORCraigslistAreasEnum.getCode()="+aFORCraigslistAreasEnum.getCode());
+            
+            if (aFORCraigslistAreasEnum.getCode().compareTo(inputString)==0){
+                
+                return aFORCraigslistAreasEnum;
+            }
+        }
+        
+        return null;
+    }	
 }
