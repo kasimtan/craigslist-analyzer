@@ -91,6 +91,8 @@ public class SearchCriteriaBean implements Serializable {
      * @return
      */
     public Collection<CrawlResultPackage> getBestOffers() {
+        logger.info(this.toString());
+        
         // 1. Create the crawler object
         Crawler aCrawl = new Crawler();
 
