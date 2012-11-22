@@ -56,20 +56,33 @@ public class Crawler {
     public synchronized Collection<CrawlResultPackage> crawlWebPages(
             String inputSearchUrl,
             int inputIntOffers){
-        Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
+        
         Collection<CrawlResultPackage> aCurrentPageResults=null;
         int myIntPage=0;
-                        
-        do {
-            logger.debug("Page="+myIntPage);
+        
+        // Do we already searched for this URL?
+        aCurrentPageResults=CraigslistCache.getInstance().getResultFromCache(inputSearchUrl);
+        
+        // No! Then do the search
+        if (aCurrentPageResults==null){
+            Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
             
-            aCurrentPageResults=this.crawlWebPage(inputSearchUrl, myIntPage);
-            aReturnColl.addAll(aCurrentPageResults);
+            do {
+                logger.debug("Page="+myIntPage);
             
-            myIntPage=myIntPage+100;
-        } while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
-           
-        return aReturnColl;
+                aCurrentPageResults=this.crawlWebPage(inputSearchUrl, myIntPage);
+                aReturnColl.addAll(aCurrentPageResults);
+            
+                myIntPage=myIntPage+100;
+            } while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
+            
+            // And add it to the cache object
+            CraigslistCache.getInstance().addResultToCache(inputSearchUrl, aReturnColl);            
+            
+            return aReturnColl;
+        } else {
+            return aCurrentPageResults;
+        }
     }
     
     /**
