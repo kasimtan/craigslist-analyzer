@@ -189,10 +189,15 @@ public class AnaCrack {
 	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
 	    logger.debug(i+">="+littleEqual);
 	    
-	    for (;i>=littleEqual;i--){
-	        CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
-	        logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
-	        aCrawlCollRet.add(aPack2);
+	    try {
+	        for (;i>=littleEqual;i--){
+	            CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
+	            logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
+	            aCrawlCollRet.add(aPack2);
+	        }
+	    } catch (ArrayIndexOutOfBoundsException e){
+	        logger.fatal(e.toString());
+	        e.printStackTrace();
 	    }
 	    
 	    logger.debug("aCrawlCollRet="+aCrawlCollRet.size());

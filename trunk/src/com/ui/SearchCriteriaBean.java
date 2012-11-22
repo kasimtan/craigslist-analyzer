@@ -97,8 +97,17 @@ public class SearchCriteriaBean implements Serializable {
         // 1. Create the crawler object
         Crawler aCrawl = Crawler.getInstance();
 
+        CraigslistCategoryEnum aCraigslistCategoryEnum=CraigslistCategoryEnum.getCategory(this.getCategoryURL());
+        
+        logger.info("aCraigslistCategoryEnum="+aCraigslistCategoryEnum);
+        
+        if (aCraigslistCategoryEnum==null){
+            logger.error("aCraigslistCategoryEnum IS NULL");
+            return null;
+        }
+        
         this.setCraigslistUrl(aCrawl.createUrl(
-                CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+                aCraigslistCategoryEnum,
                 CraigslistAreasEnum.SAN_FRANCISCO, 
                 this.getKeyword()));
 

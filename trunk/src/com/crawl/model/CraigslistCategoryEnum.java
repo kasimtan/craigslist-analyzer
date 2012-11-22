@@ -2,12 +2,15 @@ package com.crawl.model;
 
 import org.apache.log4j.Logger;
 
+import com.ui.SearchCriteriaBean;
+
 /**
  * Craigslist "For Sale" Category
  * @author mschimpf
  *
  */
 public enum CraigslistCategoryEnum{
+    
 	MAIN_TOPIC__COMMUNITY("ccc", "Community"), 
 	MAIN_TOPIC__PERSONALS("", "Personals"), 
 	MAIN_TOPIC__DISCUSSION_FORUMS("forums", "Discussion Forums"), 
@@ -227,6 +230,8 @@ public enum CraigslistCategoryEnum{
 	GIGS__DOMESTIC("", "Domestic"),
 	GIGS__WRITING("", "Writing");
 	
+	static Logger logger = Logger.getLogger(CraigslistCategoryEnum.class);
+	
 	private String code; 
 	private String name;
 	
@@ -241,5 +246,21 @@ public enum CraigslistCategoryEnum{
 
 	public String getName() {
 		return name;
+	}
+	
+	public static CraigslistCategoryEnum getCategory(String inputString){
+	    logger.debug("inputString="+inputString);
+	    CraigslistCategoryEnum[] aValuesOfCraigslistCategoryEnum=CraigslistCategoryEnum.values();
+	    
+	    for (CraigslistCategoryEnum aFORCraigslistCategoryEnum : aValuesOfCraigslistCategoryEnum){
+	        logger.debug("aFORCraigslistCategoryEnum.getCode()="+aFORCraigslistCategoryEnum.getCode());
+	        
+	        if (aFORCraigslistCategoryEnum.getCode().compareTo(inputString)==0){
+	            
+	            return aFORCraigslistCategoryEnum;
+	        }
+	    }
+	    
+	    return null;
 	}
 }
