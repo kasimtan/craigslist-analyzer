@@ -30,7 +30,7 @@
 	</div>
 	<h4>Location: #{searchCriteriaBean.location} - LocationURL: #{searchCriteriaBean.locationURL} - 
 	Category: #{searchCriteriaBean.category} - CategoryURL: #{searchCriteriaBean.categoryURL}<br></br> 
-	Craigslist URL: #{searchCriteriaBean.craigslistUrl}<br></br></h4>
+	Craigslist URL: <a href="#{searchCriteriaBean.craigslistUrl}">Link</a><br></br></h4>
 	<h:dataTable value="#{searchCriteriaBean.bestOffers}" var="o"
 		styleClass="order-table" headerClass="order-table-header"
 		rowClasses="order-table-odd-row,order-table-even-row">

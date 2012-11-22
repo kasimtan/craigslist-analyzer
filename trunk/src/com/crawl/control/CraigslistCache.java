@@ -12,8 +12,6 @@ public class CraigslistCache extends Cache{
     
     private static CraigslistCache craigslistCache;
     
-    private HashMap map=new HashMap();
-    
     private CraigslistCache(){}
     
     /**
@@ -29,21 +27,25 @@ public class CraigslistCache extends Cache{
     }
     
     public Collection<CrawlResultPackage> getResultFromCache(String inputKey){
-        logger.info("getResultFromCache inputKey="+inputKey+"---------------------------------");
+        this.checkTimeToLife();
+        
+        logger.debug("getResultFromCache inputKey="+inputKey+"---------------------------------");
         
         Collection<CrawlResultPackage> aRetColl=(Collection<CrawlResultPackage>)this.map.get(inputKey);
         
         if (aRetColl != null && aRetColl.size()!=0){
-            logger.info("aRetColl.size="+aRetColl.size());
+            logger.debug("aRetColl.size="+aRetColl.size());
         } else {
-            logger.info("aRetColl IS NULL");
+            logger.debug("aRetColl IS NULL");
         }
         
         return aRetColl;
     }
     
     public void addResultToCache(String inputKey, Collection<CrawlResultPackage> inputCollection){
-        logger.info("getResultFromCache inputKey="+inputKey+"++++++++++++++++++++++++++++++++++++++++++++");
+        this.checkTimeToLife();
+        
+        logger.debug("getResultFromCache inputKey="+inputKey+"++++++++++++++++++++++++++++++++++++++++++++");
         
         this.map.put(inputKey, inputCollection);
     }
