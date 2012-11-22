@@ -16,17 +16,31 @@ import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * 
+ * SINGLETON
  * @author mschimpf
  *
  */
 public class Crawler {
     static Logger logger = Logger.getLogger(Crawler.class);
     
-    private String oldURL=null;
+    private static Crawler crawler;
+    
     private String url;
     private String matchPattern;
-    private Collection<CrawlResultPackage> findings=null;
+    
+    private Crawler(){}
+    
+    /**
+     * SINGLETON getInstance method.
+     * @return
+     */
+    public static Crawler getInstance(){
+        if (Crawler.crawler==null){
+            Crawler.crawler=new Crawler();
+        }
+        
+        return Crawler.crawler;
+    }
     
     /**
      * 
@@ -36,7 +50,7 @@ public class Crawler {
      * @param inputIntOffers how many offers 100 = 1 Craigslist page
      * @return
      */
-    public void crawlWebPages(
+    public synchronized Collection<CrawlResultPackage> crawlWebPages(
             CraigslistCategoryEnum inCraigslistCategoryEnum, 
             CraigslistAreasEnum inCraigslistAreasEnum,
             String inSearchItem, 
@@ -53,26 +67,7 @@ public class Crawler {
                 "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();
         
         this.setUrl(aTempUrl);
-        
-        // To prepare something like a Proxy...
-        // Currently it is strange, but the crawl methid will be called a lot of times and I don't know why
-        // The frontend does it...
-        
-        // First time ever
-        
-        // IS NOT WORKING BECAUSE THE FRONTEND CREATES ALWAYS A NEW CRAWL OBJECT...
-        //
-        // I have to create some SINGLETON like with all the results etc.
-        if (this.getOldURL()==null || this.getOldURL().trim().length()==0){
-            this.setOldURL(aTempUrl.trim());
-            logger.debug("FIRST +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        } else if (this.getOldURL().trim().compareTo(this.getUrl().trim())==0) {
-            logger.debug("DUPLICATE REQUEST ******************************************************");
-        } else {
-            logger.debug("ELSE -----------------------------------------------------------");
-            this.setOldURL(this.getUrl());
-        }
-        
+                
         do {
             logger.debug("Page="+myIntPage);
             
@@ -82,30 +77,14 @@ public class Crawler {
             myIntPage=myIntPage+100;
         } while (aCurrentPageResults.size()!=0 && myIntPage < inputIntOffers);
            
-        this.setFindings(aReturnColl);
+        return aReturnColl;
     }
     
-    private String getOldURL() {
-        return oldURL;
-    }
-
-    private void setOldURL(String oldURL) {
-        this.oldURL = oldURL;
-    }
-
-    public Collection<CrawlResultPackage> getFindings() {
-        return findings;
-    }
-
-    public void setFindings(Collection<CrawlResultPackage> findings) {
-        this.findings = findings;
-    }
-
     /**
      * The crawl function
      * @return
      */
-    private Collection<CrawlResultPackage> crawlWebPage(int page) {
+    private synchronized Collection<CrawlResultPackage> crawlWebPage(int page) {
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         URL url;
         InputStream is = null;
