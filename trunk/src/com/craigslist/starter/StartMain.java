@@ -60,13 +60,13 @@ public class StartMain {
         // 1. Create the crawler object
         Crawler aCrawl = Crawler.getInstance();
 
+        String aUrl=aCrawl.createUrl(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+                CraigslistAreasEnum.SAN_FRANCISCO, 
+                "Apple");
+        
         // 2. Step get all offers
-        Collection<CrawlResultPackage> aResultColl =aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
-        // CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
-                CraigslistAreasEnum.SAN_FRANCISCO, "Apple", 1000 /*
-                                                                  * Max Offers -
-                                                                  * 100 = 1 page
-                                                                  */);
+        Collection<CrawlResultPackage> aResultColl =aCrawl.crawlWebPages(aUrl, 1000);
 
         logger.debug("aResultColl Size=" + aResultColl.size());
 

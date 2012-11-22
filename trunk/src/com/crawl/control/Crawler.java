@@ -25,9 +25,12 @@ public class Crawler {
     
     private static Crawler crawler;
     
-    private String url;
+    //private String url;
     private String matchPattern;
     
+    /**
+     * Private constructor (SINGLETON)
+     */
     private Crawler(){}
     
     /**
@@ -51,27 +54,16 @@ public class Crawler {
      * @return
      */
     public synchronized Collection<CrawlResultPackage> crawlWebPages(
-            CraigslistCategoryEnum inCraigslistCategoryEnum, 
-            CraigslistAreasEnum inCraigslistAreasEnum,
-            String inSearchItem, 
+            String inputSearchUrl,
             int inputIntOffers){
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         Collection<CrawlResultPackage> aCurrentPageResults=null;
         int myIntPage=0;
-        
-        String aTempUrl=(
-                "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
-                ".craigslist.org/search/"+inCraigslistCategoryEnum.getCode()+
-                inCraigslistAreasEnum.getCode()+
-                "?query="+inSearchItem+
-                "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();
-        
-        this.setUrl(aTempUrl);
-                
+                        
         do {
             logger.debug("Page="+myIntPage);
             
-            aCurrentPageResults=this.crawlWebPage(myIntPage);
+            aCurrentPageResults=this.crawlWebPage(inputSearchUrl, myIntPage);
             aReturnColl.addAll(aCurrentPageResults);
             
             myIntPage=myIntPage+100;
@@ -81,10 +73,30 @@ public class Crawler {
     }
     
     /**
+     * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
+     * @param inCraigslistCategoryEnum
+     * @param inCraigslistAreasEnum
+     * @param inSearchItem
+     * @return
+     */
+    public String createUrl(CraigslistCategoryEnum inCraigslistCategoryEnum, 
+            CraigslistAreasEnum inCraigslistAreasEnum,
+            String inSearchItem) {
+        String aTempUrl=(
+                "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
+                ".craigslist.org/search/"+inCraigslistCategoryEnum.getCode()+
+                inCraigslistAreasEnum.getCode()+
+                "?query="+inSearchItem+
+                "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();        
+        
+        return aTempUrl;
+    }
+    
+    /**
      * The crawl function
      * @return
      */
-    private synchronized Collection<CrawlResultPackage> crawlWebPage(int page) {
+    private synchronized Collection<CrawlResultPackage> crawlWebPage(String inputSearchUrl, int page) {
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
         URL url;
         InputStream is = null;
@@ -101,8 +113,8 @@ public class Crawler {
             //  &sort=pricedsc
             //  &srchType=A
             
-            logger.info("URL = "+this.getUrl()+" +page="+page);
-            url = new URL(this.getUrl()+page);
+            logger.info("URL = "+inputSearchUrl+" +page="+page);
+            url = new URL(inputSearchUrl+page);
 
             is = url.openStream(); // throws an IOException
             dis = new DataInputStream(new BufferedInputStream(is));
@@ -367,14 +379,6 @@ public class Crawler {
             e.printStackTrace();
             return inputCollection;
         }
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    private void setUrl(String url) {
-        this.url = url;
     }
 
     public String getMatchPattern() {

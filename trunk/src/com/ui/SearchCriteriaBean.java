@@ -24,9 +24,10 @@ public class SearchCriteriaBean implements Serializable {
 
     private String location = "Select a location ......";
     private String category = "Select a category .....";
-    private String locationURL = "";
-    private String categoryURL = "";
-    private String keyword = "";
+    private String locationURL;
+    private String categoryURL;
+    private String keyword;
+    private String craigslistUrl;
 
     public String getLocation() {
         return this.location;
@@ -96,20 +97,22 @@ public class SearchCriteriaBean implements Serializable {
         // 1. Create the crawler object
         Crawler aCrawl = Crawler.getInstance();
 
-        // 2. Step get all offers
-        Collection<CrawlResultPackage> aResultColl =aCrawl.crawlWebPages(CraigslistCategoryEnum.FOR_SALE__COMPUTER,
-        // CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA,
-                CraigslistAreasEnum.SAN_FRANCISCO, this.getKeyword(),// "Apple",
-                1000 /* Max Offers - 100 = 1 page */);
+        this.setCraigslistUrl(aCrawl.createUrl(
+                CraigslistCategoryEnum.FOR_SALE__COMPUTER,
+                CraigslistAreasEnum.SAN_FRANCISCO, 
+                this.getKeyword()));
 
-        logger.debug("aResultColl Size=" + aResultColl.size());
+        // 2. Step get all offers        
+        Collection<CrawlResultPackage> aCrawlResultColl=aCrawl.crawlWebPages(this.getCraigslistUrl(), 100);
+
+        logger.debug("aResultColl Size=" + aCrawlResultColl.size());
 
         // 3. Create analyzer object
         AnaCrack aAnaCrack = new AnaCrack();
 
         // 4. do the anlysing and return the offers
         Collection<CrawlResultPackage> aAnaColl = aAnaCrack.getBestOffers(
-                aResultColl, /* The result collection from the crawler */
+                aCrawlResultColl, /* The result collection from the crawler */
                 10, /* Give me the x best offers */
                 CraigslistAlgorithmEnum.BEST, /* To use algorithm */
                 1, /* Lower control limit */
@@ -117,5 +120,13 @@ public class SearchCriteriaBean implements Serializable {
         );
 
         return aAnaColl;
+    }
+
+    public String getCraigslistUrl() {
+        return craigslistUrl;
+    }
+
+    public void setCraigslistUrl(String craigslistUrl) {
+        this.craigslistUrl = craigslistUrl;
     }
 }
