@@ -132,7 +132,7 @@ public class SearchCriteriaBean implements Serializable {
         // 4. do the anlysing and return the offers
         Collection<CrawlResultPackage> aAnaColl = aAnaCrack.analyse(
                 aCrawlResultColl, /* The result collection from the crawler */
-                10, /* Give me the x best offers */
+                20, /* Give me the x best offers */
                 CraigslistAlgorithmEnum.BEST, /* To use algorithm */
                 1, /* Lower control limit */
                 1000 /* higher control limit */
