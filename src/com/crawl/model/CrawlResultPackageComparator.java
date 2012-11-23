@@ -8,6 +8,9 @@ import java.util.Comparator;
  *
  */
 public class CrawlResultPackageComparator implements Comparator<CrawlResultPackage>{
+    /**
+     * 
+     */
     @Override public int compare(CrawlResultPackage inputOne, CrawlResultPackage inputTwo){
         if (inputOne.getPriceOfItem()==inputTwo.getPriceOfItem()){
             return 0;
