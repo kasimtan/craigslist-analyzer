@@ -22,11 +22,11 @@ import com.crawl.model.CrawlResultPackageComparator;
  *
  */
 public class AnaCrackTest {
-	static Logger logger = Logger.getLogger(CrawlTest.class);
+	static Logger logger = Logger.getLogger(AnaCrackTest.class);
 
 	@Test
 	public void test_createAnaCrack() {
-		System.out.println("Create AnaCrack class...");
+	    logger.info("Create AnaCrack class...");
 		AnaCrack c = new AnaCrack();
 		assertTrue(c != null);
 	}
@@ -62,7 +62,7 @@ public class AnaCrackTest {
     }
     
     @Test
-    public void test_Sort() {
+    public void test_sort() {
         logger.debug("Test sort...");
         
         List<CrawlResultPackage> aCrawlResultPackage=new ArrayList<CrawlResultPackage>();

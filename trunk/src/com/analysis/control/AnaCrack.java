@@ -27,10 +27,9 @@ public class AnaCrack {
     private int mode;
     private double standardDeviation;
     
-    private int howMuchOffersToReturn;
+    private int howManyOffersToReturn;
     private int lowerControlLimit;
     private int higherControlLimit;
-    
     
 	/**
 	 * 
@@ -40,18 +39,18 @@ public class AnaCrack {
 	 * @param inputHigherControlLimit higher control limit
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> analyse (
+	public Collection<CrawlResultPackage> analyse(
 	        Collection<CrawlResultPackage> inputCrawlerResultColl, 
-	        int inputInputHowMuch, 
+	        int inputHowManyResults, 
 	        CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, 
 	        int inputLowerControlLimit, 
 	        int inputHigherControlLimit){
 	   if (inputCrawlerResultColl==null ||
-	           inputInputHowMuch<=0 ||
+	           inputHowManyResults<=0 ||
 	           inputCraigslistAlgorithmEnum==null ||
 	           inputLowerControlLimit<=0 ||
 	           inputHigherControlLimit<=0){
-	       throw new IllegalArgumentException(""+inputCrawlerResultColl+" "+inputInputHowMuch+" "+inputCraigslistAlgorithmEnum+" "+inputLowerControlLimit+ " "+inputHigherControlLimit);
+	       throw new IllegalArgumentException(""+inputHowManyResults+" "+inputHowManyResults+" "+inputCraigslistAlgorithmEnum+" "+inputLowerControlLimit+ " "+inputHigherControlLimit);
 	   }
 	   
 	   if (inputCrawlerResultColl.size()==0){
@@ -62,7 +61,7 @@ public class AnaCrack {
 	    this.setCrawlCollection(inputCrawlerResultColl);
 	    this.setOffers(inputCrawlerResultColl.size());
 	    
-	    this.howMuchOffersToReturn=inputInputHowMuch;
+	    this.howManyOffersToReturn=inputHowManyResults;
 	    this.lowerControlLimit=inputLowerControlLimit;
 	    this.higherControlLimit=inputHigherControlLimit;
 	    
@@ -73,7 +72,9 @@ public class AnaCrack {
 	    this.searchForMode();
 	    this.searchForStandardDeviation();
 	    
-	    if (inputCrawlerResultColl.size()<=inputInputHowMuch){
+	    // If the findings count is lower or equal than the
+	    // items, nothing to do...
+	    if (inputCrawlerResultColl.size()<=inputHowManyResults){
 	        return this.getCrawlCollection();
 	    }
 	    
@@ -135,7 +136,7 @@ public class AnaCrack {
         Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
                 
         // Get the 10 expensivest offers
-        for (int i=0;i<=this.howMuchOffersToReturn;i++){
+        for (int i=0;i<=this.howManyOffersToReturn;i++){
             CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
             logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
             aCrawlCollRet.add(aPack2);
@@ -184,7 +185,7 @@ public class AnaCrack {
 	    Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
 	    
 	    int i=aPackArrayRet.length-1;
-	    int littleEqual=aPackArrayRet.length-this.howMuchOffersToReturn;
+	    int littleEqual=aPackArrayRet.length-this.howManyOffersToReturn;
 	    
 	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
 	    logger.debug(i+">="+littleEqual);
@@ -274,15 +275,16 @@ public class AnaCrack {
             intArray[a]=myPackage.getPriceOfItem();
             a++;
         }
-	    
-	    
+	   
 	    int maxValue=0, maxCount=0;
 
 	    for (int i = 0; i < intArray.length; ++i) {
 	        int count = 0;
+	        
 	        for (int j = 0; j < intArray.length; ++j) {
 	            if (intArray[j] == intArray[i]) ++count;
 	        }
+	        
 	        if (count > maxCount) {
 	            maxCount = count;
 	            maxValue = intArray[i];
@@ -324,6 +326,9 @@ public class AnaCrack {
 	    }
 	}
 
+	/**
+	 * 
+	 */
 	private void searchForMinPrice(){
         int aMinPrice=1000000;
         
@@ -339,9 +344,11 @@ public class AnaCrack {
         this.setMin(aMinPrice);
         
         logger.info("aMinPrice="+this.getMin()+" offers="+this.getOffers());        
-	    
 	}
 	
+	/**
+	 * 
+	 */
     private void searchForMaxPrice(){
         int aMaxPrice=0;
         
@@ -381,19 +388,35 @@ public class AnaCrack {
             logger.info("average price="+this.getAverage()+" offers="+this.getOffers());    
         }
 	}
-		
+	
+	/**
+	 * 
+	 * @return
+	 */
     public int getOffers() {
         return offers;
     }
 
+    /**
+     * 
+     * @param offers
+     */
     private void setOffers(int offers) {
         this.offers = offers;
     }	
 	
+    /**
+     * 
+     * @return
+     */
 	public Collection<CrawlResultPackage> getCrawlCollection() {
         return crawlCollection;
     }
 
+	/**
+	 * 
+	 * @param crawlCollection
+	 */
     private void setCrawlCollection(Collection<CrawlResultPackage> crawlCollection) {
         this.crawlCollection = crawlCollection;
     }
@@ -405,26 +428,50 @@ public class AnaCrack {
 		return this.average;
 	}
 
+	/**
+	 * 
+	 * @param average
+	 */
 	private void setAverage(int average) {
         this.average = average;
     }
 
+	/**
+	 * 
+	 * @param min
+	 */
     private void setMin(int min) {
         this.min = min;
     }
 
+    /**
+     * 
+     * @param max
+     */
     private void setMax(int max) {
         this.max = max;
     }
 
+    /**
+     * 
+     * @param median
+     */
     private void setMedian(double median) {
         this.median = median;
     }
 
+    /**
+     * 
+     * @param mode
+     */
     private void setMode(int mode) {
         this.mode = mode;
     }
 
+    /**
+     * 
+     * @param standardDeviation
+     */
     private void setStandardDeviation(double standardDeviation) {
         this.standardDeviation = standardDeviation;
     }
@@ -464,6 +511,9 @@ public class AnaCrack {
 		return this.standardDeviation;
 	}
 	
+	/**
+	 * 
+	 */
 	@Override public String toString(){
 	    StringBuilder aRetString=new StringBuilder();
 	    
