@@ -163,6 +163,6 @@ public class CrawlTest {
                 
         logger.debug("URL="+aUrl+" length="+aUrl.length());
         
-        assertTrue(aUrl.length()==97);    
+        assertTrue(aUrl.length()==96);    
     }
 }
