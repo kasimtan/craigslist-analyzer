@@ -40,7 +40,7 @@ public class AnaCrack {
 	 * @param inputHigherControlLimit higher control limit
 	 * @return
 	 */
-	public Collection<CrawlResultPackage> getBestOffers(
+	public Collection<CrawlResultPackage> analyse (
 	        Collection<CrawlResultPackage> inputCrawlerResultColl, 
 	        int inputInputHowMuch, 
 	        CraigslistAlgorithmEnum inputCraigslistAlgorithmEnum, 

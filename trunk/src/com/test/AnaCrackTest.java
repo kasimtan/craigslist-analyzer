@@ -38,7 +38,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         try{
-            Collection<CrawlResultPackage> aColl=c.getBestOffers(null, -1, null, -1, -1);
+            Collection<CrawlResultPackage> aColl=c.analyse(null, -1, null, -1, -1);
         } catch (IllegalArgumentException e){
             logger.info("Catch expected IllegalArgumentException exception");
             logger.info(e);
@@ -54,7 +54,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
@@ -93,7 +93,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
@@ -107,7 +107,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
@@ -121,7 +121,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
@@ -135,7 +135,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
@@ -149,7 +149,7 @@ public class AnaCrackTest {
         AnaCrack c = new AnaCrack();
         
         // ToDo try something lower then 10 Packages and you will receive an Exception
-        Collection<CrawlResultPackage> aColl=c.getBestOffers(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
+        Collection<CrawlResultPackage> aColl=c.analyse(AnaCrackTest.generateFakeColl(1, 10, 1), 10, CraigslistAlgorithmEnum.BEST, 1, 10);
 
         logger.debug(""+c.toString());
         
