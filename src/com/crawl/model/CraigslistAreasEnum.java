@@ -35,6 +35,11 @@ public enum CraigslistAreasEnum {
 		return this.code; 
 	}
 	
+	/**
+	 * 
+	 * @param inputString
+	 * @return
+	 */
     public static CraigslistAreasEnum getArea(String inputString){
         logger.debug("inputString="+inputString);
         CraigslistAreasEnum[] aValuesOfCraigslistAreasEnum=CraigslistAreasEnum.values();

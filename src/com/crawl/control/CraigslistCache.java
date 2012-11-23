@@ -7,6 +7,11 @@ import org.apache.log4j.Logger;
 
 import com.crawl.model.CrawlResultPackage;
 
+/**
+ * 
+ * @author mschimpf
+ *
+ */
 public class CraigslistCache extends Cache{
     static Logger logger = Logger.getLogger(CraigslistCache.class);
     
@@ -26,22 +31,30 @@ public class CraigslistCache extends Cache{
         return CraigslistCache.craigslistCache;
     }
     
+    /**
+     * 
+     * @param inputKey
+     * @return
+     */
     public Collection<CrawlResultPackage> getResultFromCache(String inputKey){
         this.checkTimeToLife();
         
         logger.debug("getResultFromCache inputKey="+inputKey+"---------------------------------");
         
-        Collection<CrawlResultPackage> aRetColl=(Collection<CrawlResultPackage>)this.map.get(inputKey);
+        Collection<CrawlResultPackage> aRetColl=this.map.get(inputKey);
         
         if (aRetColl != null && aRetColl.size()!=0){
             logger.debug("aRetColl.size="+aRetColl.size());
-        } else {
-            logger.debug("aRetColl IS NULL");
-        }
+        } 
         
         return aRetColl;
     }
     
+    /**
+     * 
+     * @param inputKey
+     * @param inputCollection
+     */
     public void addResultToCache(String inputKey, Collection<CrawlResultPackage> inputCollection){
         this.checkTimeToLife();
         
