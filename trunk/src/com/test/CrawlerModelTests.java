@@ -175,7 +175,7 @@ public class CrawlerModelTests {
     }
     
     @Test
-    public void test_comparator24() {
+    public void test_comparator3() {
         logger.debug("Test comparator...");
         
         List<CrawlResultPackage> aCrawlResultPackage=new ArrayList<CrawlResultPackage>();
@@ -196,8 +196,8 @@ public class CrawlerModelTests {
     }
     
     @Test
-    public void test_comparator3() {
-        logger.debug("Test comparator...3");
+    public void test_comparator4() {
+        logger.debug("Test comparator...4");
         
         List<CrawlResultPackage> aCrawlResultPackage=new ArrayList<CrawlResultPackage>();
         
@@ -224,8 +224,8 @@ public class CrawlerModelTests {
     }
     
     @Test
-    public void test_comparator4() {
-        logger.debug("Test comparator...4");
+    public void test_collectionAndPrice() {
+        logger.debug("Test collection and price");
         
         List<CrawlResultPackage> aCrawlResultPackage=new ArrayList<CrawlResultPackage>();
         
