@@ -33,73 +33,43 @@
                             <h:message for="locationURLField" styleClass="error"/>
                         </td>
                         <td align="left">
-							<a href="#location" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="locationLabel"></a>
-							<div id="location" class="hidden">
-							<ul><ui:repeat var="country" value="#{world.countries}">
-								<li><a href="#{country.link}">#{country.name}</a>
-								<ul><ui:repeat var="state" value="#{country.states}">
-									<li><a href="#{state.link}">#{state.name}</a>
-									<ul><ui:repeat var="city" value="#{state.cities}">
-										<li><a href="#{city.link}">#{city.name}</a></li>
-									</ui:repeat></ul></li>
-								</ui:repeat></ul></li>
-							</ui:repeat></ul>
-							</div>
+                            <a href="#location" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="locationLabel"></a>
+                            <div id="location" class="hidden">
+                            <ul><ui:repeat var="country" value="#{world.countries}">
+                                <li><a href="#{country.link}">#{country.name}</a>
+                                <ul><ui:repeat var="state" value="#{country.states}">
+                                    <li><a href="#{state.link}">#{state.name}</a>
+                                    <ul><ui:repeat var="city" value="#{state.cities}">
+                                        <li><a href="#{city.link}">#{city.name}</a></li>
+                                    </ui:repeat></ul></li>
+                                </ui:repeat></ul></li>
+                            </ui:repeat></ul>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td align="right"><strong>*CATEGORY:</strong>
-                            <br/><h:inputHidden id="categoryURLField" value="#{searchCriteriaBean.categoryURL}" required="true" requiredMessage="Category required"/>
+                            <br/><h:inputHidden id="categoryCodeField" value="#{searchCriteriaBean.categoryCode}" required="true" requiredMessage="Category required"/>
                             <h:inputHidden id="categoryField" value="#{searchCriteriaBean.category}"/>
-                            <h:message for="categoryURLField" styleClass="error"/>
+                            <h:message for="categoryCodeField" styleClass="error"/>
                         </td>
                         <td align="left">
-							<a href="#category" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="categoryLabel"></a>
-							<div id="category" class="hidden">
-							<ul>
-							    <li><a href="#">For Sale</a>
-							        <ul>
-							            <li><a href="sss">All For Sale</a></li>
-							            <li><a href="ppa">Appliances</a></li>
-							            <li><a href="ata">Antiques</a></li>
-							            <li><a href="bar">Barter</a></li>
-							            <li><a href="bia">Bikes</a></li>
-							            <li><a href="boo">Boats</a></li>
-							            <li><a href="bka">Books</a></li>
-							            <li><a href="bfa">Business</a></li>
-							            <li><a href="sya">Computer</a></li>
-							            <li><a href="fua">Furniture</a></li>
-							            <li><a href="foa">General</a></li>
-							            <li><a href="jwa">Jewelry</a></li>
-							            <li><a href="maa">Materials</a></li>
-							            <li><a href="rva">Rvs</a></li>
-							            <li><a href="sga">Sporting</a></li>
-							            <li><a href="tia">Tickets</a></li>
-							            <li><a href="tla">Tools</a></li>
-							            <li><a href="wan">Wanted</a></li>
-							            <li><a href="vga">Video Gaming</a></li>
-							        </ul>
-							    </li>
-							    <li><a href="#">Housing</a>
-							        <ul>
-							            <li><a href="apa">Apts / Housing</a></li>
-							            <li><a href="roo">Rooms / Shared</a></li>
-							            <li><a href="sub">Sublets / Temporary</a></li>
-							            <li><a href="hsw">Housing Wanted</a></li>
-							            <li><a href="swp">Housing Swap</a></li>
-							            <li><a href="vac">Vacation Rentals</a></li>
-							            <li><a href="prk">Parking / Storage</a></li>
-							            <li><a href="off">Office / Commercial</a></li>
-							            <li><a href="rea">Real Estate For Sale</a></li>
-							        </ul>
-							    </li>
-							    <li style="padding:.36em">&nbsp;</li>
-							    <li style="padding:.36em">&nbsp;</li>
-							    <li style="padding:.36em">&nbsp;</li>
-							    <li style="padding:.36em">&nbsp;</li>
-							    <li style="padding:.36em">&nbsp;</li>
-							</ul>
-							</div>
+                            <a href="#category" class="fg-button fg-button-icon-right ui-state-default ui-corner-all" id="categoryLabel"></a>
+                            <div id="category" class="hidden">
+                            <ul><li><a href="#">For Sale</a>
+                                <ul><ui:repeat var="category" value="#{forSaleCategory.categories}">
+                                    <li><a href="#{category.code}">#{category.name}</a></li>
+                                </ui:repeat></ul></li>
+                                <li><a href="#">Housing</a>
+                                <ul><ui:repeat var="category" value="#{housingCategory.categories}">
+                                    <li><a href="#{category.code}">#{category.name}</a></li>
+                                </ui:repeat></ul></li>
+                                <li style="padding:.36em">&nbsp;</li>
+                                <li style="padding:.36em">&nbsp;</li>
+                                <li style="padding:.36em">&nbsp;</li>
+                                <li style="padding:.36em">&nbsp;</li>
+                                <li style="padding:.36em">&nbsp;</li>
+                            </ul></div>
                         </td>
                     </tr>
                     <tr>

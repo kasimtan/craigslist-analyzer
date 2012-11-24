@@ -36,7 +36,7 @@
     Category: <strong>[#{searchCriteriaBean.category}]</strong>, 
     Location: <strong>[#{searchCriteriaBean.location}]</strong>.
     </div>
-    <h3>10 Best-Price Offers</h3>
+    <h3>Top 10 Best-Price Offers*</h3>
     <div>Keyword: <strong>[#{searchCriteriaBean.keyword}]</strong>, 
     Category: <strong>[#{searchCriteriaBean.category}]</strong>, 
     Location: <strong>[#{searchCriteriaBean.location}]</strong>.
@@ -46,6 +46,7 @@
             <h:column><f:facet name="header">Price</f:facet>#{o.priceOfItem}</h:column>
             <h:column><f:facet name="header">Area</f:facet>#{o.locationsAsString}</h:column>
         </h:dataTable>
+        <div style="float:right"><i>* Top 10 Best-Price offers are based on our statistical algorithm. </i></div>
     </div>
 </div>
 <p class="center"><h:form>

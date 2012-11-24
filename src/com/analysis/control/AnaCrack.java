@@ -65,12 +65,12 @@ public class AnaCrack {
 	    this.lowerControlLimit=inputLowerControlLimit;
 	    this.higherControlLimit=inputHigherControlLimit;
 	    
-	    this.createAverage();
+	    /*this.createAverage();
 	    this.searchForMinPrice();
 	    this.searchForMaxPrice();
 	    this.searchForMedian();
 	    this.searchForMode();
-	    this.searchForStandardDeviation();
+	    this.searchForStandardDeviation();*/
 	    
 	    // If the findings count is lower or equal than the
 	    // items, nothing to do...

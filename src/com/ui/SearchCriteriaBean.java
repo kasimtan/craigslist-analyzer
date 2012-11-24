@@ -11,8 +11,6 @@ import org.apache.log4j.Logger;
 import com.analysis.control.AnaCrack;
 import com.crawl.control.Crawler;
 import com.crawl.model.CraigslistAlgorithmEnum;
-import com.crawl.model.CraigslistAreasEnum;
-import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 @ManagedBean
@@ -25,7 +23,7 @@ public class SearchCriteriaBean implements Serializable {
     private String location = "Select a location ......";
     private String category = "Select a category .....";
     private String locationURL;
-    private String categoryURL;
+    private String categoryCode;
     private String keyword;
 
     public String getLocation() {
@@ -52,12 +50,12 @@ public class SearchCriteriaBean implements Serializable {
         this.category = category;
     }
 
-    public String getCategoryURL() {
-        return categoryURL;
+    public String getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setCategoryURL(String categoryURL) {
-        this.categoryURL = categoryURL;
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public String getKeyword() {
@@ -74,7 +72,7 @@ public class SearchCriteriaBean implements Serializable {
         aRetString.append(location + "\n");
         aRetString.append(category + "\n");
         aRetString.append(locationURL + "\n");
-        aRetString.append(categoryURL + "\n");
+        aRetString.append(categoryCode + "\n");
         aRetString.append(keyword + "\n");
         return aRetString.toString();
     }
@@ -87,15 +85,11 @@ public class SearchCriteriaBean implements Serializable {
         logger.info(this.toString());
         // 1. Create the crawler object
         Crawler aCrawl = Crawler.getInstance();
-        CraigslistCategoryEnum aCraigslistCategoryEnum = CraigslistCategoryEnum.getCategory(this.getCategoryURL());
-        logger.info("aCraigslistCategoryEnum=" + aCraigslistCategoryEnum);
-        if (aCraigslistCategoryEnum == null){
-            logger.error("aCraigslistCategoryEnum IS NULL");
-            return null;
-        }
+        logger.info("aCraigslistCategoryEnum=" + categoryCode);
         logger.info("aCraigslistAreasEnum=" + locationURL);
+        logger.info("aCraigslistKeyword=" + keyword);
         String craigslistURL = aCrawl.createUrl(
-                aCraigslistCategoryEnum,
+                getCategoryCode(),
                 getLocationURL(),
                 getKeyword());
         // 2. Step get all offers        
