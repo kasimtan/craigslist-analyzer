@@ -50,7 +50,6 @@ public class World {
                 Country countryObj = new Country(countryName, countryLink, stateList);
                 countryList.add(countryObj);
             }
-            
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -64,14 +63,14 @@ public class World {
     private static String capitalWord(String str) {
         // Capitalize letter after space, bracket, slash or dash character
         Pattern spaces = Pattern.compile("(\\s+[a-z])|(\\(+[a-z])|(\\-+[a-z])|(\\/+[a-z])");
-        Matcher m = spaces.matcher(str);    
+        Matcher m = spaces.matcher(str);
         StringBuilder capitalWordBuilder = new StringBuilder(str.substring(0,1).toUpperCase());
         int prevStart = 1;
         while(m.find()) {
             capitalWordBuilder.append(str.substring(prevStart, m.end()-1));
             capitalWordBuilder.append(str.substring(m.end()-1, m.end()).toUpperCase());
             prevStart = m.end();
-        }   
+        }
         capitalWordBuilder.append(str.substring(prevStart, str.length()));
         return capitalWordBuilder.toString();
     }

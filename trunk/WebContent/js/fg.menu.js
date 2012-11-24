@@ -244,7 +244,7 @@ function Menu(callr, option){
 		else if(options.crumbDefaultText == 'Select a category:') {
 			$('#categoryLabel').html(arrowStr + $(item).text());
 			$('#scForm\\:categoryField').val($(item).text());
-			$('#scForm\\:categoryURLField').val($(item).attr('href'));
+			$('#scForm\\:categoryCodeField').val($(item).attr('href'));
 		}
 	};
 };

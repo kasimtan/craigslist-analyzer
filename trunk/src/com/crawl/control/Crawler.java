@@ -111,12 +111,12 @@ public class Crawler {
     /**
      * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
      * (For global worldwide location/area)
-     * @param inCraigslistCategoryEnum
-     * @param inCraigslistAreasEnum
+     * @param inCraigslistCategoryCode
+     * @param inCraigslistAreasURL
      * @param inSearchItem
      * @return
      */
-    public String createUrl(CraigslistCategoryEnum inCraigslistCategoryEnum, 
+    public String createUrl(String inCraigslistCategoryCode, 
             String inCraigslistAreasURL,
             String inSearchItem) {
         try {
@@ -125,9 +125,9 @@ public class Crawler {
         catch(UnsupportedEncodingException e) { }
         String aTempUrl=(
                 inCraigslistAreasURL+
-                "/search/"+inCraigslistCategoryEnum.getCode()+
+                "/search/"+inCraigslistCategoryCode+
                 "?query="+inSearchItem+
-                "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();        
+                "&maxAsk=100000&sort=priceasc&srchType=A&s=").trim();        
         
         return aTempUrl;
     }

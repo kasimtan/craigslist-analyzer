@@ -5,7 +5,7 @@ public class City {
     private String link;
 
     public City(String name, String link) {
-        this. name =  name;
+        this.name = name;
         this.link = link;
     }
 
