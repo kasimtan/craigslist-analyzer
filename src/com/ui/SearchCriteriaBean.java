@@ -27,7 +27,6 @@ public class SearchCriteriaBean implements Serializable {
     private String locationURL;
     private String categoryURL;
     private String keyword;
-    private String craigslistUrl;
 
     public String getLocation() {
         return location;
@@ -72,83 +71,46 @@ public class SearchCriteriaBean implements Serializable {
     @Override
     public String toString() {
         StringBuilder aRetString = new StringBuilder();
-
         aRetString.append(location + "\n");
         aRetString.append(category + "\n");
         aRetString.append(locationURL + "\n");
         aRetString.append(categoryURL + "\n");
         aRetString.append(keyword + "\n");
-
         return aRetString.toString();
     }
 
     /**
-     * This is the main function it is generating the output collection.
-     * 
+     * 10 Best-Price Offers
      * @return
      */
     public Collection<CrawlResultPackage> getBestOffers() {
         logger.info(this.toString());
-        
         // 1. Create the crawler object
         Crawler aCrawl = Crawler.getInstance();
-
-        CraigslistCategoryEnum aCraigslistCategoryEnum=CraigslistCategoryEnum.getCategory(this.getCategoryURL());
-        
-        
-        logger.info("aCraigslistCategoryEnum="+aCraigslistCategoryEnum);
-        
-        if (aCraigslistCategoryEnum==null){
+        CraigslistCategoryEnum aCraigslistCategoryEnum = CraigslistCategoryEnum.getCategory(this.getCategoryURL());
+        logger.info("aCraigslistCategoryEnum=" + aCraigslistCategoryEnum);
+        if (aCraigslistCategoryEnum == null){
             logger.error("aCraigslistCategoryEnum IS NULL");
             return null;
         }
-        
-        /*CraigslistAreasEnum aCraigslistAreasEnum=CraigslistAreasEnum.getArea(this.getLocationURL());
-        
-        logger.info("aCraigslistAreasEnum="+aCraigslistAreasEnum);
-        
-        if (aCraigslistAreasEnum==null){
-            logger.error("aCraigslistAreasEnum IS NULL");
-            return null;
-        }
-                
-        this.setCraigslistUrl(aCrawl.createUrl(
+        logger.info("aCraigslistAreasEnum=" + locationURL);
+        String craigslistURL = aCrawl.createUrl(
                 aCraigslistCategoryEnum,
-                aCraigslistAreasEnum, 
-                this.getKeyword()));*/
-        
-        logger.info("aCraigslistAreasEnum="+locationURL);
-        
-        this.setCraigslistUrl(aCrawl.createUrl(
-                aCraigslistCategoryEnum,
-                locationURL, 
-                this.getKeyword()));
-
+                getLocationURL(),
+                getKeyword());
         // 2. Step get all offers        
-        Collection<CrawlResultPackage> aCrawlResultColl=aCrawl.crawlWebPages(this.getCraigslistUrl(), 100);
-
+        Collection<CrawlResultPackage> aCrawlResultColl = aCrawl.crawlWebPages(craigslistURL, 100);
         logger.debug("aResultColl Size=" + aCrawlResultColl.size());
-
         // 3. Create analyzer object
         AnaCrack aAnaCrack = new AnaCrack();
-
-        // 4. do the anlysing and return the offers
+        // 4. Do the analysing and return the offers
         Collection<CrawlResultPackage> aAnaColl = aAnaCrack.analyse(
                 aCrawlResultColl, /* The result collection from the crawler */
-                20, /* Give me the x best offers */
+                10, /* Give me the x best offers */
                 CraigslistAlgorithmEnum.BEST, /* To use algorithm */
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
-
         return aAnaColl;
-    }
-
-    public String getCraigslistUrl() {
-        return craigslistUrl;
-    }
-
-    public void setCraigslistUrl(String craigslistUrl) {
-        this.craigslistUrl = craigslistUrl;
     }
 }
