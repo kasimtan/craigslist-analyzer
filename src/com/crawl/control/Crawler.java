@@ -4,8 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -87,6 +89,7 @@ public class Crawler {
     
     /**
      * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
+     * (Specified for only San Francisco Bay Area)
      * @param inCraigslistCategoryEnum
      * @param inCraigslistAreasEnum
      * @param inSearchItem
@@ -99,6 +102,30 @@ public class Crawler {
                 "http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+
                 ".craigslist.org/search/"+inCraigslistCategoryEnum.getCode()+
                 inCraigslistAreasEnum.getCode()+
+                "?query="+inSearchItem+
+                "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();        
+        
+        return aTempUrl;
+    }
+    
+    /**
+     * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
+     * (For global worldwide location/area)
+     * @param inCraigslistCategoryEnum
+     * @param inCraigslistAreasEnum
+     * @param inSearchItem
+     * @return
+     */
+    public String createUrl(CraigslistCategoryEnum inCraigslistCategoryEnum, 
+            String inCraigslistAreasURL,
+            String inSearchItem) {
+        try {
+            inSearchItem = URLEncoder.encode(inSearchItem,"UTF-8");
+        }
+        catch(UnsupportedEncodingException e) { }
+        String aTempUrl=(
+                inCraigslistAreasURL+
+                "/search/"+inCraigslistCategoryEnum.getCode()+
                 "?query="+inSearchItem+
                 "&maxAsk=100000&sort=pricedsc&srchType=A&s=").trim();        
         
@@ -369,12 +396,12 @@ public class Crawler {
                         if (inMaxRecursion<=0){
                             logger.debug("3) MAX MAAAAXXXXRECURSION REACHED inputCleanString=|"+inputCleanString+"|");
                             inputCollection.add(inputCleanString);
-                            logger.debug("30) ínputCollection=|"+inputCollection.toString()+"|");
+                            logger.debug("30) inputCollection=|"+inputCollection.toString()+"|");
                             return inputCollection;
                         } else {
                             logger.debug("35) ELSEEEEE aTempStringNewAddItem=   |"+aTempStringNewAddItem+"|");
                             inputCollection.add(aTempStringNewAddItem);
-                            logger.debug("38) ínputCollection=|"+inputCollection.toString()+"|");
+                            logger.debug("38) inputCollection=|"+inputCollection.toString()+"|");
                             this.getLocationsFromCleanStringRecursion(aTempStringNewRecurItem, inputCollection, (inMaxRecursion-1));
                             return inputCollection;
                         }
@@ -384,7 +411,7 @@ public class Crawler {
                 inputCollection.add(inputCleanString.trim());
             }
         
-            logger.debug("40) ínputCollection=|"+inputCollection.toString()+"|");
+            logger.debug("40) inputCollection=|"+inputCollection.toString()+"|");
             return inputCollection;
         } catch (Exception e) {
             logger.fatal(e);

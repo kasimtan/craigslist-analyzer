@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <h1>Not found <span>:(</span></h1>
+                <h1>Page Not found <span>:(</span></h1>
                 <p>Sorry, but the page you were trying to view does not exist.</p>
                 <p>It looks like this was the result of either:</p>
                 <ul>

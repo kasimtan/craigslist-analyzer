@@ -30,15 +30,15 @@ public class SearchCriteriaBean implements Serializable {
     private String craigslistUrl;
 
     public String getLocation() {
-        return this.location;
+        return location;
     }
 
     public void setLocation(String location) {
-        this.toString();
+        this.location = location;
     }
 
     public String getLocationURL() {
-        return this.locationURL;
+        return locationURL;
     }
 
     public void setLocationURL(String locationURL) {
@@ -46,7 +46,7 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getCategory() {
-        return this.category;
+        return category;
     }
 
     public void setCategory(String category) {
@@ -54,7 +54,7 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getCategoryURL() {
-        return this.categoryURL;
+        return categoryURL;
     }
 
     public void setCategoryURL(String categoryURL) {
@@ -62,15 +62,11 @@ public class SearchCriteriaBean implements Serializable {
     }
 
     public String getKeyword() {
-        return this.keyword;
+        return keyword;
     }
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
-    }
-
-    public String someActionControllerMethod() {
-        return "some-page";
     }
 
     @Override
@@ -107,7 +103,7 @@ public class SearchCriteriaBean implements Serializable {
             return null;
         }
         
-        CraigslistAreasEnum aCraigslistAreasEnum=CraigslistAreasEnum.getArea(this.getLocationURL());
+        /*CraigslistAreasEnum aCraigslistAreasEnum=CraigslistAreasEnum.getArea(this.getLocationURL());
         
         logger.info("aCraigslistAreasEnum="+aCraigslistAreasEnum);
         
@@ -119,6 +115,13 @@ public class SearchCriteriaBean implements Serializable {
         this.setCraigslistUrl(aCrawl.createUrl(
                 aCraigslistCategoryEnum,
                 aCraigslistAreasEnum, 
+                this.getKeyword()));*/
+        
+        logger.info("aCraigslistAreasEnum="+locationURL);
+        
+        this.setCraigslistUrl(aCrawl.createUrl(
+                aCraigslistCategoryEnum,
+                locationURL, 
                 this.getKeyword()));
 
         // 2. Step get all offers        
