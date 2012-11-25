@@ -20,7 +20,16 @@ public final class CrawlResultPackage {
 	private String url="";
 	
 	public final String getItem() {
-		return item;
+		return this.encodeAmpersand(item);
+	}
+
+	/**
+	 * correct some encoding problems
+	 * @param inputString
+	 * @return
+	 */
+	private String encodeAmpersand(String inputString){
+	    return inputString.replace("&amp;", "&");
 	}
 
 	public final void setItem(String item) {
@@ -82,10 +91,10 @@ public final class CrawlResultPackage {
 		try{
 			StringBuilder aRetStringBuild=new StringBuilder();
 			aRetStringBuild.append("----------------------------------------------------\n");
-			aRetStringBuild.append("line=\t\t"+this.line+"\n");
-			aRetStringBuild.append("priceOfItem=\t"+this.priceOfItem+"\n");
-			aRetStringBuild.append("item=\t\t"+this.item+"\n");
-			aRetStringBuild.append("url=\t\t"+this.url+"\n");
+			aRetStringBuild.append("line=\t\t"+this.getLine()+"\n");
+			aRetStringBuild.append("priceOfItem=\t"+this.getPriceOfItem()+"\n");
+			aRetStringBuild.append("item=\t\t"+this.getItem()+"\n");
+			aRetStringBuild.append("url=\t\t"+this.getUrl()+"\n");
 			aRetStringBuild.append("locations=\t"+this.getLocationsAsString().trim()+"\n");
 			aRetStringBuild.append("=====================================================\n");
 			
