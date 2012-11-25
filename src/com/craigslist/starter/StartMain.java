@@ -14,6 +14,8 @@ import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
+import com.crawl.model.LocationDistribution;
+import com.crawl.model.PriceDistribution;
 
 /**
  * 
@@ -81,13 +83,33 @@ public class StartMain {
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
-
+        
         int i = 0;
         for (CrawlResultPackage aPack : aAnaColl) {
             i++;
-            logger.info(i + ". BEST OFFERS=" + aPack.toString());
+            logger.debug(i + ". BEST OFFERS=" + aPack.toString());
+        }
+        
+        Collection<LocationDistribution> aLocColl=aAnaCrack.getLocationDistribution();
+        
+        i = 0;
+        for (LocationDistribution aLoc : aLocColl) {
+            i++;
+            logger.debug(aLoc.toString());
         }
 
+        logger.debug(aLocColl.size());
+        
+        Collection<PriceDistribution> aPriceColl=aAnaCrack.getPriceDistribution();
+        
+        i = 0;
+        for (PriceDistribution aPrice : aPriceColl) {
+            i++;
+            logger.info(aPrice.toString());
+        }
+
+        logger.info(aLocColl.size());        
+        
         logger.debug("Ending application.");
     }
 }
