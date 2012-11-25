@@ -29,7 +29,7 @@ public final class CrawlResultPackage {
 	 * @return
 	 */
 	private String encodeAmpersand(String inputString){
-	    return inputString.replaceAll("&amp;", "&");
+	    return inputString.replaceAll("&amp;", "&").replaceAll("&quot;", "'");
 	}
 
 	public final void setItem(String item) {
