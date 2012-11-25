@@ -2,7 +2,6 @@ package com.analysis.control;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
@@ -81,21 +80,39 @@ public class AnaCrack {
 	    // Which Algoritm?
 	    switch (inputCraigslistAlgorithmEnum){
 	        case BEST : 
-	            return this.getBestOffers();
+	            return this.reverseOrder(this.getBestOffers());
 	        case WORST : 
-                return this.getWorstOffers();
+                return this.reverseOrder(this.getWorstOffers());
 	        case HIGHEST : 
-                return this.getWorstOffers();
+                return this.reverseOrder(this.getWorstOffers());
 	        case LOWEST : 
-                return this.getBestOffers();
+                return this.reverseOrder(this.getBestOffers());
 	        case DUMBEST : 
-                return this.getWorstOffers();
+                return this.reverseOrder(this.getWorstOffers());
 	        default:
                 logger.error("The algorithm is unknown!");
                 break;                
 	    }
 	    
 		return new ArrayList<CrawlResultPackage>();
+	}
+	
+	/**
+	 * Reverse the order of the collection.
+	 * @param inputColl
+	 * @return
+	 */
+	private Collection<CrawlResultPackage> reverseOrder(Collection<CrawlResultPackage> inputColl){
+	    Collection<CrawlResultPackage> aRetColl=new ArrayList<CrawlResultPackage>();
+	    
+	    Object[] aArrayCralObjects=inputColl.toArray();
+	    
+	    for (int i=0;i<aArrayCralObjects.length;i++){
+	        logger.info("i="+i);
+	        aRetColl.add((CrawlResultPackage)aArrayCralObjects[i]);
+	    }
+	    
+	    return aRetColl;
 	}
 	
     /**
@@ -182,13 +199,16 @@ public class AnaCrack {
 	    logger.debug("aCrawlCollTemp2="+aCrawlCollTemp2.size());
 	    
 	    Object[] aPackArrayRet=aCrawlCollTemp2.toArray();
+	    
+	    logger.info("aPackArrayRet.length="+aPackArrayRet.length);
+	    
 	    Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
 	    
 	    int i=aPackArrayRet.length-1;
 	    int littleEqual=aPackArrayRet.length-this.howManyOffersToReturn;
 	    
-	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
-	    logger.debug(i+">="+littleEqual);
+	    logger.info("aPackArrayRet.length="+aPackArrayRet.length);
+	    logger.info(i+">="+littleEqual);
 	    
 	    try {
 	        for (;i>=littleEqual;i--){
