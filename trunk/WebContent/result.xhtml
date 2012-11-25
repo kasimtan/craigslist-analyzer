@@ -25,32 +25,41 @@
 </h:head>
 <h:body>
     <h1 class="center"><span>Craigslist Analyzer</span></h1>
-<div id="accordion">
-    <h3>Price Distribution Analysis</h3>
-    <div>Keyword: <strong>[#{searchCriteriaBean.keyword}]</strong>, 
-    Category: <strong>[#{searchCriteriaBean.category}]</strong>, 
-    Location: <strong>[#{searchCriteriaBean.location}]</strong>.
+    <!-- #{analyzerBean.doAnalyze} -->
+    <div id="accordion">
+        <h3>Price Distribution Analysis</h3>
+        <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
+	        Category: <strong>[#{analyzerBean.category}]</strong>, 
+	        Location: <strong>[#{analyzerBean.location}]</strong>.
+	        <h3><ul>
+	            <li>Total analyzed items = #{analyzerBean.totalItems}</li>
+	            <li>Average price = #{analyzerBean.average}</li>
+	            <li>Max. price = #{analyzerBean.max}</li>
+	            <li>Min. price = #{analyzerBean.min}</li>
+	            <li>Median price = #{analyzerBean.median}</li>
+	            <li>Standard deviation = #{analyzerBean.standardDeviation}</li>
+	        </ul></h3>
+        </div>
+        <h3>Location Distribution Analysis</h3>
+        <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
+        Category: <strong>[#{analyzerBean.category}]</strong>, 
+        Location: <strong>[#{analyzerBean.location}]</strong>.
+        </div>
+        <h3>Top 10 Best-Price Offers*</h3>
+        <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
+        Category: <strong>[#{analyzerBean.category}]</strong>, 
+        Location: <strong>[#{analyzerBean.location}]</strong>.
+            <h:dataTable width="100%" cellpadding="5" value="#{analyzerBean.bestOffers}" var="o"
+            headerClass="ui-widget-header" columnClasses="ui-widget-content,ui-widget-content center,ui-widget-content">
+                <h:column><f:facet name="header">Item</f:facet><a href="#{o.url}">#{o.item}</a></h:column>
+                <h:column><f:facet name="header">Price</f:facet>#{o.priceOfItem}</h:column>
+                <h:column><f:facet name="header">Area</f:facet>#{o.locationsAsString}</h:column>
+            </h:dataTable>
+            <div style="float:right"><i>* Top 10 Best-Price offers are based on our statistical algorithm. </i></div>
+        </div>
     </div>
-    <h3>Location Distribution Analysis</h3>
-    <div>Keyword: <strong>[#{searchCriteriaBean.keyword}]</strong>, 
-    Category: <strong>[#{searchCriteriaBean.category}]</strong>, 
-    Location: <strong>[#{searchCriteriaBean.location}]</strong>.
-    </div>
-    <h3>Top 10 Best-Price Offers*</h3>
-    <div>Keyword: <strong>[#{searchCriteriaBean.keyword}]</strong>, 
-    Category: <strong>[#{searchCriteriaBean.category}]</strong>, 
-    Location: <strong>[#{searchCriteriaBean.location}]</strong>.
-        <h:dataTable width="100%" cellpadding="5" value="#{searchCriteriaBean.bestOffers}" var="o"
-		headerClass="ui-widget-header" columnClasses="ui-widget-content,ui-widget-content center,ui-widget-content">
-            <h:column><f:facet name="header">Item</f:facet><a href="#{o.url}">#{o.item}</a></h:column>
-            <h:column><f:facet name="header">Price</f:facet>#{o.priceOfItem}</h:column>
-            <h:column><f:facet name="header">Area</f:facet>#{o.locationsAsString}</h:column>
-        </h:dataTable>
-        <div style="float:right"><i>* Top 10 Best-Price offers are based on our statistical algorithm. </i></div>
-    </div>
-</div>
-<p class="center"><h:form>
-    <h:commandButton value="Back to Main Page" class="fg-button ui-state-default ui-corner-all" action="main"/>
-</h:form></p>
+    <p><div class="center"><h:form>
+        <h:commandButton value="Back to Main Page" class="fg-button ui-state-default ui-corner-all" action="main"/>
+    </h:form></div></p>
 </h:body>
 </html>

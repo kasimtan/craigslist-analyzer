@@ -28,8 +28,8 @@
                 <table width="100%" border="0" cellpadding="10">
                     <tr>
                         <td align="right"><strong>*LOCATION:</strong>
-                            <br/><h:inputHidden id="locationURLField" value="#{searchCriteriaBean.locationURL}" required="true" requiredMessage="Location required"/>
-                            <h:inputHidden id="locationField" value="#{searchCriteriaBean.location}"/>
+                            <br/><h:inputHidden id="locationURLField" value="#{analyzerBean.locationURL}" required="true" requiredMessage="Location required"/>
+                            <h:inputHidden id="locationField" value="#{analyzerBean.location}"/>
                             <h:message for="locationURLField" styleClass="error"/>
                         </td>
                         <td align="left">
@@ -49,8 +49,8 @@
                     </tr>
                     <tr>
                         <td align="right"><strong>*CATEGORY:</strong>
-                            <br/><h:inputHidden id="categoryCodeField" value="#{searchCriteriaBean.categoryCode}" required="true" requiredMessage="Category required"/>
-                            <h:inputHidden id="categoryField" value="#{searchCriteriaBean.category}"/>
+                            <br/><h:inputHidden id="categoryCodeField" value="#{analyzerBean.categoryCode}" required="true" requiredMessage="Category required"/>
+                            <h:inputHidden id="categoryField" value="#{analyzerBean.category}"/>
                             <h:message for="categoryCodeField" styleClass="error"/>
                         </td>
                         <td align="left">
@@ -77,7 +77,7 @@
                             <br/><h:message for="keywordField" styleClass="error"/>
                         </td>
                         <td align="left">
-                            <h:inputText id="keywordField" class="fg-textbox ui-state-default ui-corner-all" value="#{searchCriteriaBean.keyword}" required="true" requiredMessage="Keyword required"/>
+                            <h:inputText id="keywordField" class="fg-textbox ui-state-default ui-corner-all" value="#{analyzerBean.keyword}" required="true" requiredMessage="Keyword required"/>
                         </td>
                     </tr>
                     <tr>

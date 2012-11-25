@@ -2,8 +2,6 @@ package com.crawl.model;
 
 import org.apache.log4j.Logger;
 
-import com.ui.SearchCriteriaBean;
-
 /**
  * Craigslist "For Sale" Category
  * @author mschimpf
