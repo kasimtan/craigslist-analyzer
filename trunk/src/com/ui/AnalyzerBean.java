@@ -12,6 +12,8 @@ import com.analysis.control.AnaCrack;
 import com.crawl.control.Crawler;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
+import com.crawl.model.LocationDistribution;
+import com.crawl.model.PriceDistribution;
 
 @ManagedBean
 @SessionScoped
@@ -21,6 +23,27 @@ public class AnalyzerBean implements Serializable {
     private static Logger logger = Logger.getLogger(AnalyzerBean.class);
     private Collection<CrawlResultPackage> analyzerOffers;
     private Collection<CrawlResultPackage> crawlResult;
+    
+    private Collection<LocationDistribution> locationDistribution;
+    private Collection<PriceDistribution> priceDistribution;
+    
+    public Collection<LocationDistribution> getLocationDistribution() {
+        return locationDistribution;
+    }
+
+    public void setLocationDistribution(
+            Collection<LocationDistribution> locationDistribution) {
+        this.locationDistribution = locationDistribution;
+    }
+
+    public Collection<PriceDistribution> getPriceDistribution() {
+        return priceDistribution;
+    }
+
+    public void setPriceDistribution(Collection<PriceDistribution> priceDistribution) {
+        this.priceDistribution = priceDistribution;
+    }
+
     private transient AnaCrack analyzer;
 
     private String location = "Select a location ......";
@@ -104,6 +127,10 @@ public class AnalyzerBean implements Serializable {
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
+        
+        this.setLocationDistribution(analyzer.getLocationDistribution());
+        this.setPriceDistribution(analyzer.getPriceDistribution());
+        
         return "Analyze Result";
     }
 
