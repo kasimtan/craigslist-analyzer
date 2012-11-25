@@ -2,11 +2,14 @@ package com.analysis.control;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
+import com.crawl.model.LocationDistribution;
+import com.crawl.model.PriceDistribution;
 
 /**
  * Class for doing the analyzing things.
@@ -108,7 +111,7 @@ public class AnaCrack {
 	    Object[] aArrayCralObjects=inputColl.toArray();
 	    
 	    for (int i=0;i<aArrayCralObjects.length;i++){
-	        logger.info("i="+i);
+	        logger.debug("i="+i);
 	        aRetColl.add((CrawlResultPackage)aArrayCralObjects[i]);
 	    }
 	    
@@ -546,4 +549,77 @@ public class AnaCrack {
 	    
 	    return aRetString.toString();
 	}
+	
+	/**
+	 * Create Location DIstribution
+	 * @return
+	 */
+	public Collection<LocationDistribution> getLocationDistribution(){
+	    logger.debug("Start");
+	    logger.debug("size="+this.getCrawlCollection().size());
+	    
+	    HashMap<String, LocationDistribution> aHashMap=new HashMap<String, LocationDistribution>();
+	    
+	    for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()){
+	        Collection<String> aStringLocColl=aCrawlResultPackage.getLocations();
+	        
+	        logger.debug("aStringLocColl="+aCrawlResultPackage.getLocationsAsString());
+	        
+	        for (String aStringGet: aStringLocColl){
+	            String aCurrString=aStringGet.toLowerCase();
+	            
+	            LocationDistribution aLocDist=aHashMap.get(aCurrString);
+	            logger.debug("aLocDist="+aLocDist);
+	            
+	            if (aLocDist==null){
+	                LocationDistribution aLoc=new LocationDistribution();
+	                aLoc.setAreaName(aCurrString);
+	                aLoc.setCount(1);
+	                aHashMap.put(aCurrString, aLoc);
+	            } else {
+	                aLocDist.setCount(aLocDist.getCount()+1);
+	            }
+	        }
+	    }
+	    
+	    Collection<LocationDistribution> aRetColl=aHashMap.values();
+	    
+	    logger.debug("SIZE="+aRetColl.size());
+	    
+	    return aRetColl;
+	}
+	
+	   /**
+     * Create Price DIstribution
+     * @return
+     */
+    public Collection<PriceDistribution> getPriceDistribution(){
+        logger.debug("Start");
+        logger.debug("size="+this.getCrawlCollection().size());
+        
+        HashMap<String, PriceDistribution> aHashMap=new HashMap<String, PriceDistribution>();
+        
+        for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()){
+            String aStringPrice=""+aCrawlResultPackage.getPriceOfItem();
+            
+            logger.debug("aStringPrice="+aStringPrice);
+            
+            PriceDistribution aPriceDist=aHashMap.get(aStringPrice);
+                
+            if (aPriceDist==null){
+                PriceDistribution aPricePack=new PriceDistribution();
+                aPricePack.setPriceString(aStringPrice);
+                aPricePack.setCount(1);
+                aHashMap.put(aStringPrice, aPricePack);
+            } else {
+                aPriceDist.setCount(aPriceDist.getCount()+1);
+            }
+        }
+        
+        Collection<PriceDistribution> aRetColl=aHashMap.values();
+        
+        logger.debug("SIZE="+aRetColl.size());
+        
+        return aRetColl;
+    }
 }
