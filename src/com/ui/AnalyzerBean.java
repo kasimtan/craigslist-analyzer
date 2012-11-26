@@ -1,6 +1,7 @@
 package com.ui;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Collection;
 
 import javax.faces.bean.ManagedBean;
@@ -21,29 +22,10 @@ public class AnalyzerBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static Logger logger = Logger.getLogger(AnalyzerBean.class);
-    private Collection<CrawlResultPackage> analyzerOffers;
-    private Collection<CrawlResultPackage> crawlResult;
-    
-    private Collection<LocationDistribution> locationDistribution;
-    private Collection<PriceDistribution> priceDistribution;
-    
-    public Collection<LocationDistribution> getLocationDistribution() {
-        return locationDistribution;
-    }
-
-    public void setLocationDistribution(
-            Collection<LocationDistribution> locationDistribution) {
-        this.locationDistribution = locationDistribution;
-    }
-
-    public Collection<PriceDistribution> getPriceDistribution() {
-        return priceDistribution;
-    }
-
-    public void setPriceDistribution(Collection<PriceDistribution> priceDistribution) {
-        this.priceDistribution = priceDistribution;
-    }
-
+    private transient Collection<CrawlResultPackage> analyzerOffers;
+    private transient Collection<CrawlResultPackage> crawlResult;
+    private transient Collection<LocationDistribution> locationDistribution;
+    private transient Collection<PriceDistribution> priceDistribution;
     private transient AnaCrack analyzer;
 
     private String location = "Select a location ......";
@@ -115,7 +97,7 @@ public class AnalyzerBean implements Serializable {
                 this.getLocationURL(),
                 this.getKeyword());
         // Get all items
-        crawlResult = aCrawl.crawlWebPages(craigslistURL, 100);
+        crawlResult = aCrawl.crawlWebPages(craigslistURL, 2500);
         logger.debug("aResultColl Size=" + crawlResult.size());
         // Create analyzer object
         analyzer = new AnaCrack();
@@ -127,10 +109,6 @@ public class AnalyzerBean implements Serializable {
                 1, /* Lower control limit */
                 1000 /* higher control limit */
         );
-        
-        this.setLocationDistribution(analyzer.getLocationDistribution());
-        this.setPriceDistribution(analyzer.getPriceDistribution());
-        
         return "Analyze Result";
     }
 
@@ -147,7 +125,15 @@ public class AnalyzerBean implements Serializable {
      * @return
      */
     public String getAverage() {
-        return (analyzer != null) ? String.valueOf(analyzer.getAverage()) : "N/A";
+        if(analyzer == null)
+            return "N/A";
+        // Rounded to 2 decimal place
+        double average = analyzer.getAverage() * 100.0;
+        average = Math.round(average);
+        average = average / 100;
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        return nf.format(average);
     }
 
     /**
@@ -171,9 +157,13 @@ public class AnalyzerBean implements Serializable {
      * @return
      */
     public String getMedian() {
+        if(analyzer == null)
+            return "N/A";
         // Rounded as integer
         double median = analyzer.getMedian();
-        return (analyzer != null) ? String.valueOf(Math.round(median)) : "N/A";
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        return nf.format(Math.round(median));
     }
 
     /**
@@ -181,11 +171,15 @@ public class AnalyzerBean implements Serializable {
      * @return
      */
     public String getStandardDeviation() {
+        if(analyzer == null)
+            return "N/A";
         // Rounded to 2 decimal place
-        double stddev = analyzer.getStandardDeviation() * 100;
+        double stddev = analyzer.getStandardDeviation() * 100.0;
         stddev = Math.round(stddev);
         stddev = stddev / 100;
-        return (analyzer != null) ? String.valueOf(stddev) : "N/A";
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        return nf.format(stddev);
     }
 
     /**
@@ -194,5 +188,42 @@ public class AnalyzerBean implements Serializable {
      */
     public Collection<CrawlResultPackage> getBestOffers() {
         return analyzerOffers;
+    }
+
+    /**
+     * Check 10 Best-Price Offers isEmpty
+     * @return
+     */
+    public boolean isBestOffersEmpty() {
+        return (analyzerOffers == null) ? true : analyzerOffers.isEmpty();
+    }
+    
+    public String getPriceDistribution() {
+        StringBuilder str = new StringBuilder();
+        String[] colors = {"#FF0F00", "#FF6600", "#FF9E01", "#FCD202", "#B0DE09", "#04D215", "#0D8ECF", "#0D52D1", "#2A0CD0", "#8A0CCF", "#CD0D74", "#754DEB", "#999999", "#666666", "#333333"};
+        if(analyzer != null) {
+            priceDistribution = analyzer.getPriceDistribution();
+            int i = 0;
+            for(PriceDistribution price : priceDistribution) {
+                if(i > 0) str.append(", ");
+                str.append("{ price:'" + price.getPriceString() + "', count:" + price.getCount() + ", color:'" + colors[i % 15] + "' }");
+                i++;
+            }
+        }
+        return str.toString();
+    }
+    
+    public String getLocationDistribution() {
+        StringBuilder str = new StringBuilder();
+        if(analyzer != null) {
+            locationDistribution = analyzer.getLocationDistribution();
+            int i = 0;
+            for(LocationDistribution loc : locationDistribution) {
+                if(i > 0) str.append(", ");
+                str.append("{ area:'" + loc.getAreaName() + "', count:" + loc.getCount() + " }");
+                i++;
+            }
+        }
+        return str.toString();
     }
 }
