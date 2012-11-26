@@ -38,6 +38,7 @@ public class AnaCrack {
     private int higherControlLimit;
     
 	/**
+	 * The main anlyzing method.
 	 * 
 	 * @param inputInputHowMuch Give me the 10 best offers
 	 * @param inputCraigslistAlgorithmEnum To use algorithm
@@ -123,7 +124,7 @@ public class AnaCrack {
 	}
 	
     /**
-     * Get the worst offers
+     * Get the worst offers.
      * @return
      */
     private Collection<CrawlResultPackage> getWorstOffers(){
@@ -172,7 +173,7 @@ public class AnaCrack {
 	
 	
 	/**
-	 * Get the best offers
+	 * Get the best offers.
 	 * @return
 	 */
 	private Collection<CrawlResultPackage> getBestOffers(){
@@ -233,7 +234,7 @@ public class AnaCrack {
 	}
 	
 	/**
-	 * Standrd Deviation
+	 * Standard deviation.
 	 */
 	private void searchForStandardDeviation(){   
         double[] doubleArray=new double[this.getOffers()];
@@ -291,7 +292,7 @@ public class AnaCrack {
 	}  
 
 	/**
-	 * 
+	 * Search for the mode.
 	 */
 	private void searchForMode() {
         int[] intArray=new int[this.getOffers()];
@@ -323,7 +324,7 @@ public class AnaCrack {
 	}	
 	
 	/**
-	 * 
+	 * Search for median.
 	 */
 	private void searchForMedian() {
 	    int[] intArray=new int[this.getOffers()];
@@ -354,7 +355,7 @@ public class AnaCrack {
 	}
 
 	/**
-	 * 
+	 * Search for the min price.
 	 */
 	private void searchForMinPrice(){
         int aMinPrice=1000000;
@@ -374,7 +375,7 @@ public class AnaCrack {
 	}
 	
 	/**
-	 * 
+	 * Search for the max price.
 	 */
     private void searchForMaxPrice(){
         int aMaxPrice=0;
@@ -394,7 +395,7 @@ public class AnaCrack {
     }
 	
 	/**
-	 * 
+	 * Create the average.
 	 */
 	private void createAverage(){
         int aPrice=0;
@@ -417,7 +418,7 @@ public class AnaCrack {
 	}
 	
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 * @return
 	 */
     public int getOffers() {
@@ -425,7 +426,7 @@ public class AnaCrack {
     }
 
     /**
-     * 
+     * GETTER/SETTER.
      * @param offers
      */
     private void setOffers(int offers) {
@@ -433,7 +434,7 @@ public class AnaCrack {
     }	
 	
     /**
-     * 
+     * GETTER/SETTER.
      * @return
      */
 	public Collection<CrawlResultPackage> getCrawlCollection() {
@@ -441,7 +442,7 @@ public class AnaCrack {
     }
 
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 * @param crawlCollection
 	 */
     private void setCrawlCollection(Collection<CrawlResultPackage> crawlCollection) {
@@ -449,14 +450,14 @@ public class AnaCrack {
     }
 
     /**
-	 * 
+	 * GETTER/SETTER.
 	 */
 	public double getAverage(){
 		return this.average;
 	}
 
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 * @param average
 	 */
 	private void setAverage(double average) {
@@ -464,7 +465,7 @@ public class AnaCrack {
     }
 
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 * @param min
 	 */
     private void setMin(int min) {
@@ -472,7 +473,7 @@ public class AnaCrack {
     }
 
     /**
-     * 
+     * GETTER/SETTER.
      * @param max
      */
     private void setMax(int max) {
@@ -480,7 +481,7 @@ public class AnaCrack {
     }
 
     /**
-     * 
+     * GETTER/SETTER.
      * @param median
      */
     private void setMedian(double median) {
@@ -488,7 +489,7 @@ public class AnaCrack {
     }
 
     /**
-     * 
+     * GETTER/SETTER.
      * @param mode
      */
     private void setMode(int mode) {
@@ -496,7 +497,7 @@ public class AnaCrack {
     }
 
     /**
-     * 
+     * GETTER/SETTER.
      * @param standardDeviation
      */
     private void setStandardDeviation(double standardDeviation) {
@@ -504,35 +505,35 @@ public class AnaCrack {
     }
 
     /**
-	 * 
+	 * GETTER/SETTER.
 	 */
 	public int getMin(){
 		return this.min;
 	}
 	
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 */	
 	public int getMax(){
 		return this.max;
 	}
 	
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 */	
 	public double getMedian(){
 		return this.median;
 	}
 
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 */
 	public int getMode(){
 		return this.mode;
 	}
 	
 	/**
-	 * 
+	 * GETTER/SETTER.
 	 */	
 	public double getStandardDeviation(){
 		return this.standardDeviation;
@@ -555,7 +556,7 @@ public class AnaCrack {
 	}
 	
 	/**
-	 * Create Location DIstribution
+	 * Create Location distribution
 	 * @return
 	 */
 	public Collection<LocationDistribution> getLocationDistribution(){
@@ -608,38 +609,49 @@ public class AnaCrack {
 	    return aRetColl3;
 	}
 	
+	/**
+	 * Make the result collection for the location view - viewable.
+	 * 
+	 * Consider not every location consider only the highest 20 and put together the rest.
+	 * 
+	 * @param inputColl
+	 * @return
+	 */
 	private Collection<LocationDistribution> cutAndMakeItProper(Collection<LocationDistribution> inputColl){
-	    // If there are less or equal x items, do nothing and return the input collection
 	    final int aCountItems=20;
 	    
-	    if (inputColl.size()<=aCountItems){
+	    // If there are less then aCountItems items, do nothing and return the input collection
+	    if (inputColl.size()<aCountItems){
 	        logger.debug("Collection is less then "+aCountItems+"!");
 	        return inputColl;
 	    }
 	    
+	    // First step - reverse the collection order -------------------------------------------
 	    Collection<LocationDistribution> aFirstStepColl=new ArrayList<LocationDistribution>();
 	    
-	    Object[] arrObj=inputColl.toArray();
+	    Object[] arrObjFirst=inputColl.toArray();
 	    
 	    // Reverse it
-	    for (int i=arrObj.length-1;i>0;i--){
-	        aFirstStepColl.add((LocationDistribution)arrObj[i]);
+	    for (int i=arrObjFirst.length-1;i>0;i--){
+	        aFirstStepColl.add((LocationDistribution)arrObjFirst[i]);
 	    }
 	    
+	    // Second step - Calculate the first hits and calculate the rest ----------------------  
 	    Collection<LocationDistribution> aSecondStepColl=new ArrayList<LocationDistribution>();
 	    
-	    Object[] objArrFin=aFirstStepColl.toArray();
+	    Object[] arrObjSecond=aFirstStepColl.toArray();
 	    
 	    int aIntRestCopunter=0;
 	    
-        for (int i=0;i<objArrFin.length;i++){
+        for (int i=0;i<arrObjSecond.length;i++){
             if (i>aCountItems){
-                aIntRestCopunter=aIntRestCopunter+((LocationDistribution)objArrFin[i]).getCount();
+                aIntRestCopunter=aIntRestCopunter+((LocationDistribution)arrObjSecond[i]).getCount();
             }else{
-                aSecondStepColl.add((LocationDistribution)objArrFin[i]);
+                aSecondStepColl.add((LocationDistribution)arrObjSecond[i]);
             }
         }	
         
+        // Create and add the Rest item to the collection
         LocationDistribution aLocationDistributionRest=new LocationDistribution();
         aLocationDistributionRest.setAreaName("Others");
         aLocationDistributionRest.setCount(aIntRestCopunter);
@@ -649,7 +661,7 @@ public class AnaCrack {
 	}
 	
     /**
-     * BubbleSort
+     * BubbleSort the collection for the location count.
      * @param arr
      */
     private Collection<LocationDistribution> bubbleSort(Object[] inputObjArray) {
@@ -673,7 +685,7 @@ public class AnaCrack {
     }
 	
     /**
-     * Create Price DIstribution
+     * Create Price Distribution.
      * @return
      */
     public Collection<PriceDistribution> getPriceDistribution(){
