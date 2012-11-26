@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * 
+ * Cache super class for attributes and methods which will be used by other implementations. For example, the EBayCache...
  * @author mschimpf
  *
  */
@@ -20,7 +20,7 @@ public class Cache {
     protected HashMap<String, Collection<CrawlResultPackage>> map=new HashMap<String, Collection<CrawlResultPackage>>();
     
     /**
-     * 
+     * Check if content is still usable? And if not drop the used data object and recreate a emptz new one. 
      */
     protected synchronized void checkTimeToLife(){
         long currentTime=System.currentTimeMillis()-this.creationTime;
