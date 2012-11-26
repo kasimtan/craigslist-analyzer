@@ -18,38 +18,42 @@
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/normalize.css"/>
     <link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'/>
-    <script src="js/jquery-1.8.2.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <script src="js/fg.menu.js"></script>
-    <script>$(function() { $( "#accordion" ).accordion(); });</script>
+    <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/fg.menu.js"></script>
+    <script type="text/javascript" src="js/amcharts.js"></script>
 </h:head>
 <h:body>
-    <h1 class="center"><span>Craigslist Analyzer</span></h1>
+    <h1 class="center"><span>Craigslist Analyzer</span><br/><font size="3"><i>A market analysis tool for products in Craigslist</i></font></h1>
     <!-- #{analyzerBean.doAnalyze} -->
     <div id="accordion">
         <h3>Price Distribution Analysis</h3>
         <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
-	        Category: <strong>[#{analyzerBean.category}]</strong>, 
-	        Location: <strong>[#{analyzerBean.location}]</strong>.
-	        <h3><ul>
-	            <li>Total analyzed items = #{analyzerBean.totalItems}</li>
-	            <li>Average price = #{analyzerBean.average}</li>
-	            <li>Max. price = #{analyzerBean.max}</li>
-	            <li>Min. price = #{analyzerBean.min}</li>
-	            <li>Median price = #{analyzerBean.median}</li>
-	            <li>Standard deviation = #{analyzerBean.standardDeviation}</li>
-	        </ul></h3>
+            Category: <strong>[#{analyzerBean.category}]</strong>, 
+            Location: <strong>[#{analyzerBean.location}]</strong>.
+            <h3><ul>
+                <li>Total analyzed items = #{analyzerBean.totalItems}</li>
+                <li>Average price = #{analyzerBean.average}</li>
+                <li>Max. price = #{analyzerBean.max}</li>
+                <li>Min. price = #{analyzerBean.min}</li>
+                <li>Median price = #{analyzerBean.median}</li>
+                <li>Standard deviation = #{analyzerBean.standardDeviation}</li>
+            </ul></h3>
+        	<div id="chart1div" style="width: 100%; height: 250px;"></div>
         </div>
         <h3>Location Distribution Analysis</h3>
         <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
-        Category: <strong>[#{analyzerBean.category}]</strong>, 
-        Location: <strong>[#{analyzerBean.location}]</strong>.
+	        Category: <strong>[#{analyzerBean.category}]</strong>, 
+	        Location: <strong>[#{analyzerBean.location}]</strong>.
+            <h3>Total analyzed items = #{analyzerBean.totalItems}</h3>
+	        <div id="chart2div" style="width: 100%; height: 350px;"></div>
         </div>
         <h3>Top 10 Best-Price Offers*</h3>
         <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
-        Category: <strong>[#{analyzerBean.category}]</strong>, 
-        Location: <strong>[#{analyzerBean.location}]</strong>.
-            <h:dataTable width="100%" cellpadding="5" value="#{analyzerBean.bestOffers}" var="o"
+	        Category: <strong>[#{analyzerBean.category}]</strong>, 
+	        Location: <strong>[#{analyzerBean.location}]</strong>.
+            <h3><h:outputText value="No offer" rendered="#{analyzerBean.bestOffersEmpty}"/></h3>
+            <h:dataTable width="100%" cellpadding="5" value="#{analyzerBean.bestOffers}" rendered="#{!analyzerBean.bestOffersEmpty}" var="o"
             headerClass="ui-widget-header" columnClasses="ui-widget-content,ui-widget-content center,ui-widget-content">
                 <h:column><f:facet name="header">Item</f:facet><a href="#{o.url}">#{o.item}</a></h:column>
                 <h:column><f:facet name="header">Price</f:facet>#{o.priceOfItem}</h:column>
@@ -61,5 +65,55 @@
     <p><div class="center"><h:form>
         <h:commandButton value="Back to Main Page" class="fg-button ui-state-default ui-corner-all" action="main"/>
     </h:form></div></p>
+    <script> var chart1, chart2;
+    var chart1Data = [#{analyzerBean.priceDistribution}];
+    var chart2Data = [#{analyzerBean.locationDistribution}];
+    AmCharts.ready(function () {
+        // SERIAL CHART
+        chart1 = new AmCharts.AmSerialChart();
+        chart1.dataProvider = chart1Data;
+        chart1.categoryField = "price";
+        // the following two lines makes chart 3D
+        chart1.depth3D = 20;
+        chart1.angle = 30;
+        // AXES
+        // category
+        var categoryAxis = chart1.categoryAxis;
+        categoryAxis.gridPosition = "start";
+        categoryAxis.title = "Price";
+        // value
+        var valueAxis = new AmCharts.ValueAxis();
+        valueAxis.title = "Frequency";
+        chart1.addValueAxis(valueAxis);
+        // GRAPH
+        var graph = new AmCharts.AmGraph();
+        graph.valueField = "count";
+        graph.colorField = "color";
+        graph.balloonText = "[[category]]: [[value]]";
+        graph.labelPosition = "top";
+        graph.labelText = "[[value]]";
+        graph.type = "column";
+        graph.lineAlpha = 0;
+        graph.fillAlphas = 1;
+        chart1.addGraph(graph);
+        // WRITE
+        chart1.write("chart1div");
+    });
+    AmCharts.ready(function () {
+        chart2 = new AmCharts.AmPieChart();
+        chart2.dataProvider = chart2Data;
+        chart2.titleField = "area";
+        chart2.valueField = "count";
+        chart2.outlineColor = "#FFFFFF";
+        chart2.outlineAlpha = 0.8;
+        chart2.outlineThickness = 2;
+        // this makes the chart 3D
+        chart2.depth3D = 15;
+        chart2.angle = 30;
+        chart2.write("chart2div");
+    });
+    $(function() { $("#accordion").accordion(); });
+    $(function() { $("#accordion").accordion({change: function(event, ui) { chart1.invalidateSize(); chart2.invalidateSize(); }})});
+    </script>
 </h:body>
 </html>

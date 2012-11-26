@@ -25,7 +25,7 @@ public class AnaCrack {
     private Collection<CrawlResultPackage> crawlCollection;
     
     private int offers;
-    private int average;
+    private double average;
     private int min;
     private int max;
     private double median;
@@ -251,7 +251,7 @@ public class AnaCrack {
          sum = sum + doubleArray[i];
         }
 
-        double mean = sum/doubleArray.length;
+        double mean = sum*1.0/doubleArray.length;
 
         logger.debug(mean);
 
@@ -281,7 +281,7 @@ public class AnaCrack {
         logger.debug(sum);
 
         // dividing the numbers by one less than total numbers
-        double result = sum / (doubleArray.length - 1);
+        double result = sum*1.0 / (doubleArray.length - 1);
 
         double standardDeviation = Math.sqrt(result);
                 
@@ -409,7 +409,7 @@ public class AnaCrack {
         if (this.getOffers()==0){
             this.setAverage(-1);
         } else{
-            this.setAverage((aPrice/this.getOffers()));
+            this.setAverage((aPrice*1.0/this.getOffers()));
             
             logger.info("average price="+this.getAverage()+" offers="+this.getOffers());    
         }
@@ -450,7 +450,7 @@ public class AnaCrack {
     /**
 	 * 
 	 */
-	public int getAverage(){
+	public double getAverage(){
 		return this.average;
 	}
 
@@ -458,7 +458,7 @@ public class AnaCrack {
 	 * 
 	 * @param average
 	 */
-	private void setAverage(int average) {
+	private void setAverage(double average) {
         this.average = average;
     }
 
@@ -610,26 +610,32 @@ public class AnaCrack {
         logger.debug("Start");
         logger.debug("size="+this.getCrawlCollection().size());
         
-        SortedMap<String, PriceDistribution> aSortedMap=new TreeMap<String, PriceDistribution>();
+        HashMap<String, String> map = new HashMap<String, String>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
         
-        for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()){
+        for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()) {
             String aStringPrice=""+aCrawlResultPackage.getPriceOfItem();
-            
-            logger.debug("aStringPrice="+aStringPrice);
-            
-            PriceDistribution aPriceDist=aSortedMap.get(aStringPrice);
-                
-            if (aPriceDist==null){
-                PriceDistribution aPricePack=new PriceDistribution();
-                aPricePack.setPriceString(aStringPrice);
-                aPricePack.setCount(1);
-                aSortedMap.put(aStringPrice, aPricePack);
-            } else {
-                aPriceDist.setCount(aPriceDist.getCount()+1);
+            if(map.get(aStringPrice) == null) {
+                map.put(aStringPrice, "1");
+                list.add(Integer.parseInt(aStringPrice));
+                logger.info("aStringPrice=" + aStringPrice);
+            }
+            else {
+                int count = Integer.parseInt((String)map.get(aStringPrice));
+                map.put(aStringPrice, String.valueOf(count + 1));
             }
         }
         
-        Collection<PriceDistribution> aRetColl=aSortedMap.values();
+        Collections.sort(list);
+        
+        Collection<PriceDistribution> aRetColl = new ArrayList<PriceDistribution>();
+        for(int i = 0; i < list.size(); i++) {
+            PriceDistribution aPriceDist = new PriceDistribution();
+            String priceStr = String.valueOf(list.get(i));
+            aPriceDist.setPriceString(priceStr);
+            aPriceDist.setCount(Integer.parseInt(map.get(priceStr)));
+            aRetColl.add(aPriceDist);
+        }
         
         logger.debug("SIZE="+aRetColl.size());
              
