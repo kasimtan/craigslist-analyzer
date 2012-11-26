@@ -39,14 +39,14 @@
                 <li>Median price = #{analyzerBean.median}</li>
                 <li>Standard deviation = #{analyzerBean.standardDeviation}</li>
             </ul></h3>
-        	<div id="chart1div" style="width: 100%; height: 250px;"></div>
+        	<div id="chart1div" style="width: 100%; height: 240px;"></div>
         </div>
         <h3>Location Distribution Analysis</h3>
         <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
 	        Category: <strong>[#{analyzerBean.category}]</strong>, 
 	        Location: <strong>[#{analyzerBean.location}]</strong>.
-            <h3>Total analyzed items = #{analyzerBean.totalItems}</h3>
-	        <div id="chart2div" style="width: 100%; height: 350px;"></div>
+            <h3><ul><li>Total analyzed items = #{analyzerBean.totalItems}</li></ul></h3>
+	        <div id="chart2div" style="width: 100%; height: 360px;"></div>
         </div>
         <h3>Top 10 Best-Price Offers*</h3>
         <div>Keyword: <strong>[#{analyzerBean.keyword}]</strong>, 
@@ -62,9 +62,9 @@
             <div style="float:right"><i>* Top 10 Best-Price offers are based on our statistical algorithm. </i></div>
         </div>
     </div>
-    <p><div class="center"><h:form>
+    <p align="center"><h:form>
         <h:commandButton value="Back to Main Page" class="fg-button ui-state-default ui-corner-all" action="main"/>
-    </h:form></div></p>
+    </h:form></p>
     <script> var chart1, chart2;
     var chart1Data = [#{analyzerBean.priceDistribution}];
     var chart2Data = [#{analyzerBean.locationDistribution}];
@@ -107,6 +107,8 @@
         chart2.outlineColor = "#FFFFFF";
         chart2.outlineAlpha = 0.8;
         chart2.outlineThickness = 2;
+        chart2.marginTop = 0;
+        chart2.marginBottom = 0;
         // this makes the chart 3D
         chart2.depth3D = 15;
         chart2.angle = 30;

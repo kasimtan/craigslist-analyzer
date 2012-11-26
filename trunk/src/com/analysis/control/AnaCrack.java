@@ -593,17 +593,17 @@ public class AnaCrack {
 	    
 	    Collection<LocationDistribution> aRetColl1=aSortedMap.values();
 	    	    
-	    logger.info("aRetColl1 --- SIZE="+aRetColl1.size());
+	    logger.debug("aRetColl1 --- SIZE="+aRetColl1.size());
 	    
 	    // Sort it...
 	    Collection<LocationDistribution> aRetColl2=this.bubbleSort(aRetColl1.toArray());
 	    
-	    logger.info("aRetColl2 --- SIZE="+aRetColl2.size());
+	    logger.debug("aRetColl2 --- SIZE="+aRetColl2.size());
 	    
 	    // Cut it to ten items
 	    Collection<LocationDistribution> aRetColl3=this.cutAndMakeItProper(aRetColl2);
 	    
-	    logger.info("aRetColl3 --- SIZE="+aRetColl3.size());
+	    logger.debug("aRetColl3 --- SIZE="+aRetColl3.size());
 	    	    
 	    return aRetColl3;
 	}
@@ -613,7 +613,7 @@ public class AnaCrack {
 	    final int aCountItems=20;
 	    
 	    if (inputColl.size()<=aCountItems){
-	        logger.info("Collection is less then "+aCountItems+"!");
+	        logger.debug("Collection is less then "+aCountItems+"!");
 	        return inputColl;
 	    }
 	    
@@ -641,7 +641,7 @@ public class AnaCrack {
         }	
         
         LocationDistribution aLocationDistributionRest=new LocationDistribution();
-        aLocationDistributionRest.setAreaName("Rest");
+        aLocationDistributionRest.setAreaName("Others");
         aLocationDistributionRest.setCount(aIntRestCopunter);
         aSecondStepColl.add(aLocationDistributionRest);
 	    
