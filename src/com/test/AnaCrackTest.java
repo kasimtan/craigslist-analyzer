@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.junit.Test;
 import com.analysis.control.AnaCrack;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
-import com.crawl.model.CrawlResultPackageComparator;
 
 /**
  * 
