@@ -68,7 +68,7 @@ public class StartMain {
                 "Apple");
         
         // 2. Step get all offers
-        Collection<CrawlResultPackage> aResultColl =aCrawl.crawlWebPages(aUrl, 1000);
+        Collection<CrawlResultPackage> aResultColl =aCrawl.crawlWebPages(aUrl, 5000);
 
         logger.debug("aResultColl Size=" + aResultColl.size());
 
@@ -78,7 +78,7 @@ public class StartMain {
         // 4. do the anlysing and return the offers
         Collection<CrawlResultPackage> aAnaColl = aAnaCrack.analyse(
                 aResultColl, /* The result collection from the crawler */
-                8, /* Give me the x best offers */
+                50, /* Give me the x best offers */
                 CraigslistAlgorithmEnum.BEST, /* To use algorithm */
                 1, /* Lower control limit */
                 1000 /* higher control limit */

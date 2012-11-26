@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
 import com.crawl.model.LocationDistribution;
+import com.crawl.model.LocationDistributionComparator;
 import com.crawl.model.PriceDistribution;
 
 /**
@@ -590,14 +591,88 @@ public class AnaCrack {
 	        }
 	    }
 	    
-	    Collection<LocationDistribution> aRetColl=aSortedMap.values();
+	    Collection<LocationDistribution> aRetColl1=aSortedMap.values();
+	    	    
+	    logger.info("aRetColl1 --- SIZE="+aRetColl1.size());
 	    
-	    logger.debug("SIZE="+aRetColl.size());
+	    // Sort it...
+	    Collection<LocationDistribution> aRetColl2=this.bubbleSort(aRetColl1.toArray());
 	    
-	    return aRetColl;
+	    logger.info("aRetColl2 --- SIZE="+aRetColl2.size());
+	    
+	    // Cut it to ten items
+	    Collection<LocationDistribution> aRetColl3=this.cutAndMakeItProper(aRetColl2);
+	    
+	    logger.info("aRetColl3 --- SIZE="+aRetColl3.size());
+	    	    
+	    return aRetColl3;
 	}
 	
-	   /**
+	private Collection<LocationDistribution> cutAndMakeItProper(Collection<LocationDistribution> inputColl){
+	    // If there are less or equal x items, do nothing and return the input collection
+	    final int aCountItems=20;
+	    
+	    if (inputColl.size()<=aCountItems){
+	        logger.info("Collection is less then "+aCountItems+"!");
+	        return inputColl;
+	    }
+	    
+	    Collection<LocationDistribution> aFirstStepColl=new ArrayList<LocationDistribution>();
+	    
+	    Object[] arrObj=inputColl.toArray();
+	    
+	    // Reverse it
+	    for (int i=arrObj.length-1;i>0;i--){
+	        aFirstStepColl.add((LocationDistribution)arrObj[i]);
+	    }
+	    
+	    Collection<LocationDistribution> aSecondStepColl=new ArrayList<LocationDistribution>();
+	    
+	    Object[] objArrFin=aFirstStepColl.toArray();
+	    
+	    int aIntRestCopunter=0;
+	    
+        for (int i=0;i<objArrFin.length;i++){
+            if (i>aCountItems){
+                aIntRestCopunter=aIntRestCopunter+((LocationDistribution)objArrFin[i]).getCount();
+            }else{
+                aSecondStepColl.add((LocationDistribution)objArrFin[i]);
+            }
+        }	
+        
+        LocationDistribution aLocationDistributionRest=new LocationDistribution();
+        aLocationDistributionRest.setAreaName("Rest");
+        aLocationDistributionRest.setCount(aIntRestCopunter);
+        aSecondStepColl.add(aLocationDistributionRest);
+	    
+	    return aSecondStepColl;
+	}
+	
+    /**
+     * BubbleSort
+     * @param arr
+     */
+    private Collection<LocationDistribution> bubbleSort(Object[] inputObjArray) {
+        for (int i = 0; i < inputObjArray.length; i++) {
+            for (int j = 1; j < inputObjArray.length; j++) {
+                if (((LocationDistribution)inputObjArray[j]).getCount() < (((LocationDistribution)inputObjArray[j - 1]).getCount())) {
+                    LocationDistribution aLocationDistribution = (LocationDistribution)inputObjArray[j];
+                    inputObjArray[j] = inputObjArray[j - 1];
+                    inputObjArray[j - 1] = aLocationDistribution;
+                }
+            }
+        }
+        
+        Collection<LocationDistribution> aFinal=new ArrayList<LocationDistribution>();
+        
+        for (int i=0;i<inputObjArray.length;i++){
+            aFinal.add((LocationDistribution)inputObjArray[i]);
+        }
+
+        return aFinal;
+    }
+	
+    /**
      * Create Price DIstribution
      * @return
      */
@@ -618,7 +693,7 @@ public class AnaCrack {
             if(map.get(aStringPrice) == null) {
                 map.put(aStringPrice, "1");
                 list.add(Integer.parseInt(aStringPrice));
-                logger.info("aStringPrice=" + aStringPrice);
+                logger.debug("aStringPrice=" + aStringPrice);
             }
             else {
                 int count = Integer.parseInt((String)map.get(aStringPrice));
@@ -640,5 +715,5 @@ public class AnaCrack {
         logger.debug("SIZE="+aRetColl.size());
              
         return aRetColl;
-    }
+    }   
 }
