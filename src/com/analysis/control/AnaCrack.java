@@ -12,12 +12,11 @@ import org.apache.log4j.Logger;
 import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
 import com.crawl.model.LocationDistribution;
-import com.crawl.model.LocationDistributionComparator;
 import com.crawl.model.PriceDistribution;
 
 /**
  * Class for doing the analyzing things.
- * @author mschimpf
+ * @author Team Kappa
  *
  */
 public class AnaCrack {

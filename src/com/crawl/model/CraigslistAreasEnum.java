@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Which area should be used to analyze?
- * @author mschimpf
+ * @author Team Kappa
  *
  */
 public enum CraigslistAreasEnum {
@@ -27,16 +27,24 @@ public enum CraigslistAreasEnum {
 	
 	private String code;  
 	
+	/**
+	 * Constructor.
+	 * @param c
+	 */
 	private CraigslistAreasEnum(String c) {   
 		this.code = c; 
 	}  
 	
+	/**
+	 * GETTER.
+	 * @return
+	 */
 	public String getCode() {   
 		return this.code; 
 	}
 	
 	/**
-	 * 
+	 * Search for a string which fits the code.
 	 * @param inputString
 	 * @return
 	 */

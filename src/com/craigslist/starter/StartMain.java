@@ -19,7 +19,7 @@ import com.crawl.model.PriceDistribution;
 
 /**
  * Standallone class with a main method. Usefull for tests.
- * @author mschimpf
+ * @author Team Kappa
  * 
  */
 public class StartMain {

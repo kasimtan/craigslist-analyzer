@@ -11,10 +11,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * JSF housing categorz object modell.
+ * @author Team Kappa
+ *
+ */
 @ManagedBean(eager=true)
 public class HousingCategory {
     private static List<Category> categories;
 
+    /**
+     * Constructor.
+     */
     public HousingCategory() {
         String url = "http://sfbay.craigslist.org/hhh/";
         try {
@@ -37,10 +45,19 @@ public class HousingCategory {
         }
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public List<Category> getCategories() {
         return categories;
     }
     
+    /**
+     * Put the capital first.
+     * @param str
+     * @return
+     */
     private static String capitalFirst(String str) {
         // Capitalize first letter of the string
         StringBuilder capitalWordBuilder = new StringBuilder(str.substring(0,1).toUpperCase());

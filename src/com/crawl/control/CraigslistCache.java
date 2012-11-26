@@ -1,15 +1,14 @@
 package com.crawl.control;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * 
- * @author mschimpf
+ * Craigslist cache is a cache object only for the content of Craigslist. For additional web pages will be additional cache classes created.
+ * @author Kappa Team
  *
  */
 public class CraigslistCache extends Cache{
@@ -17,6 +16,9 @@ public class CraigslistCache extends Cache{
     
     private static CraigslistCache craigslistCache;
     
+    /**
+     * Singleton private constructore.
+     */
     private CraigslistCache(){}
     
     /**
@@ -32,7 +34,7 @@ public class CraigslistCache extends Cache{
     }
     
     /**
-     * 
+     * Get info from cache.
      * @param inputKey
      * @return
      */
@@ -51,7 +53,7 @@ public class CraigslistCache extends Cache{
     }
     
     /**
-     * 
+     * Add info to cache.
      * @param inputKey
      * @param inputCollection
      */

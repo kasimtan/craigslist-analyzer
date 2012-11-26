@@ -18,8 +18,8 @@ import com.crawl.model.CrawlResultPackage;
 import com.crawl.model.CrawlResultPackageComparator;
 
 /**
- * 
- * @author mschimpf
+ * Crawler model testing methods.
+ * @author Team Kappa
  *
  */
 public class CrawlerModelTests {
