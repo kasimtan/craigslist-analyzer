@@ -170,7 +170,7 @@ public class Crawler {
                 
                 // <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
                 // if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
-                this.setMatchPattern((".*<a href=\"http://"+CraigslistAreasEnum.URL_CONST_AREA_SF_BAY_AREA.getCode()+".craigslist.org/.*html.*>").trim());
+                this.setMatchPattern(".*<a href=\"http://.*.craigslist.*/.*html.*>");
                 
                 logger.debug("MatchPattern="+this.getMatchPattern());
                 
