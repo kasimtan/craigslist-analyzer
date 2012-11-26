@@ -6,8 +6,8 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 /**
- * 
- * @author mschimpf
+ * The extraction item data object from Crawl object. 
+ * @author Team Kappa
  *
  */
 public final class CrawlResultPackage {
@@ -19,6 +19,10 @@ public final class CrawlResultPackage {
 	private String item="";
 	private String url="";
 	
+	/**
+	 * GETTER/SETTER.
+	 * @return
+	 */
 	public final String getItem() {
 		return this.encodeAmpersand(item);
 	}
@@ -32,42 +36,82 @@ public final class CrawlResultPackage {
 	    return inputString.replaceAll("&amp;", "&").replaceAll("&quot;", "'");
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @param item
+	 */
 	public final void setItem(String item) {
 		this.item = item;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @return
+	 */
 	public final String getUrl() {
 		return url;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @param url
+	 */
 	public final void setUrl(String url) {
 		this.url = url;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @return
+	 */
 	public final int getPriceOfItem() {
 		return priceOfItem;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @param priceOfItem
+	 */
 	public final void setPriceOfItem(int priceOfItem) {
 		this.priceOfItem = priceOfItem;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @return
+	 */
 	public final String getLine() {
 		return line;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @param line
+	 */
 	public final void setLine(String line) {
 		this.line = line;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @return
+	 */
 	public final Collection<String> getLocations() {
 		return locations;
 	}
 
+	/**
+	 * GETTER/SETTER.
+	 * @param locations
+	 */
 	public final void setLocations(Collection<String> locations) {
 		this.locations = locations;
 	}
 	
+	/**
+	 * Simply print method.
+	 * @return
+	 */
 	public final String getLocationsAsString(){
 		if (this.getLocations()==null || this.getLocations().size()==0){
 			return "";

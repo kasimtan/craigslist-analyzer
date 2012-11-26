@@ -3,8 +3,8 @@ package com.crawl.model;
 import org.apache.log4j.Logger;
 
 /**
- * Craigslist "For Sale" Category
- * @author mschimpf
+ * Craigslist Categories.
+ * @author Team Kappa.
  *
  */
 public enum CraigslistCategoryEnum{
@@ -233,19 +233,37 @@ public enum CraigslistCategoryEnum{
 	private String code; 
 	private String name;
 	
+	/**
+	 * Constructor.
+	 * @param c
+	 * @param n
+	 */
 	private CraigslistCategoryEnum(String c, String n) {   
 		this.code = c; 
 		this.name = n;
 	}  
 	
+	/**
+	 * GETTER.
+	 * @return
+	 */
 	public String getCode() {   
 		return this.code; 
 	}
 
+	/**
+	 * GETTER.
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Compare the categorz codes with a input string.
+	 * @param inputString
+	 * @return
+	 */
 	public static CraigslistCategoryEnum getCategory(String inputString){
 	    logger.debug("inputString="+inputString);
 	    CraigslistCategoryEnum[] aValuesOfCraigslistCategoryEnum=CraigslistCategoryEnum.values();

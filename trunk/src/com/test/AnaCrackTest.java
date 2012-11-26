@@ -15,8 +15,8 @@ import com.crawl.model.CraigslistAlgorithmEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * 
- * @author mschimpf
+ * AnaCrack JUnit testing methods.
+ * @author Team Kappa
  *
  */
 public class AnaCrackTest {

@@ -4,12 +4,12 @@ import java.util.Comparator;
 
 /**
  * Sort Algorithmen.
- * @author mschimpf
+ * @author Team kappa
  *
  */
 public class CrawlResultPackageComparator implements Comparator<CrawlResultPackage>{
     /**
-     * 
+     * Sort alg.
      */
     @Override public int compare(CrawlResultPackage inputOne, CrawlResultPackage inputTwo){
         if (inputOne.getPriceOfItem()==inputTwo.getPriceOfItem()){

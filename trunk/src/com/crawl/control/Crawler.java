@@ -18,8 +18,8 @@ import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * SINGLETON
- * @author mschimpf
+ * SINGLETON: The main crawler method to extract the oinformation from the Craiglists web page.
+ * @author Team Kappa
  *
  */
 public class Crawler {
@@ -48,6 +48,7 @@ public class Crawler {
     }
     
     /**
+     * The main extraction method, to call the Craigslist page and get all needed information from there.
      * 
      * @param inCraigslistCategoryEnum Which category?
      * @param inCraigslistAreasEnum Which area
@@ -89,7 +90,8 @@ public class Crawler {
     
     /**
      * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
-     * (Specified for only San Francisco Bay Area)
+     * (Specified for only San Francisco Bay Area).
+     * 
      * @param inCraigslistCategoryEnum
      * @param inCraigslistAreasEnum
      * @param inSearchItem
@@ -111,6 +113,7 @@ public class Crawler {
     /**
      * This is an important step because we need the Craigslist URL before we search also as key for the cache object.
      * (For global worldwide location/area)
+     * 
      * @param inCraigslistCategoryCode
      * @param inCraigslistAreasURL
      * @param inSearchItem
@@ -133,7 +136,7 @@ public class Crawler {
     }
     
     /**
-     * The crawl function
+     * The crawl function for one page of Craigslist.
      * @return
      */
     private synchronized Collection<CrawlResultPackage> crawlWebPage(String inputSearchUrl, int page) {
@@ -152,7 +155,6 @@ public class Crawler {
             //  maxAsk=1000000
             //  &sort=pricedsc
             //  &srchType=A
-            
             logger.info("URL = "+inputSearchUrl+" +page="+page);
             url = new URL(inputSearchUrl+page);
 
@@ -286,7 +288,7 @@ public class Crawler {
     }   
     
     /**
-     * 
+     * Extract the URL from the result string.
      * @param inputLine
      * @return
      */
@@ -322,6 +324,7 @@ public class Crawler {
     }       
     
     /**
+     * Extract the locations from the web page.
      * 
      * @param input
      * @return
@@ -421,10 +424,18 @@ public class Crawler {
         }
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getMatchPattern() {
         return matchPattern;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param matchPattern
+     */
     private void setMatchPattern(String matchPattern) {
         this.matchPattern = matchPattern;
     }

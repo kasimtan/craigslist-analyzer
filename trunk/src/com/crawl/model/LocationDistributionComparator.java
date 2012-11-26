@@ -3,13 +3,13 @@ package com.crawl.model;
 import java.util.Comparator;
 
 /**
- * 
- * @author mschimpf
+ * Location distribution comparator sort object.
+ * @author Team Kappa
  *
  */
 public class LocationDistributionComparator implements Comparator<LocationDistribution>{
     /**
-     * 
+     * Sort method.
      */
     @Override public int compare(LocationDistribution inputOne, LocationDistribution inputTwo){
         if (inputOne.getCount()==inputTwo.getCount()){

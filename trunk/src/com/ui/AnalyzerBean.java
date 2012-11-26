@@ -16,6 +16,11 @@ import com.crawl.model.CrawlResultPackage;
 import com.crawl.model.LocationDistribution;
 import com.crawl.model.PriceDistribution;
 
+/**
+ * Main JSF bean for the analyzing and presentation of the results.
+ * @author Team Kappa
+ *
+ */
 @ManagedBean
 @SessionScoped
 public class AnalyzerBean implements Serializable {
@@ -34,46 +39,89 @@ public class AnalyzerBean implements Serializable {
     private String categoryCode;
     private String keyword;
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getLocationURL() {
         return locationURL;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param locationURL
+     */
     public void setLocationURL(String locationURL) {
         this.locationURL = locationURL;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param category
+     */
     public void setCategory(String category) {
         this.category = category;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getCategoryCode() {
         return categoryCode;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param categoryCode
+     */
     public void setCategoryCode(String categoryCode) {
         this.categoryCode = categoryCode;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public String getKeyword() {
         return keyword;
     }
 
+    /**
+     * GETTER/SETTER.
+     * @param keyword
+     */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
 
+    /**
+     * toString method.
+     */
     @Override
     public String toString() {
         StringBuilder aRetString = new StringBuilder();
@@ -213,6 +261,10 @@ public class AnalyzerBean implements Serializable {
         return str.toString();
     }
     
+    /**
+     * Get the location distribution.
+     * @return
+     */
     public String getLocationDistribution() {
         StringBuilder str = new StringBuilder();
         if(analyzer != null) {

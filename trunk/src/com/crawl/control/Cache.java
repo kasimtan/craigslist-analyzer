@@ -9,7 +9,7 @@ import com.crawl.model.CrawlResultPackage;
 
 /**
  * Cache super class for attributes and methods which will be used by other implementations. For example, the EBayCache...
- * @author mschimpf
+ * @author Team Kappa
  *
  */
 public class Cache {

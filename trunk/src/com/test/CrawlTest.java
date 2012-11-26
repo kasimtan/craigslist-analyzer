@@ -13,8 +13,8 @@ import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
 
 /**
- * 
- * @author mschimpf
+ * Crwaler testing methods.
+ * @author Team Kappa
  * 
  */
 public class CrawlTest {

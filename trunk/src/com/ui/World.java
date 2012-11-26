@@ -1,21 +1,30 @@
 package com.ui;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.faces.bean.*;
+import javax.faces.bean.ManagedBean;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * JSF world data object model.
+ * @author Team Kappa.
+ *
+ */
 @ManagedBean(eager=true)
 public class World {
     private List<Country> countryList;
 
+    /**
+     * Constructor.
+     */
     public World() {
         String url = "http://www.craigslist.org/about/sites";
         try {
@@ -56,10 +65,19 @@ public class World {
         }
     }
 
+    /**
+     * GETTER/SETTER.
+     * @return
+     */
     public List<Country> getCountries() {
         return countryList;
     }
     
+    /**
+     * Put capital first.
+     * @param str
+     * @return
+     */
     private static String capitalWord(String str) {
         // Capitalize letter after space, bracket, slash or dash character
         Pattern spaces = Pattern.compile("(\\s+[a-z])|(\\(+[a-z])|(\\-+[a-z])|(\\/+[a-z])");
