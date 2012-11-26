@@ -216,8 +216,8 @@ public class Crawler {
      * MacBook Pro MC725LL/A 17-Inch</a
      * 
      * @param input
-     *            a complete string which must contains a $ sign as starting
-     *            position. The method reads all number signs after the $ and
+     *            a complete string which must contains a > sign as starting
+     *            position. The method reads all number signs after the > and
      *            transformed it into a int number
      * @return
      */
@@ -227,16 +227,18 @@ public class Crawler {
 
             completeLoop: // Break out mark
 
-            // Search for the first '$' character. 
+            // Search for the first '>' character. 
             // Beginning from the left side
             for (int i = 0; i < input.length(); i++) {
-                if (input.charAt(i) == '$') {
+                if (input.charAt(i) == '>') {
+                    boolean isNumberScanned = false;
                     // Get everything after the $ character if it is a number
                     for (int j = i + 1; j < input.length(); j++) {
                         if (Character.isDigit(input.charAt(j))) {
                             char aChar = input.charAt(j);
                             stringNumber = stringNumber + "" + aChar;
-                        } else {
+                            isNumberScanned = true;
+                        } else if(isNumberScanned) {
                             // No numbers left, break out
                             break /* continue */completeLoop;
                         }

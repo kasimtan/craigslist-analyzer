@@ -652,7 +652,7 @@ public class AnaCrack {
         
         // Create and add the Rest item to the collection
         LocationDistribution aLocationDistributionRest=new LocationDistribution();
-        aLocationDistributionRest.setAreaName("Others");
+        aLocationDistributionRest.setAreaName("others");
         aLocationDistributionRest.setCount(aIntRestCopunter);
         aSecondStepColl.add(aLocationDistributionRest);
 	    
