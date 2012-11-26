@@ -18,7 +18,7 @@ import com.crawl.model.LocationDistribution;
 import com.crawl.model.PriceDistribution;
 
 /**
- * 
+ * Standallone class with a main method. Usefull for tests.
  * @author mschimpf
  * 
  */
@@ -108,7 +108,7 @@ public class StartMain {
             logger.debug(aPrice.toString());
         }
 
-        logger.debug(aLocColl.size());        
+        logger.debug(aPriceColl.size());        
         
         logger.debug("Ending application.");
     }
