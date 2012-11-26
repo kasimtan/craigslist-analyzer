@@ -95,20 +95,20 @@ public class StartMain {
         i = 0;
         for (LocationDistribution aLoc : aLocColl) {
             i++;
-            logger.debug(aLoc.toString());
+            logger.info(aLoc.toString());
         }
 
-        logger.debug(aLocColl.size());
+        logger.info(aLocColl.size());
         
         Collection<PriceDistribution> aPriceColl=aAnaCrack.getPriceDistribution();
         
         i = 0;
         for (PriceDistribution aPrice : aPriceColl) {
             i++;
-            logger.info(aPrice.toString());
+            logger.debug(aPrice.toString());
         }
 
-        logger.info(aLocColl.size());        
+        logger.debug(aLocColl.size());        
         
         logger.debug("Ending application.");
     }

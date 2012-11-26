@@ -2,7 +2,10 @@ package com.analysis.control;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
@@ -555,10 +558,15 @@ public class AnaCrack {
 	 * @return
 	 */
 	public Collection<LocationDistribution> getLocationDistribution(){
+        if (this.getCrawlCollection()==null){
+            logger.error("getCrawlCollection --- Collection is NULL");
+            return new ArrayList<LocationDistribution>();
+        }
+	    
 	    logger.debug("Start");
 	    logger.debug("size="+this.getCrawlCollection().size());
-	    
-	    HashMap<String, LocationDistribution> aHashMap=new HashMap<String, LocationDistribution>();
+	    	    
+	    SortedMap<String, LocationDistribution> aSortedMap=new TreeMap<String, LocationDistribution>();
 	    
 	    for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()){
 	        Collection<String> aStringLocColl=aCrawlResultPackage.getLocations();
@@ -568,21 +576,21 @@ public class AnaCrack {
 	        for (String aStringGet: aStringLocColl){
 	            String aCurrString=aStringGet.toLowerCase();
 	            
-	            LocationDistribution aLocDist=aHashMap.get(aCurrString);
+	            LocationDistribution aLocDist=aSortedMap.get(aCurrString);
 	            logger.debug("aLocDist="+aLocDist);
 	            
 	            if (aLocDist==null){
 	                LocationDistribution aLoc=new LocationDistribution();
 	                aLoc.setAreaName(aCurrString);
 	                aLoc.setCount(1);
-	                aHashMap.put(aCurrString, aLoc);
+	                aSortedMap.put(aCurrString, aLoc);
 	            } else {
 	                aLocDist.setCount(aLocDist.getCount()+1);
 	            }
 	        }
 	    }
 	    
-	    Collection<LocationDistribution> aRetColl=aHashMap.values();
+	    Collection<LocationDistribution> aRetColl=aSortedMap.values();
 	    
 	    logger.debug("SIZE="+aRetColl.size());
 	    
@@ -594,32 +602,37 @@ public class AnaCrack {
      * @return
      */
     public Collection<PriceDistribution> getPriceDistribution(){
+        if (this.getCrawlCollection()==null){
+            logger.error("getCrawlCollection --- Collection is NULL");
+            return new ArrayList<PriceDistribution>();
+        }
+        
         logger.debug("Start");
         logger.debug("size="+this.getCrawlCollection().size());
         
-        HashMap<String, PriceDistribution> aHashMap=new HashMap<String, PriceDistribution>();
+        SortedMap<String, PriceDistribution> aSortedMap=new TreeMap<String, PriceDistribution>();
         
         for (CrawlResultPackage aCrawlResultPackage : this.getCrawlCollection()){
             String aStringPrice=""+aCrawlResultPackage.getPriceOfItem();
             
             logger.debug("aStringPrice="+aStringPrice);
             
-            PriceDistribution aPriceDist=aHashMap.get(aStringPrice);
+            PriceDistribution aPriceDist=aSortedMap.get(aStringPrice);
                 
             if (aPriceDist==null){
                 PriceDistribution aPricePack=new PriceDistribution();
                 aPricePack.setPriceString(aStringPrice);
                 aPricePack.setCount(1);
-                aHashMap.put(aStringPrice, aPricePack);
+                aSortedMap.put(aStringPrice, aPricePack);
             } else {
                 aPriceDist.setCount(aPriceDist.getCount()+1);
             }
         }
         
-        Collection<PriceDistribution> aRetColl=aHashMap.values();
+        Collection<PriceDistribution> aRetColl=aSortedMap.values();
         
         logger.debug("SIZE="+aRetColl.size());
-        
+             
         return aRetColl;
     }
 }
