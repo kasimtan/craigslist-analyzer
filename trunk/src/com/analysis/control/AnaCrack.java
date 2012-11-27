@@ -214,11 +214,17 @@ public class AnaCrack {
 	    int i=aPackArrayRet.length-1;
 	    int littleEqual=aPackArrayRet.length-this.howManyOffersToReturn;
 	    
-	    logger.info("aPackArrayRet.length="+aPackArrayRet.length);
-	    logger.info(i+">="+littleEqual);
+	    // Check if it turn to minus and if yes set it to 0
+	    if (littleEqual<0){
+	        littleEqual=0;
+	    }
+	    
+	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
+	    logger.debug(i+">="+littleEqual);
 	    
 	    try {
 	        for (;i>=littleEqual;i--){
+	            logger.debug("ArrayLength="+aPackArrayRet.length+" ["+i+"]>="+littleEqual+"************************");
 	            CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
 	            logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
 	            aCrawlCollRet.add(aPack2);
