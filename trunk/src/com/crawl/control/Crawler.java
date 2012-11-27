@@ -130,7 +130,7 @@ public class Crawler {
                 inCraigslistAreasURL+
                 "/search/"+inCraigslistCategoryCode+
                 "?query="+inSearchItem+
-                "&maxAsk=100000&sort=priceasc&srchType=A&s=").trim();        
+                "&sort=priceasc&srchType=A&s=").trim();        
         
         return aTempUrl;
     }
