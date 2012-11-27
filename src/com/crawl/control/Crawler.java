@@ -252,12 +252,19 @@ public class Crawler {
                 return 0;
             } else {
                 // Transform the String to an int value and return it
-                return new Integer(stringNumber).intValue();
+                try{
+                    return new Integer(stringNumber).intValue();
+                } catch (NumberFormatException e){
+                    logger.fatal("String number is too big for int 32 bit. This is not reasonable because nothing in Craigslist is4 billions worth!");
+                    logger.fatal(e);
+                    e.printStackTrace();
+                    return 1;
+                }
             }
         } catch (Exception e) {
             logger.fatal(e);
             e.printStackTrace();
-            return -1;
+            return 1;
         }
     }   
     
