@@ -238,6 +238,7 @@ public class AnaCrack {
 	    return aCrawlCollRet;
 	}
 	
+	
 	/**
 	 * Standard deviation.
 	 */
