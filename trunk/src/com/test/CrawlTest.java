@@ -85,7 +85,8 @@ public class CrawlTest {
         
         logger.debug("MatchPatter="+aString);
         
-        assertTrue(aString.compareTo(".*<a href=\"http://sfbay.craigslist.org/.*html.*>")==0);
+        assertTrue(aString.compareTo(".*<a href=\"http://.*.craigslist.*/.*html.*>")==0);
+                                      
     }
     
     @Test
@@ -104,9 +105,9 @@ public class CrawlTest {
 
         String aString=aCrawl.getMatchPattern();
         
-        logger.debug("MatchPatter="+aString+" length="+aString.length());
+        logger.info("MatchPatter="+aString+" length="+aString.length());
         
-        assertTrue(aString.length()==48);
+        assertTrue(aString.length()==43);
     }
     
     @Test
