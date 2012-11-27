@@ -256,8 +256,6 @@ public class Crawler {
                     return new Integer(stringNumber).intValue();
                 } catch (NumberFormatException e){
                     logger.fatal("String number is too big for int 32 bit. This is not reasonable because nothing in Craigslist is4 billions worth!");
-                    logger.fatal(e);
-                    e.printStackTrace();
                     return 1;
                 }
             }
