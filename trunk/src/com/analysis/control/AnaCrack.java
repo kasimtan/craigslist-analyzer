@@ -87,39 +87,21 @@ public class AnaCrack {
 	    // Which Algoritm?
 	    switch (inputCraigslistAlgorithmEnum){
 	        case BEST : 
-	            return this.reverseOrder(this.getBestOffers());
+	            return this.getBestOffers();
 	        case WORST : 
-                return this.reverseOrder(this.getWorstOffers());
+                return this.getWorstOffers();
 	        case HIGHEST : 
-                return this.reverseOrder(this.getWorstOffers());
+                return this.getWorstOffers();
 	        case LOWEST : 
-                return this.reverseOrder(this.getBestOffers());
+                return this.getBestOffers();
 	        case DUMBEST : 
-                return this.reverseOrder(this.getWorstOffers());
+                return this.getWorstOffers();
 	        default:
                 logger.error("The algorithm is unknown!");
                 break;                
 	    }
 	    
 		return new ArrayList<CrawlResultPackage>();
-	}
-	
-	/**
-	 * Reverse the order of the collection.
-	 * @param inputColl
-	 * @return
-	 */
-	private Collection<CrawlResultPackage> reverseOrder(Collection<CrawlResultPackage> inputColl){
-	    Collection<CrawlResultPackage> aRetColl=new ArrayList<CrawlResultPackage>();
-	    
-	    Object[] aArrayCralObjects=inputColl.toArray();
-	    
-	    for (int i=0;i<aArrayCralObjects.length;i++){
-	        logger.debug("i="+i);
-	        aRetColl.add((CrawlResultPackage)aArrayCralObjects[i]);
-	    }
-	    
-	    return aRetColl;
 	}
 	
     /**
@@ -211,7 +193,6 @@ public class AnaCrack {
 	    
 	    Collection<CrawlResultPackage> aCrawlCollRet=new ArrayList<CrawlResultPackage>();
 	    
-	    int i=aPackArrayRet.length-1;
 	    int littleEqual=aPackArrayRet.length-this.howManyOffersToReturn;
 	    
 	    // Check if it turn to minus and if yes set it to 0
@@ -220,10 +201,10 @@ public class AnaCrack {
 	    }
 	    
 	    logger.debug("aPackArrayRet.length="+aPackArrayRet.length);
-	    logger.debug(i+">="+littleEqual);
+	    logger.debug(aPackArrayRet.length-1+">="+littleEqual);
 	    
 	    try {
-	        for (;i>=littleEqual;i--){
+	        for (int i = littleEqual; i < aPackArrayRet.length; i++){
 	            logger.debug("ArrayLength="+aPackArrayRet.length+" ["+i+"]>="+littleEqual+"************************");
 	            CrawlResultPackage aPack2=(CrawlResultPackage)aPackArrayRet[i];
 	            logger.debug(i+". aPack2="+aPack2.getPriceOfItem());
