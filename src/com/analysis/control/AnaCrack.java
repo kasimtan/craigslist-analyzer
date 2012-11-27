@@ -341,6 +341,17 @@ public class AnaCrack {
             intArray[i]=myPackage.getPriceOfItem();
             i++;
         }
+	    
+	    // Sorting
+        for (i = 0; i < intArray.length; i++) {
+            for (int j = 1; j < intArray.length; j++) {
+                if (intArray[j] < intArray[j - 1]) {
+                    int temp = intArray[j];
+                    intArray[j] = intArray[j - 1];
+                    intArray[j - 1] = temp;
+                }
+            }
+        }
 	    	    
 	    int middle = intArray.length/2;  // subscript of middle element
 	    
