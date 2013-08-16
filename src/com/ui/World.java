@@ -28,15 +28,24 @@ public class World {
     public World() {
         String url = "http://www.craigslist.org/about/sites";
         try {
+            // Get Country list
             Document document = Jsoup.connect(url).get();
-            Elements countries = document.select("div.colmask");
-            countryList = new ArrayList<Country>();
+            Elements countries = document.select("body h1");
+            ArrayList<String> countryArray = new ArrayList<String>();
             for(Element country : countries) {
-                String countryLink = "#";
-                String countryName = country.select("h1.continent_header").text();
+                String countryName = country.text();
                 // Rename US to United States
                 if("US".equals(countryName)) countryName = "United States";
-                Elements states = country.select("div.state_delimiter");
+                countryArray.add(country.text());
+            }
+            
+            // Get states and cities for each country
+            countries = document.select("div.colmask");
+            countryList = new ArrayList<Country>();
+            int index = 0;
+            for(Element country : countries) {
+                String countryLink = "#";
+                Elements states = country.select("h4");
                 List<State> stateList = new ArrayList<State>();
                 for(Element state : states) {
                     String stateName = state.text();
@@ -56,8 +65,9 @@ public class World {
                     State stateObj = new State(stateName, stateLink, cityList);
                     stateList.add(stateObj);
                 }
-                Country countryObj = new Country(countryName, countryLink, stateList);
+                Country countryObj = new Country(countryArray.get(index), countryLink, stateList);
                 countryList.add(countryObj);
+                index++;
             }
         }
         catch(IOException e) {

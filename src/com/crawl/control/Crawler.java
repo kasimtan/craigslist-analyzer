@@ -10,12 +10,20 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
+import com.ui.City;
+import com.ui.Country;
+import com.ui.State;
 
 /**
  * SINGLETON: The main crawler method to extract the oinformation from the Craiglists web page.
@@ -141,10 +149,6 @@ public class Crawler {
      */
     private synchronized Collection<CrawlResultPackage> crawlWebPage(String inputSearchUrl, int page) {
         Collection<CrawlResultPackage> aReturnColl=new ArrayList<CrawlResultPackage>();
-        URL url;
-        InputStream is = null;
-        DataInputStream dis;
-        String line;
 
         try {
             // OLD http://sfbay.craigslist.org/search/sya?query=&srchType=T&minAsk=1&maxAsk=100000&sort=pricedsc
@@ -156,54 +160,28 @@ public class Crawler {
             //  &sort=pricedsc
             //  &srchType=A
             logger.info("URL = "+inputSearchUrl+" +page="+page);
-            url = new URL(inputSearchUrl+page);
-
-            is = url.openStream(); // throws an IOException
-            dis = new DataInputStream(new BufferedInputStream(is));
-
-            // Go to the complete html output. Line by line
-            while ((line = dis.readLine()) != null) {
-                
-                // A line looks like this...
-                // Oct 26 - $799999 - COLD CASH CASH FOR ANY USED/NEW IPHONES - IPADS - (santa clara) img computers - by owner 
-                
-                line = line.trim(); // Cutoff unneeded characters
-                // if a item is found
-                
-                // <a href="http://sfbay.craigslist.org/sby/sys/3358383668.html">$20000 - F5 big-IP 6900 series obo</a>
-                // if (line.matches(".*<a href=\"http://"+CraigslistAreasEnum.MAIN_AREA_SF_BAY_AREA+".craigslist.org/.*html.*>") == true) {
-                this.setMatchPattern(".*<a href=\"http://.*.craigslist.*/.*html.*>");
-                
-                logger.debug("MatchPattern="+this.getMatchPattern());
-                
-                if (line.matches(this.getMatchPattern()) == true) {
-                    CrawlResultPackage myTempCrawlResultPackage= new CrawlResultPackage();
-                    myTempCrawlResultPackage.setLine(line);
-                    // get the price
-                    myTempCrawlResultPackage.setPriceOfItem(this.getPriceFromString(line));
-                    
-                    // Get Item and url
-                    myTempCrawlResultPackage.setItem(this.getItemNameFromInputLine(line.trim()));
-                    myTempCrawlResultPackage.setUrl(this.getUrlFromInputLine(line.trim()));
-                    
-                    // The location is located in the html source code two lines under the a href
-                    line = dis.readLine();
-                    line = dis.readLine();
-                    myTempCrawlResultPackage.setLocations(this.getLocationsFromString(line));
-                    aReturnColl.add(myTempCrawlResultPackage);
-                }
+            //url = new URL(inputSearchUrl+page);
+            inputSearchUrl = inputSearchUrl + page;
+            
+            // Get items list
+            Document document = Jsoup.connect(inputSearchUrl).get();
+            Elements rows = document.select("p.row");
+            for(Element row : rows) {
+                CrawlResultPackage myTempCrawlResultPackage= new CrawlResultPackage();
+                myTempCrawlResultPackage.setLine(row.html());
+                // get price
+                myTempCrawlResultPackage.setPriceOfItem(getPriceFromString(row.select("span.price").text()));
+                // Get item and url
+                myTempCrawlResultPackage.setItem(row.select("span.pl a").text());
+                myTempCrawlResultPackage.setUrl(row.select("span.pl a").attr("abs:href"));
+                // Get location
+                myTempCrawlResultPackage.setLocations(getLocationsFromString(row.select("small").text()));
+                aReturnColl.add(myTempCrawlResultPackage);
             }
         } catch (MalformedURLException mue) {
             mue.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException ioe) {
-                logger.error(ioe);
-                ioe.printStackTrace();
-            }
         }
         
         logger.debug("Size="+aReturnColl.size());
@@ -230,7 +208,7 @@ public class Crawler {
             // Search for the first '>' character. 
             // Beginning from the left side
             for (int i = 0; i < input.length(); i++) {
-                if (input.charAt(i) == '>') {
+                //if (input.charAt(i) == '>') {
                     boolean isNumberScanned = false;
                     // Get everything after the $ character if it is a number
                     for (int j = i + 1; j < input.length(); j++) {
@@ -243,7 +221,7 @@ public class Crawler {
                             break /* continue */completeLoop;
                         }
                     }
-                }
+                //}
             }
             
             logger.debug("stringNumber=|"+stringNumber+"|");
@@ -343,6 +321,7 @@ public class Crawler {
             
             Collection<String> aCollLoc=new ArrayList<String>();
             String aWorkString=null;
+            if(input == null) return aCollLoc;
 
             completeLoop: // Break out mark
 
