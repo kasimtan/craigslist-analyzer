@@ -1,16 +1,11 @@
 package com.crawl.control;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -21,9 +16,6 @@ import org.jsoup.select.Elements;
 import com.crawl.model.CraigslistAreasEnum;
 import com.crawl.model.CraigslistCategoryEnum;
 import com.crawl.model.CrawlResultPackage;
-import com.ui.City;
-import com.ui.Country;
-import com.ui.State;
 
 /**
  * SINGLETON: The main crawler method to extract the oinformation from the Craiglists web page.
@@ -138,7 +130,7 @@ public class Crawler {
                 inCraigslistAreasURL+
                 "/search/"+inCraigslistCategoryCode+
                 "?query="+inSearchItem+
-                "&sort=priceasc&srchType=A&s=").trim();        
+                "&sort=priceasc&srchType=T&s=").trim();        
         
         return aTempUrl;
     }
@@ -203,27 +195,19 @@ public class Crawler {
         try {
             String stringNumber = "";
 
-            completeLoop: // Break out mark
-
-            // Search for the first '>' character. 
-            // Beginning from the left side
-            for (int i = 0; i < input.length(); i++) {
-                //if (input.charAt(i) == '>') {
-                    boolean isNumberScanned = false;
-                    // Get everything after the $ character if it is a number
-                    for (int j = i + 1; j < input.length(); j++) {
-                        if (Character.isDigit(input.charAt(j))) {
-                            char aChar = input.charAt(j);
-                            stringNumber = stringNumber + "" + aChar;
-                            isNumberScanned = true;
-                        } else if(isNumberScanned) {
-                            // No numbers left, break out
-                            break /* continue */completeLoop;
-                        }
-                    }
-                //}
+            // Get everything after the $ character if it is a number
+            boolean isNumberScanned = false;
+            for (int j = 0; j < input.length(); j++) {
+                if (Character.isDigit(input.charAt(j))) {
+                    char aChar = input.charAt(j);
+                    stringNumber = stringNumber + "" + aChar;
+                    isNumberScanned = true;
+                }
+                else if (isNumberScanned) {
+                    break;
+                }
             }
-            
+
             logger.debug("stringNumber=|"+stringNumber+"|");
             
             if (stringNumber==null || stringNumber.trim().length()==0){
@@ -242,71 +226,7 @@ public class Crawler {
             e.printStackTrace();
             return 1;
         }
-    }   
-    
-    /**
-     * Example inputLine <a href="http://sfbay.craigslist.org/eby/sys/3350860655.html">$875 - MacBook Air 13 - 2.13GHz - 4GB - 256GB SSD - M Lion - Office 11 </a>
-     * @param inputLine
-     * @return
-     */
-    private String getItemNameFromInputLine(String inputLine) {
-        try {
-            String stringLine = "";
-            logger.debug("inputLine=|"+inputLine+"|");
-            
-            // Search for the first minis
-            for (int i=0; i < inputLine.length();i++){
-                if (inputLine.charAt(i)=='-'){
-                    stringLine=inputLine.substring(i+2, inputLine.length()-4 );
-                    // ToDo HTML encoding ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    logger.debug("WITHOUT HTML stringLine=|"+stringLine+"|");
-                    return stringLine.trim();
-                }
-            }
-
-            return stringLine.trim();
-        } catch (Exception e) {
-            logger.fatal(e);
-            e.printStackTrace();
-            return "";
-        }
-    }   
-    
-    /**
-     * Extract the URL from the result string.
-     * @param inputLine
-     * @return
-     */
-    private String getUrlFromInputLine(String inputLine) {
-        try {
-            String stringLine = "";
-            logger.debug("inputLine=|"+inputLine+"|");
-
-            // Search for the first minis
-            for (int i=0; i < inputLine.length();i++){
-                if (inputLine.charAt(i)=='\"'){
-                    stringLine=inputLine.substring(i+1);
-                    logger.debug("stringLine=|"+stringLine+"|");
-                    
-                    for (int j=0;j<stringLine.length();j++){
-                        if (stringLine.charAt(j)=='\"'){
-                            stringLine=stringLine.substring(0, j);
-
-                            logger.debug("stringLine=|"+stringLine+"|");
-    
-                            return stringLine.trim();
-                        }
-                    }
-                }
-            }
-            
-            return stringLine.trim();
-        } catch (Exception e) {
-            logger.fatal(e);
-            e.printStackTrace();
-            return "";
-        }
-    }       
+    }
     
     /**
      * Extract the locations from the web page.
@@ -416,13 +336,5 @@ public class Crawler {
      */
     public String getMatchPattern() {
         return matchPattern;
-    }
-
-    /**
-     * GETTER/SETTER.
-     * @param matchPattern
-     */
-    private void setMatchPattern(String matchPattern) {
-        this.matchPattern = matchPattern;
     }
 }
