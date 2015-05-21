@@ -1,0 +1,1 @@
+Users select a topic from the Craigslist like "Computers" and the application does the result data analyzing.
